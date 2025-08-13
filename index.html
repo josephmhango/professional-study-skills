@@ -15,71 +15,159 @@
     body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,#0b1020,#0b1020 40%,#0f1630);color:var(--text)}
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 64px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
-    .brand{display:flex;align-items:center;gap:12px}
+    header{display:block;margin-bottom:16px}
+    .brand{display:flex;align-items:flex-start;gap:12px}
+    .logo{height:48px;width:auto;flex:0 0 auto}
     .badge{font-size:12px;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);border:1px solid #243069;border-radius:999px;padding:6px 10px}
     h1{font-size:clamp(22px,3vw,28px);margin:0;font-weight:700}
-    .controls{display:flex;flex-wrap:wrap;gap:12px}
+    .tagline{margin:.35rem 0 0;color:var(--muted);font-size:14px}
+    .tagline a{color:var(--brand);text-decoration:underline}
+    .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--card);border:1px solid #1a2247;border-radius:12px;padding:12px 12px;margin:12px 0 24px}
     .input,.select{background:var(--card);border:1px solid #212954;color:var(--text);border-radius:12px;padding:12px 14px;outline:none}
-    .input{min-width:260px}
-    .select{min-width:140px}
+    .input{min-width:260px;flex:1 1 360px}
+    .select{min-width:160px;flex:0 0 200px}
     .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-    .card{background:var(--card);border:1px solid #1a2247;border-radius:16px;padding:18px 16px;transition:transform .12s ease,border-color .12s ease,background .12s ease}
+    .card{background:var(--card);border:1px solid #1a2247;border-radius:16px;padding:18px 16px;transition:transform .12s ease,border-color .12s ease,background .12s ease;cursor:pointer}
     .card:hover{transform:translateY(-3px);border-color:#2a3875;background:var(--hover)}
+    .thumb{width:100%;aspect-ratio:16/9;border-radius:12px;background:linear-gradient(135deg,#1a2247,#2a3875 60%,#3a4a95);border:1px solid #1a2247;object-fit:contain;object-position:center;display:block;margin-bottom:10px}
     .card h3{margin:4px 0 6px;font-size:18px}
+    .card-title{display:inline-block;padding:4px 10px;border-radius:999px;background:#0f1630;border:1px solid #283268;color:#b9c6ff;text-decoration:none;transition:color .12s ease,border-color .12s ease}
+    .card-title:hover{color:#ff8c00;border-color:#ff8c00}
     .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;color:var(--muted);font-size:13px}
     .tag{padding:2px 8px;border-radius:999px;background:#0f1630;border:1px solid #283268;color:#b9c6ff}
+    .lead-pill{padding:2px 8px;border-radius:999px;background:#0f1630;border:1px solid #283268;color:#b9c6ff}
+    .slide-list{margin:8px 0 0 0;padding:0 0 0 16px}
+    .slide-list li{margin:2px 0}
+    .slide-link{display:inline-block;padding:4px 10px;border-radius:999px;background:#0f1630;border:1px solid #283268;color:#b9c6ff;text-decoration:none;transition:color .12s ease,border-color .12s ease}
+    .slide-link:hover{color:#ff8c00;border-color:#ff8c00}
     .footer{margin-top:36px;color:var(--muted);font-size:13px}
     .empty{opacity:.8;border:1px dashed #2b356c;padding:28px;border-radius:16px;text-align:center}
+    /* Header three-column layout */
+    .site-header{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;margin-bottom:16px}
+    .header-center{text-align:center}
+    .assessment-box{border:2px solid #ff8c00;border-radius:16px;padding:16px;margin:16px 0;background:rgba(255,140,0,0.08)}
+    .assessment-box .card{ text-align:center }
+    .assessment-box .slide-list{ padding:0; list-style:none; text-align:center }
+    .assessment-box .slide-list li{ margin:6px 0 }
+    .assessment-box .meta{ justify-content:center }
+    .assessment-box .card:hover{ box-shadow:0 0 0 3px rgba(255,140,0,0.35), 0 10px 20px rgba(0,0,0,0.25); border-color:#ff8c00 }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header>
-      <div class="brand">
-        <span class="badge">SQ4003</span>
-        <h1>Professional & Study Skills — Slide Decks</h1>
+    <header class="site-header">
+      <div class="header-left">
+        <img src="HAU-logo.svg" alt="Harper Adams University" class="logo" />
       </div>
-      <div class="controls">
-        <input id="q" class="input" type="search" placeholder="Search title, topic, or week…" aria-label="Search" />
-        <select id="week" class="select" aria-label="Filter by week">
-          <option value="">All weeks</option>
-        </select>
-        <select id="topic" class="select" aria-label="Filter by topic">
-          <option value="">All topics</option>
-        </select>
+      <div class="header-center">
+        <h1>Professional and Study Skills (SQ4003)</h1>
+        <p class="tagline">This module is part of the <a href="https://www.harper-adams.ac.uk/courses/station-quarter/201227/2025/applied-data-science" target="_blank" rel="noopener">Applied Data Science Route</a> at Harper Adams University.</p>
+      </div>
+      <div class="header-right">
+        <img src="thumbnails/agridat.png" alt="AgriDat" class="logo" />
       </div>
     </header>
+    <nav class="controls" aria-label="Slide filters">
+      <input id="q" class="input" type="search" placeholder="Search title, topic, or week…" aria-label="Search" />
+      <select id="week" class="select" aria-label="Filter by week">
+        <option value="">All weeks</option>
+      </select>
+      <select id="topic" class="select" aria-label="Filter by topic">
+        <option value="">All topics</option>
+      </select>
+    </nav>
 
     <div id="cards" class="grid" role="list"></div>
     <div id="empty" class="empty" hidden>No decks match your filters.</div>
 
-    <p class="footer">Tip: Drop this file at the repo root as <code>index.html</code>. Put each exported slide deck in <code>/slides</code>. Update the <code>slides</code> array below (or generate it in a build step) and publish via GitHub Pages.</p>
+    <section class="assessment-box" aria-labelledby="assessment-title">
+      <h2 id="assessment-title">Assessment Center</h2>
+      <div class="grid">
+        <a class="card" href="https://vle.harper-adams.ac.uk/course/view.php?id=278" target="_blank" rel="noopener">
+          <h3>Module descriptor</h3>
+          <div class="meta"><span>Student-only access, takes you to the VLE</span></div>
+        </a>
+        <a class="card" href="https://vle.harper-adams.ac.uk/course/view.php?id=278" target="_blank" rel="noopener">
+          <h3>Assignment Brief</h3>
+          <div class="meta"><span>Student-only access, takes you to the VLE</span></div>
+        </a>
+        <div class="card">
+          <h3>Assignment support files</h3>
+          <ul class="slide-list">
+            <li><a class="slide-link" href="https://vle.harper-adams.ac.uk/course/view.php?id=278" target="_blank" rel="noopener">Support pack (VLE)</a></li>
+            <li><a class="slide-link" href="https://vle.harper-adams.ac.uk/course/view.php?id=278">Supporting files</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="reading-title">
+      <h2 id="reading-title">Recommended reading</h2>
+      <ul>
+        <li>Skoulikari, A. (2023). Learning Git: A Hands‑On and Visual Guide to the Basics of Git. O’Reilly Media.</li>
+        <li>Jones, D. (2011). Learn Windows PowerShell in a Month of Lunches. Manning Publications.</li>
+        <li>Hart, C. (2025). Doing a Literature Review: Releasing the Research Imagination (3rd ed.). SAGE Publications Ltd.</li>
+
+      </ul>
+    </section>
+        <p class="footer"><code>Copyright 2025 Harper Adams University</code></p>
+
   </div>
 
   <script>
     // --- EDIT ME: Your slide decks live under /slides ---
     // title: what users see; file: href under /slides; week: number or string; topics: tags for filtering
     const slides = [
-      { title: "01 • Introduction & Time Management", file: "01-introduction-time-management.html", week: 1, topics: ["Setting up IDEs","Intended module outcomes","Assignment description","Lead: Dr K.J. Mhango"] },
-      { title: "02 • Research Skills", file: "02-research-skills.html", week: 2, topics: ["Information literacy","Effective searching","Assignment launch","Lead: Dr K.J. Mhango"] },
-      { title: "03 • Research design, methodology and reporting", file: "03-research-design-methodology-reporting.html", week: 3, topics: ["Critical thinking and analytical skills","Research design and methodology","Report writing","Lead: Dr K.J. Mhango"] },
-      { title: "04 • Science Communication", file: "04-science-communication.html", week: 4, topics: ["Science communication principles","Presentation skills","Communication tools (Word, Powerpoint, Web)","Lead: Simon Bicknell"] },
-      { title: "05 • Data management", file: "05-data-management.html", week: 5, topics: ["Excel","Data management in excel","Tidy data principles for spreadsheet data","FAIR data principles","Lead: Simon Bicknell"] },
-      { title: "06 • Markdown", file: "06-markdown.html", week: 6, topics: ["Markdown principles","Quarto","Lead: Dr K.J. Mhango"] },
-      { title: "07 • Command line interfaces", file: "cli.html", week: 7, topics: ["Batch scripting","Bash shell scripting","Lead: Dr K.J. Mhango"] },
-      { title: "08 • Collaboration and version control", file: "gitslides.html", week: 8, topics: ["Git and its various versions (GitHub, GitLab)","Lead: Dr K.J. Mhango"] },
-      { title: "09 • Deployment and Orchestration: GitHub pages", file: "github_pages.html", week: 9, topics: ["Showcase GitHub pages","Showcase GitHub actions","Lead: Dr K.J. Mhango"] },
-      { title: "10 • Professional development", file: "10-professional-development.html", week: 10, topics: ["Needs assessment skills","CPD (identification and evaluation)","Lead: Simon Bicknell"] },
-      { title: "11 • Professional portfolio", file: "11-professional-portfolio.html", week: 11, topics: ["Curriculum vitae","Cover letters","Creating a personal portfolio","Lead: Simon Bicknell"] },
-      { title: "12 • AI and Copilot", file: "12-ai-and-copilot.html", week: 12, topics: ["Effective use of coding assistants","Responsible use of AI","HAU policies","Lead: Dr K.J. Mhango"] },
-      { title: "13 • Assignment review", file: "13-assignment-review.html", week: 13, topics: ["Assignment overview","Responsible use of AI","HAU policies","Lead: Dr K.J. Mhango"] }
+      // --- Week 1---
+    { title: "Introduction & Time Management", file: "01-introduction-time-management.html", week: 1, topics: ["Setting up IDEs","Intended module outcomes","Assignment description","Lead: Dr K.J. Mhango"], image: "thumbnails/intro.png" },
+      // --- Week 2---
+      { title: "Research Skills", file: "02-research-skills.html", week: 2, topics: ["Information literacy","Effective searching","Assignment launch","Lead: Dr K.J. Mhango"], image: "thumbnails/scopus.jpg" },
+      // --- Week 3---
+      { title: "Research design, methodology and reporting", file: "03-research-design-methodology-reporting.html", week: 3, topics: ["Critical thinking and analytical skills","Research design and methodology","Report writing","Lead: Dr K.J. Mhango"],image: "thumbnails/research.jpg" },
+      // --- Week 4---
+      { title: "Science Communication", file: "04-science-communication.html", week: 4, topics: ["Science communication principles","Presentation skills","Communication tools (Word, Powerpoint, Web)","Lead: Simon Bicknell"], image: "thumbnails/word.png" },
+      // --- Week 5---
+      { title: " Data management", file: "05-data-management.html", week: 5, topics: ["Excel","Data management in excel","Tidy data principles for spreadsheet data","FAIR data principles","Lead: Simon Bicknell"], image: "thumbnails/excel.png" },
+      // --- Week 6---
+      { title: " Markdown", file: "06-markdown.html", week: 6, topics: ["Markdown principles","Quarto","Lead: Dr K.J. Mhango"], image: "thumbnails/md.jpg" },
+      // --- Week 7---
+      { title: "1 - Command line interfaces", file: "cli.html", week: 7, topics: ["Batch scripting","Bash shell scripting","Lead: Dr K.J. Mhango"], image: "thumbnails/powershell.png" },
+      { title: "2 - Windows Batch Scripting", file: "batch.html", week: 7, topics: ["Batch scripting","cmd.exe","Lead: Dr K.J. Mhango"] },
+      
+      // --- Week 8---
+      { title: "Collaboration and version control", file: "gitslides.html", week: 8, topics: ["Git and its various versions (GitHub, GitLab)","Lead: Dr K.J. Mhango"], image: "thumbnails/github.png" },
+      // --- Week 9---
+      { title: "Deployment and Orchestration: GitHub pages", file: "github_pages.html", week: 9, topics: ["Showcase GitHub pages","Showcase GitHub actions","Lead: Dr K.J. Mhango"], image: "thumbnails/github_pages.png" },
+      // --- Week 10---
+      { title: "Professional development", file: "10-professional-development.html", week: 10, topics: ["Needs assessment skills","CPD (identification and evaluation)","Lead: Simon Bicknell"], image: "thumbnails/cpd.png" },
+      // --- Week 11---
+      { title: "Professional portfolio", file: "11-professional-portfolio.html", week: 11, topics: ["Curriculum vitae","Cover letters","Creating a personal portfolio","Lead: Simon Bicknell"], image: "thumbnails/cv.png" },
+      // --- Week 12---
+      { title: "AI and Copilot", file: "12-ai-and-copilot.html", week: 12, topics: ["Effective use of coding assistants","Responsible use of AI","HAU policies","Lead: Dr K.J. Mhango"], image: "thumbnails/copilot.png" },
+      // --- Week 13---
+      { title: "Assignment review", file: "13-assignment-review.html", week: 13, topics: ["Assignment overview","Responsible use of AI","HAU policies","Lead: Dr K.J. Mhango"], image: "thumbnails/assignment.png" }
     ];
 
     // --- Utility helpers ---
     const unique = (arr) => [...new Set(arr)];
 
-    // Populate week & topic filters
+    function groupByWeek(slidesArr){
+      const map = new Map();
+      for(const s of slidesArr){
+        const key = String(s.week ?? '');
+        if(!map.has(key)) map.set(key, []);
+        map.get(key).push(s);
+      }
+      const groups = Array.from(map.entries()).map(([week, items])=>{
+        const sorted = items.slice().sort((a,b)=>a.title.localeCompare(b.title, undefined, {numeric:true,sensitivity:'base'}));
+        const topics = unique(sorted.flatMap(s=>s.topics||[])).sort((a,b)=>a.localeCompare(b));
+        const first = sorted[0];
+        const lead = sorted.map(s => (s.topics||[]).find(t => /^lead/i.test(t))).find(Boolean) || '';
+        return { week, slides: sorted, topics, image: first?.image, defaultFile: first?.file, lead };
+      });
+      return groups.sort((a,b)=>Number(a.week)-Number(b.week));
+    }
+
     function populateFilters() {
       const weekSel = document.getElementById('week');
       const topicSel = document.getElementById('topic');
@@ -97,33 +185,57 @@
       }
     }
 
-    function cardTemplate(s){
-      const href = `slides/${encodeURIComponent(s.file)}`;
-      const topics = (s.topics||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+    function groupCardTemplate(g){
+      const defHref = g.defaultFile ? `slides/${encodeURIComponent(g.defaultFile)}` : '#';
+      const thumb = g.image ? `<img class="thumb" src="${g.image}" alt="Week ${g.week} slides" />` : `<div class="thumb" aria-hidden="true"></div>`;
+      const list = g.slides.map(s=>{
+        const href = `slides/${encodeURIComponent(s.file)}`;
+        return `<li><a class="slide-link" href="${href}">${s.title}</a></li>`;
+      }).join('');
+      const count = g.slides.length;
+      const lead = g.lead ? `<span class="lead-pill">${g.lead}</span>` : '';
       return `
-        <a class="card" role="listitem" href="${href}">
-          <h3>${s.title}</h3>
+        <div class="card" role="link" tabindex="0" data-default-href="${defHref}">
+          ${thumb}
+          <h3><a class="card-title" href="${defHref}">Week ${g.week}</a></h3>
           <div class="meta">
-            ${s.week? `<span>Week ${s.week}</span>`: ''}
-            <span>Slides</span>
+            <span>${count} ${count===1?'slide':'slides'}</span> ${lead}
           </div>
-          <div class="meta">${topics}</div>
-        </a>
+          <ul class="slide-list">${list}</ul>
+        </div>
       `;
+    }
+
+    function bindCardNavigation(){
+      document.querySelectorAll('.card').forEach(card=>{
+        const href = card.getAttribute('data-default-href');
+        card.addEventListener('click',(e)=>{
+          if(e.target.closest('a')) return; // let inner links work
+          if(href && href !== '#') window.location.href = href;
+        });
+        card.addEventListener('keydown',(e)=>{
+          if((e.key==='Enter' || e.key===' ') && href && href !== '#'){
+            e.preventDefault();
+            window.location.href = href;
+          }
+        });
+      });
     }
 
     function render(){
       const q = document.getElementById('q').value.toLowerCase().trim();
       const week = document.getElementById('week').value;
       const topic = document.getElementById('topic').value;
-      const filtered = slides.filter(s=>{
-        const inWeek = !week || String(s.week)===week;
-        const inTopic = !topic || (s.topics||[]).includes(topic);
-        const inSearch = !q || [s.title,String(s.week),(s.topics||[]).join(' ')].join(' ').toLowerCase().includes(q);
+      const groups = groupByWeek(slides).filter(g=>{
+        const inWeek = !week || String(g.week)===week;
+        const inTopic = !topic || g.slides.some(s => (s.topics||[]).includes(topic));
+        const hay = [g.week, ...g.slides.map(s=>s.title), ...g.slides.flatMap(s=>s.topics||[])].join(' ').toLowerCase();
+        const inSearch = !q || hay.includes(q);
         return inWeek && inTopic && inSearch;
       });
-      document.getElementById('cards').innerHTML = filtered.map(cardTemplate).join('');
-      document.getElementById('empty').hidden = filtered.length>0;
+      document.getElementById('cards').innerHTML = groups.map(groupCardTemplate).join('');
+      document.getElementById('empty').hidden = groups.length>0;
+      bindCardNavigation();
     }
 
     populateFilters();

@@ -7,16 +7,19 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/league.css" id="theme">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root{ --accent:#2563eb; --muted:#64748b; }
     .reveal .slides{ max-width:1400px; }
-    .reveal h1{ font-size:clamp(36px,5vw,56px); }
+    .reveal h1{ text-shadow: none !important;font-size:clamp(36px,5vw,56px); }
     .reveal h2{ font-size:clamp(28px,4vw,42px); }
     .reveal h3{ font-size:clamp(22px,3vw,32px); }
     .reveal p, .reveal li{ font-size:clamp(18px,2.1vw,26px); line-height:1.25; }
     .muted{ color:var(--muted); }
     .pill{ display:inline-block; font-weight:600; border-radius:999px; padding:.2rem .6rem; background:#e2e8f0; color:#0f172a; font-size:clamp(12px,1.2vw,14px); }
-    .note{ border-left:4px solid var(--accent); padding:.75rem 1rem; background:#f1f5f9; border-radius:8px; }
+    .note{ border-left:4px solid var(--accent); padding:.75rem 1rem; background:#040505; border-radius:8px; }
     .tight ul{ margin:.5rem 0 0 1.2rem; }
     .tight li{ margin:.15rem 0; }
     .two-col{ display:grid; grid-template-columns:1.1fr 1fr; gap:1.2rem; align-items:start; }
@@ -25,12 +28,19 @@
     pre code{ font-size:clamp(12px,1.4vw,20px); max-height:60vh; display:block; overflow:auto; }
     @media (max-width:1000px){ .two-col{ grid-template-columns:1fr; } }
     #sessionProgress{ position:fixed; left:0; right:0; bottom:0; height:6px; background:linear-gradient(90deg, var(--accent) var(--p,0%), #e2e8f0 0); z-index:99; }
-    .ribbon{ position:fixed; right:10px; top:10px; background:rgba(15,23,42,.7); color:#fff; padding:.3rem .6rem; border-radius:8px; font-size:12px; z-index:99; }
+    .ribbon{ position:fixed; right:10px; top:10px; z-index:99; background:transparent; padding:0; border-radius:0; }
+    .ribbon img{ height:40px; width:auto; display:block; }
     .reveal section{ padding:10px 0; }
+    /* Unified site aesthetic */
+    html, body{ height:100% }
+    body{ margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:#181c34; color:#e8ecff }
+    a{ color:inherit; text-decoration:none }
+    .reveal{ background:#181c34 }
+    .reveal .slides{ background:#181c34 }
   </style>
 </head>
 <body>
-<div class="ribbon">Windows CLI Primer · Level 4 UK · 1 hour</div>
+<div class="ribbon"><img src="../HAU-logo.svg" alt="Harper Adams University"></div>
 <div id="sessionProgress"></div>
 <div class="reveal">
   <div class="slides">
