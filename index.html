@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SQ4003 • Professional & Study Skills — Slides</title>
+  <meta name="description" content="Landing page for SQ4003 slide decks." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0b1020;--card:#131933;--muted:#96a0c8;--text:#e8ecff;--brand:#7aa2ff;--hover:#202a55}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,#0b1020,#0b1020 40%,#0f1630);color:var(--text)}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 64px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .badge{font-size:12px;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);border:1px solid #243069;border-radius:999px;padding:6px 10px}
+    h1{font-size:clamp(22px,3vw,28px);margin:0;font-weight:700}
+    .controls{display:flex;flex-wrap:wrap;gap:12px}
+    .input,.select{background:var(--card);border:1px solid #212954;color:var(--text);border-radius:12px;padding:12px 14px;outline:none}
+    .input{min-width:260px}
+    .select{min-width:140px}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:var(--card);border:1px solid #1a2247;border-radius:16px;padding:18px 16px;transition:transform .12s ease,border-color .12s ease,background .12s ease}
+    .card:hover{transform:translateY(-3px);border-color:#2a3875;background:var(--hover)}
+    .card h3{margin:4px 0 6px;font-size:18px}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;color:var(--muted);font-size:13px}
+    .tag{padding:2px 8px;border-radius:999px;background:#0f1630;border:1px solid #283268;color:#b9c6ff}
+    .footer{margin-top:36px;color:var(--muted);font-size:13px}
+    .empty{opacity:.8;border:1px dashed #2b356c;padding:28px;border-radius:16px;text-align:center}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <span class="badge">SQ4003</span>
+        <h1>Professional & Study Skills — Slide Decks</h1>
+      </div>
+      <div class="controls">
+        <input id="q" class="input" type="search" placeholder="Search title, topic, or week…" aria-label="Search" />
+        <select id="week" class="select" aria-label="Filter by week">
+          <option value="">All weeks</option>
+        </select>
+        <select id="topic" class="select" aria-label="Filter by topic">
+          <option value="">All topics</option>
+        </select>
+      </div>
+    </header>
+
+    <div id="cards" class="grid" role="list"></div>
+    <div id="empty" class="empty" hidden>No decks match your filters.</div>
+
+    <p class="footer">Tip: Drop this file at the repo root as <code>index.html</code>. Put each exported slide deck in <code>/slides</code>. Update the <code>slides</code> array below (or generate it in a build step) and publish via GitHub Pages.</p>
+  </div>
+
+  <script>
+    // --- EDIT ME: Your slide decks live under /slides ---
+    // title: what users see; file: href under /slides; week: number or string; topics: tags for filtering
+    const slides = [
+      // Examples — replace with your actual files and details
+      { title: "01 • Orientation & Time Management", file: "01-orientation.html", week: 1, topics: ["orientation","time management"] },
+      { title: "02 • Academic Writing Basics",       file: "02-academic-writing.html", week: 2, topics: ["writing","citations"] },
+      { title: "03 • Referencing with Zotero",       file: "03-referencing-zotero.html", week: 3, topics: ["referencing","zotero"] },
+      { title: "04 • Data Literacy & Ethics",        file: "04-data-ethics.html", week: 4, topics: ["ethics","data"] },
+      { title: "05 • Presentations & Visual Design", file: "05-presenting.html", week: 5, topics: ["presentations","design"] },
+    ];
+
+    // --- Utility helpers ---
+    const unique = (arr) => [...new Set(arr)];
+
+    // Populate week & topic filters
+    function populateFilters() {
+      const weekSel = document.getElementById('week');
+      const topicSel = document.getElementById('topic');
+      const weeks = unique(slides.map(s => String(s.week))).sort((a,b)=>Number(a)-Number(b));
+      for (const w of weeks) {
+        const opt = document.createElement('option');
+        opt.value = w; opt.textContent = `Week ${w}`;
+        weekSel.appendChild(opt);
+      }
+      const allTopics = unique(slides.flatMap(s => (s.topics||[]))).sort((a,b)=>a.localeCompare(b));
+      for (const t of allTopics) {
+        const opt = document.createElement('option');
+        opt.value = t; opt.textContent = t;
+        topicSel.appendChild(opt);
+      }
+    }
+
+    function cardTemplate(s){
+      const href = `slides/${encodeURIComponent(s.file)}`;
+      const topics = (s.topics||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+      return `
+        <a class="card" role="listitem" href="${href}">
+          <h3>${s.title}</h3>
+          <div class="meta">
+            ${s.week? `<span>Week ${s.week}</span>`: ''}
+            <span>Slides</span>
+          </div>
+          <div class="meta">${topics}</div>
+        </a>
+      `;
+    }
+
+    function render(){
+      const q = document.getElementById('q').value.toLowerCase().trim();
+      const week = document.getElementById('week').value;
+      const topic = document.getElementById('topic').value;
+      const filtered = slides.filter(s=>{
+        const inWeek = !week || String(s.week)===week;
+        const inTopic = !topic || (s.topics||[]).includes(topic);
+        const inSearch = !q || [s.title,String(s.week),(s.topics||[]).join(' ')].join(' ').toLowerCase().includes(q);
+        return inWeek && inTopic && inSearch;
+      });
+      document.getElementById('cards').innerHTML = filtered.map(cardTemplate).join('');
+      document.getElementById('empty').hidden = filtered.length>0;
+    }
+
+    populateFilters();
+    render();
+
+    document.getElementById('q').addEventListener('input', render);
+    document.getElementById('week').addEventListener('change', render);
+    document.getElementById('topic').addEventListener('change', render);
+  </script>
+</body>
+</html>
