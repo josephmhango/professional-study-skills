@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Foundations of Windows Batch Scripting — 4‑Hour Tutorial (Level 4 UK)</title>
+  <!-- Reveal.js & Highlight.js from CDNs -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/league.css" id="theme">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+  <style>
+    :root{
+      --accent: #2563eb; /* blue-600 */
+      --muted: #64748b; /* slate-500 */
+    }
+    .reveal .slides{ max-width: 1400px; }
+    .reveal h1, .reveal h2, .reveal h3{ letter-spacing: .3px; }
+    .reveal h1{ font-size: clamp(36px,5vw,56px); }
+    .reveal h2{ font-size: clamp(28px,4vw,42px); }
+    .reveal h3{ font-size: clamp(22px,3vw,32px); }
+    .reveal p, .reveal li{ font-size: clamp(18px,2.1vw,26px); line-height: 1.25; }
+    .reveal small, .reveal .muted{ color: var(--muted); }
+
+    /* Two-column helper */
+    .two-col{ display: grid; grid-template-columns: 1.1fr 1fr; gap: 1.2rem; align-items: start; }
+    .two-col .col{ min-width: 0; }
+    .two-col pre{ margin: 0; }
+    @media (max-width: 1000px){ .two-col{ grid-template-columns: 1fr; } }
+
+    /* Code sizing and scroll handling within code pane only */
+    pre code{ font-size: clamp(12px,1.4vw,20px); max-height: 60vh; display: block; overflow: auto; }
+
+    /* Buttons */
+    .btn{ display: inline-flex; align-items: center; gap:.5rem; padding:.45rem .75rem; border-radius: 10px; border: 1px solid #cbd5e1; background:#fff; font-size: clamp(12px,1.4vw,16px); cursor:pointer; }
+    .btn:hover{ border-color:#94a3b8; }
+    .btn.primary{ background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* Utility */
+    .pill{ display:inline-block; font-weight:600; border-radius:999px; padding:.2rem .6rem; background:#e2e8f0; color:#0f172a; font-size: clamp(12px,1.2vw,14px); }
+    .note{ border-left:4px solid var(--accent); padding:.75rem 1rem; background:#f1f5f9; border-radius: 8px; }
+
+    /* Progress/time bar */
+    #sessionProgress{ position: fixed; left:0; right:0; bottom:0; height:6px; background: linear-gradient(90deg, var(--accent) var(--p,0%), #e2e8f0 0); z-index: 99; }
+
+    /* Footer ribbon */
+    .ribbon{ position: fixed; right: 10px; top: 10px; background: rgba(15,23,42,.7); color:#fff; padding:.3rem .6rem; border-radius: 8px; font-size: 12px; z-index:99; }
+
+    .tight ul{ margin: .5rem 0 0 1.2rem; }
+    .tight li{ margin: .15rem 0; }
+
+    /* Ensure slides don’t vertically overflow: keep content concise and scalable */
+    .reveal section{ padding: 10px 0; }
+  </style>
+</head>
+<body>
+<div class="ribbon">Windows Batch Scripting · Level 4 UK · 4 hours</div>
+<div id="sessionProgress"></div>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- TITLE -->
+    <section>
+      <h1>Foundations of Windows Batch Scripting</h1>
+      <h3 class="muted">Automate with <code>cmd.exe</code> in 4 hours (Level 4 HE, UK)</h3>
+      <p><span class="pill">Hands‑on</span> <span class="pill">No prior scripting required</span> <span class="pill">Practical first</span></p>
+      <p class="muted">Based on the excellent reference: Steve Jansen — Guide to Windows Batch Scripting</p>
+      <aside class="notes">Facilitator: Welcome, outline outcomes, check everyone has Command Prompt access.</aside>
+    </section>
+
+    <!-- LEARNING OUTCOMES & AGENDA -->
+    <section>
+      <h2>Learning Outcomes & Agenda</h2>
+      <div class="two-col">
+        <div class="col">
+          <h3>By the end you can…</h3>
+          <ul class="tight">
+            <li>Create/run <code>.cmd</code> scripts</li>
+            <li>Use variables, args, and scope</li>
+            <li>Control flow with <code>IF</code>/<code>FOR</code></li>
+            <li>Redirect I/O and handle errors</li>
+            <li>Prompt users and validate input</li>
+          </ul>
+          <div class="note"><strong>Rule:</strong> Content fits each slide—no scrolling. Resize window if needed; code column scrolls independently.</div>
+        </div>
+        <div class="col">
+          <h3>Session Plan (4 hours)</h3>
+          <ol class="tight">
+            <li>Intro & Setup (15m)</li>
+            <li>Basics & Variables (45m)</li>
+            <li>Control Flow & Loops (50m)</li>
+            <li>I/O & Errors & Prompts (45m)</li>
+            <li>Capstone Build (50m)</li>
+            <li>Wrap‑up & Next Steps (15m)</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETUP -->
+    <section>
+      <h2>Setup Check</h2>
+      <div class="two-col">
+        <div class="col">
+          <ul>
+            <li>Open <strong>Command Prompt</strong> (Start → type <code>cmd</code>)</li>
+            <li>Open a text editor (Notepad / VS Code)</li>
+            <li>Create a working folder, e.g. <code>C:\batch‑lab</code></li>
+            <li>Enable file extensions in Explorer (View → File name extensions)</li>
+          </ul>
+          <p class="muted">We’ll save scripts with the extension <code>.cmd</code> (preferred over <code>.bat</code>).</p>
+        </div>
+        <div class="col">
+<pre><code class="language-plaintext">C:\&gt; mkdir C:\batch-lab
+C:\&gt; cd C:\batch-lab
+C:\batch-lab&gt; notepad hello.cmd</code></pre>
+          <button class="btn" data-copy="#setup1">Copy commands</button>
+          <pre id="setup1" style="display:none"><code>C:\&gt; mkdir C:\batch-lab
+C:\&gt; cd C:\batch-lab
+C:\batch-lab&gt; notepad hello.cmd
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 1: BASICS -->
+    <section>
+      <h2>Part 1 · Batch Basics</h2>
+      <div class="two-col">
+        <div class="col">
+          <ul>
+            <li>What’s a batch file? Command list for <code>cmd.exe</code></li>
+            <li>Run via console or double‑click</li>
+            <li>Comments: <code>REM</code> or <code>::</code></li>
+            <li>Echoing: <code>ECHO</code> and <code>@ECHO OFF</code></li>
+            <li>Pause for visibility: <code>PAUSE</code></li>
+          </ul>
+          <p><strong>Task:</strong> Create <code>hello.cmd</code> and run it.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bat">@ECHO OFF
+REM Hello World in Batch
+ECHO Hello, %USERNAME%!
+ECHO Today is %DATE% at %TIME%.
+PAUSE</code></pre>
+          <button class="btn" data-copy-prev>Copy code</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VARIABLES & ARGS -->
+    <section>
+      <h2>Variables & Arguments</h2>
+      <div class="two-col">
+        <div class="col">
+          <ul>
+            <li><code>SET name=value</code>; read with <code>%name%</code></li>
+            <li>Arithmetic: <code>SET /A x=1+2</code></li>
+            <li>Arguments: <code>%1</code>…<code>%9</code>, <code>%*</code></li>
+            <li>Scope: <code>SETLOCAL</code> / <code>ENDLOCAL</code></li>
+            <li>Script path bits: <code>%~dp0</code> (dir), <code>%~n0</code> (name)</li>
+          </ul>
+          <p><strong>Mini‑Lab:</strong> Sum two CLI numbers; print where the script lives.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bat">@ECHO OFF
+SETLOCAL ENABLEEXTENSIONS
+IF "%~1"=="" GOTO :usage
+IF "%~2"=="" GOTO :usage
+SET /A sum=%~1 + %~2
+ECHO %~n0 is running from: %~dp0
+ECHO %~1 + %~2 = %sum%
+GOTO :eof
+
+:usage
+ECHO Usage: %~n0 num1 num2
+EXIT /B 64</code></pre>
+          <button class="btn" data-copy-prev>Copy code</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTROL FLOW IF -->
+    <section>
+      <h2>Control Flow · <code>IF</code> tests</h2>
+      <div class="two-col">
+        <div class="col">
+          <ul>
+            <li>Strings: <code>IF /I "%x%"=="yes" ...</code> (case‑insensitive)</li>
+            <li>Numbers: <code>EQU NEQ LSS LEQ GTR GEQ</code></li>
+            <li>Files/dirs: <code>IF EXIST path ...</code></li>
+            <li>Else: <code>( ... ) ELSE ( ... )</code></li>
+          </ul>
+          <p><strong>Try:</strong> Gate behaviour on a file existing.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bat">@ECHO OFF
+IF EXIST "%~1" (
+  ECHO Found: %~f1
+) ELSE (
+  ECHO Missing: %~1 1>&2
+  EXIT /B 2
+)</code></pre>
+          <button class="btn" data-copy-prev>Copy code</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOOPS FOR -->
+    <section>
+      <h2>Loops · <code>FOR</code> patterns</h2>
+      <div class="two-col">
+        <div class="col">
+          <ul>
+            <li>Basic: <code>FOR %%F IN (*.txt) DO ...</code></li>
+            <li>Recursive: <code>FOR /R dir %%F IN (*.log) DO ...</code></li>
+            <li>Number ranges: <code>FOR /L %%I IN (1,1,5) DO ...</code></li>
+            <li>Arguments: <code>SHIFT</code> to iterate extra args</li>
+          </ul>
+          <p><strong>Lab:</strong> Count <code>.txt</code> files; print total.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bat">@ECHO OFF
+SET count=0
+FOR %%F IN ("%~1\*.txt") DO (
+  ECHO %%~nxF
+  SET /A count+=1
+)
+ECHO Total: %count%</code></pre>
+          <button class="btn" data-copy-prev>Copy code</button>
+        </div>
+      </div>
+      <p class="muted">Tip: When testing inside FOR, use delayed expansion (<code>SETLOCAL ENABLEDELAYEDEXPANSION</code>) and <code>!count!</code>.</p>
+    </section>
+
+    <!-- FUNCTIONS / SUBROUTINES -->
+    <section>
+      <h2>Subroutines as Functions</h2>
+      <div class="two-col">
+        <div class="col">
+          <ul>
+            <li>Define label: <code>:log</code></li>
+            <li>Call with: <code>CALL :log "message"</code></li>
+            <li>Return with <code>EXIT /B</code></li>
+            <li>Return codes via <code>ERRORLEVEL</code></li>
+          </ul>
+          <p><strong>Lab:</strong> Build a <code>:log</code> that tees to console and file.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bat">@ECHO OFF
+SETLOCAL ENABLEEXTENSIONS
+SET "LOG=%TEMP%\%~n0_%DATE: =_%_%TIME::=-%.log"
+CALL :log "Script started"
+REM ... work ...
+CALL :log "Finished"
+GOTO :eof
+
+:log
+SET "ts=%DATE% %TIME%"
+ECHO [%ts%] %~1 | TEETIME "%LOG%"
+EXIT /B 0
+
+REM Poor-man's tee if TEETIME not available:
+:TEETIME
+REM Usage:  ECHO hi | CALL :TEETIME file
+SETLOCAL
+SET "outfile=%~1"
+FOR /F "usebackq delims=" %%L IN (`more`) DO (
+  ECHO %%L
+  >>"%outfile%" ECHO %%L
+)
+EXIT /B 0</code></pre>
+          <button class="btn" data-copy-prev>Copy code</button>
+        </div>
+      </div>
+      <p class="muted">If you don’t have a <code>tee</code>-like tool, the <code>:TEETIME</code> filter uses a FOR/F pipe.</p>
+    </section>
+
+    <!-- I/O REDIRECTION -->
+    <section>
+      <h2>I/O Redirection & Piping</h2>
+      <div class="two-col">
+        <div class="col">
+          <ul>
+            <li><code>1&gt;</code> stdout, <code>2&gt;</code> stderr, <code>2&gt;&amp;1</code> merge</li>
+            <li>Append: <code>&gt;&gt;</code> vs overwrite <code>&gt;</code></li>
+            <li>Pipe: <code>|</code> into <code>FIND</code>/<code>SORT</code></li>
+            <li>Silence: <code>&gt;NUL 2&gt;&amp;1</code></li>
+          </ul>
+          <p><strong>Lab:</strong> Capture both outputs in one log.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bat">@ECHO OFF
+SET "LOG=%TEMP%\io_%RANDOM%.log"
+DIR C:\Windows /B 1>>"%LOG%" 2>&1
+DIR C:\Nope    /B 1>>"%LOG%" 2>&1
+ECHO Wrote: %LOG%</code></pre>
+          <button class="btn" data-copy-prev>Copy code</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ERROR HANDLING -->
+    <section>
+      <h2>Error Handling Patterns</h2>
+      <div class="two-col">
+        <div class="col">
+          <ul>
+            <li><code>%ERRORLEVEL%</code> vs <code>IF ERRORLEVEL n</code></li>
+            <li>Short‑circuit: <code>cmd1 &amp;&amp; cmd2</code>, <code>cmd1 || cmd2</code></li>
+            <li>Exit early: <code>EXIT /B 1</code>, <code>GOTO :EOF</code></li>
+          </ul>
+          <p><strong>Lab:</strong> Fail gracefully with a helpful message.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bat">@ECHO OFF
+WHERE git >NUL 2>&1 || (
+  ECHO git not found. Install Git and retry. 1>&2
+  EXIT /B 127
+)
+ECHO Git is available.</code></pre>
+          <button class="btn" data-copy-prev>Copy code</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROMPTS & VALIDATION -->
+    <section>
+      <h2>User Prompts & Validation</h2>
+      <div class="two-col">
+        <div class="col">
+          <ul>
+            <li>Prompt: <code>SET /P var=Question:</code></li>
+            <li>Validate with <code>IF</code> or <code>FINDSTR</code></li>
+            <li>Loop until valid input</li>
+          </ul>
+          <p><strong>Lab:</strong> Ask for folder; ensure it exists.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bat">@ECHO OFF
+:ask
+SET /P folder=Enter folder path: 
+IF EXIST "%folder%" (
+  ECHO OK: "%folder%"
+) ELSE (
+  ECHO Not found. Try again.
+  GOTO :ask
+)</code></pre>
+          <button class="btn" data-copy-prev>Copy code</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADVANCED TRICKS -->
+    <section>
+      <h2>Quality of Life Tricks</h2>
+      <div class="two-col">
+        <div class="col">
+          <ul>
+            <li>Script dir context: <code>PUSHD %~dp0</code> / <code>POPD</code></li>
+            <li>Delayed expansion: <code>SETLOCAL ENABLEDELAYEDEXPANSION</code></li>
+            <li>Sleep: <code>TIMEOUT /T 2 /NOBREAK</code> (or <code>PING -n</code>)</li>
+            <li>On double‑click, keep window open: end with <code>PAUSE</code></li>
+          </ul>
+        </div>
+        <div class="col">
+<pre><code class="language-bat">@ECHO OFF
+SETLOCAL ENABLEDELAYEDEXPANSION
+PUSHD %~dp0
+SET i=0
+FOR /L %%N IN (1,1,5) DO (
+  SET /A i+=1
+  ECHO Iter !i!
+  TIMEOUT /T 1 >NUL
+)
+POPD</code></pre>
+          <button class="btn" data-copy-prev>Copy code</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAPSTONE INTRO -->
+    <section>
+      <h2>Capstone (50m) — Log & Backup Tool</h2>
+      <p>Build a robust script that:</p>
+      <ul class="tight">
+        <li>Accepts a folder argument or prompts the user</li>
+        <li>Creates <code>Backup_YYYYMMDD</code> folder next to the source</li>
+        <li>Copies all <code>.txt</code>/<code>.log</code> files into it</li>
+        <li>Logs every action and error to a timestamped file</li>
+      </ul>
+      <p class="muted">Stretch: add a <code>-y</code> flag for non‑interactive mode; handle spaces in paths.</p>
+    </section>
+
+    <!-- CAPSTONE SOLUTION (SLIDE 1) -->
+    <section>
+      <h2>Capstone · Reference Solution (1/2)</h2>
+      <div class="two-col">
+        <div class="col">
+          <p>Highlights:</p>
+          <ul class="tight">
+            <li>Argument parsing with fallback to prompt</li>
+            <li>Use <code>%DATE%</code>/<code>%TIME%</code> to name logs</li>
+            <li>Check errors aggressively</li>
+          </ul>
+        </div>
+        <div class="col">
+<pre><code class="language-bat">@ECHO OFF
+SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
+REM --- args or prompt ---
+SET "SRC=%~1"
+IF "%SRC%"=="" SET /P SRC=Source folder: 
+IF NOT EXIST "%SRC%" (
+  ECHO Source not found: "%SRC%" 1>&2
+  EXIT /B 2
+)
+REM --- paths ---
+FOR /F "tokens=1-3 delims=/ " %%a IN ("%DATE%") DO SET "TODAY=%%c%%a%%b"
+SET "DST=%~f1\..\Backup_%TODAY%"
+FOR %%D IN ("%DST%") DO SET "DST=%%~fD"
+
+REM --- log file ---
+SET "LOG=%TEMP%\backup_%TODAY%_%TIME::=-%.log"
+CALL :log "Backing up from %SRC% to %DST%"
+
+IF NOT EXIST "%DST%" MD "%DST%" || (
+  CALL :log "Failed to create %DST%" & EXIT /B 3
+)</code></pre>
+          <button class="btn" data-copy-prev>Copy code</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAPSTONE SOLUTION (SLIDE 2) -->
+    <section>
+      <h2>Capstone · Reference Solution (2/2)</h2>
+      <div class="two-col">
+        <div class="col">
+          <p>Copy phase & logging:</p>
+          <ul class="tight">
+            <li>Loop & count successes/failures</li>
+            <li>Exit with meaningful code</li>
+          </ul>
+        </div>
+        <div class="col">
+<pre><code class="language-bat">SET ok=0
+SET bad=0
+FOR %%F IN ("%SRC%\*.txt" "%SRC%\*.log") DO (
+  COPY /Y "%%~fF" "%DST%" 1>>"%LOG%" 2>&1 && (
+    SET /A ok+=1
+    CALL :log "Copied %%~nxF"
+  ) || (
+    SET /A bad+=1
+    CALL :log "Failed: %%~nxF"
+  )
+)
+CALL :log "Done. OK=!ok!; Failed=!bad!; Log=%LOG%"
+EXIT /B 0
+
+:log
+SET "ts=%DATE% %TIME%"
+FOR /F "usebackq delims=" %%L IN (`echo [%ts%] %*`) DO (
+  ECHO %%L
+  >>"%LOG%" ECHO %%L
+)
+EXIT /B 0</code></pre>
+          <button class="btn" data-copy-prev>Copy code</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRACTICAL CHECKLIST -->
+    <section>
+      <h2>Practical Checklist</h2>
+      <ul class="tight">
+        <li>Variables & args (<code>SET</code>, <code>%1</code>, <code>%~dp0</code>)</li>
+        <li>Flow (<code>IF</code>, <code>FOR</code>, labels, <code>CALL</code>)</li>
+        <li>I/O (<code>&gt;</code>, <code>2&gt;&amp;1</code>, pipes)</li>
+        <li>Errors (<code>ERRORLEVEL</code>, <code>&&</code>, <code>||</code>, <code>EXIT /B</code>)</li>
+        <li>UX (<code>SET /P</code>, <code>TIMEOUT</code>, <code>PAUSE</code>)</li>
+      </ul>
+      <p class="muted">If you can explain each item and show a snippet, you’ve nailed it.</p>
+    </section>
+
+    <!-- WRAP-UP -->
+    <section>
+      <h2>Wrap‑Up & Next Steps</h2>
+      <div class="two-col">
+        <div class="col">
+          <p>Where next?</p>
+          <ul class="tight">
+            <li>PowerShell for richer automation</li>
+            <li>Python for cross‑platform scripting</li>
+            <li>Task Scheduler for running your scripts</li>
+          </ul>
+        </div>
+        <div class="col">
+          <p>References & Docs</p>
+          <ul class="tight">
+            <li>Guide to Windows Batch Scripting (Steve Jansen)</li>
+            <li>Microsoft Docs — Windows commands</li>
+            <li>SS64.com — quick syntax reference</li>
+          </ul>
+        </div>
+      </div>
+      <p class="muted">Thanks! Questions welcome — try adapting the capstone to back up images only or zip the results.</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    progress: true,
+    controls: true,
+    center: true,
+    width: 1280,
+    height: 720,
+    plugins: [ RevealHighlight ],
+  });
+
+  // Copy buttons
+  function copyFrom(selector){
+    const el = document.querySelector(selector);
+    if(!el) return;
+    const text = el.innerText || el.textContent;
+    navigator.clipboard.writeText(text).then(()=>{
+      flash("Copied to clipboard");
+    });
+  }
+  function flash(msg){
+    const f = document.createElement('div');
+    f.textContent = msg;
+    f.style.position='fixed'; f.style.top='12px'; f.style.left='50%'; f.style.transform='translateX(-50%)';
+    f.style.background='#0f172a'; f.style.color='#fff'; f.style.padding='8px 12px'; f.style.borderRadius='10px'; f.style.zIndex='100';
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(), 1300);
+  }
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('[data-copy]');
+    if(btn){ copyFrom(btn.getAttribute('data-copy')); }
+    const prev = e.target.closest('[data-copy-prev]');
+    if(prev){
+      const pre = e.target.closest('section').querySelector('pre:last-of-type');
+      if(pre){
+        const code = pre.innerText || pre.textContent;
+        navigator.clipboard.writeText(code).then(()=>flash('Copied code'));
+      }
+    }
+  });
+
+  // Simple session progress indicator (assumes linear slide pacing across ~4h)
+  const totalMinutes = 240;
+  const start = Date.now();
+  const bar = document.getElementById('sessionProgress');
+  setInterval(()=>{
+    const elapsed = (Date.now()-start)/60000; // minutes
+    const pct = Math.min(100, (elapsed/totalMinutes)*100);
+    bar.style.setProperty('--p', pct + '%');
+  }, 10000);
+</script>
+</body>
+</html>

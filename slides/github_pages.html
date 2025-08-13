@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deployment & Orchestration — GitHub Pages (4 Hours, Level 4 HE)</title>
+  <!-- Reveal.js & Highlight.js from CDNs -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/league.css" id="theme">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+  <style>
+    :root{ --accent:#2563eb; --muted:#64748b; --ok:#16a34a; --warn:#f59e0b; --err:#dc2626; }
+    .reveal .slides{ max-width: 1400px; }
+    .reveal h1, .reveal h2, .reveal h3{ letter-spacing:.3px; }
+    .reveal h1{ font-size: clamp(36px,5vw,56px); }
+    .reveal h2{ font-size: clamp(28px,4vw,42px); }
+    .reveal h3{ font-size: clamp(22px,3vw,32px); }
+    .reveal p, .reveal li{ font-size: clamp(18px,2.1vw,26px); line-height:1.25; }
+    .muted{ color:var(--muted); }
+    .pill{ display:inline-block; font-weight:600; border-radius:999px; padding:.2rem .6rem; background:#e2e8f0; color:#0f172a; font-size:clamp(12px,1.2vw,14px); }
+    .note{ border-left:4px solid var(--accent); padding:.75rem 1rem; background:#f1f5f9; border-radius:8px; }
+    .tight ul{ margin:.5rem 0 0 1.2rem; }
+    .tight li{ margin:.15rem 0; }
+    .two-col{ display:grid; grid-template-columns:1.1fr 1fr; gap:1.2rem; align-items:start; }
+    .two-col .col{ min-width:0; }
+    .two-col pre{ margin:0; }
+    pre code{ font-size: clamp(12px,1.4vw,20px); max-height: 60vh; display:block; overflow:auto; }
+    @media (max-width:1000px){ .two-col{ grid-template-columns:1fr; } }
+    #sessionProgress{ position:fixed; left:0; right:0; bottom:0; height:6px; background:linear-gradient(90deg, var(--accent) var(--p,0%), #e2e8f0 0); z-index:99; }
+    .ribbon{ position:fixed; right:10px; top:10px; background:rgba(15,23,42,.7); color:#fff; padding:.3rem .6rem; border-radius:8px; font-size:12px; z-index:99; }
+    .btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.45rem .75rem; border-radius:10px; border:1px solid #cbd5e1; background:#fff; font-size:clamp(12px,1.4vw,16px); cursor:pointer; }
+    .btn:hover{ border-color:#94a3b8; }
+    .btn.primary{ background: var(--accent); color:#fff; border-color:var(--accent); }
+    .reveal section{ padding:10px 0; }
+    /* Animation styles */
+    .anim-wrap{ display:flex; gap:1rem; align-items:flex-start; flex-wrap:wrap; }
+    .anim-controls{ display:flex; gap:.5rem; align-items:center; margin:.25rem 0; }
+    .stage{ display:inline-flex; align-items:center; gap:.5rem; padding:.35rem .6rem; border:1px solid #e2e8f0; border-radius:10px; }
+    .dot{ width:12px; height:12px; border-radius:50%; background:#e2e8f0; }
+    .dot.ok{ background:var(--ok); }
+    .dot.run{ background:var(--warn); animation:pulse 1s infinite; }
+    @keyframes pulse{ 0%{opacity:.4} 50%{opacity:1} 100%{opacity:.4} }
+    svg.timeline{ width:100%; height:56vh; max-height:56vh; border:1px dashed #e2e8f0; border-radius:12px; background:#fff; }
+    .lbl{ font-size:14px; paint-order: stroke; stroke:#fff; stroke-width:4px; }
+  </style>
+</head>
+<body>
+<div class="ribbon">GitHub Pages · Level 4 UK · 4 hours</div>
+<div id="sessionProgress"></div>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- TITLE -->
+    <section>
+      <h1>Deployment & Orchestration: GitHub Pages</h1>
+      <h3 class="muted">From a local repo to a live CV site, with automated rebuilds (CI/CD)</h3>
+      <p><span class="pill">Windows‑first</span> <span class="pill">Beginner‑friendly</span> <span class="pill">Print‑ready notes</span></p>
+    </section>
+
+    <!-- OUTCOMES & AGENDA -->
+    <section>
+      <h2>Outcomes & Agenda (4 hours)</h2>
+      <div class="two-col">
+        <div class="col">
+          <h3>By the end you can…</h3>
+          <ul class="tight">
+            <li>Explain what GitHub Pages is and how it serves static sites</li>
+            <li>Publish a Markdown‑based CV as a website</li>
+            <li>Enable automatic rebuilds on pushes to <code>main</code> using Actions</li>
+            <li>Understand Organizations, permissions, and org‑level Pages</li>
+            <li>Read a minimal GitHub Actions workflow (CI/CD for Pages)</li>
+            <li>Troubleshoot common Pages build/deploy errors</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Session plan</h3>
+          <ol class="tight">
+            <li>First principles: static sites & Pages (45m)</li>
+            <li>Repo → Website: Markdown CV (70m)</li>
+            <li>Automation with GitHub Actions (70m)</li>
+            <li>Organizations, domains, troubleshooting (70m)</li>
+            <li>Wrap‑up, checklist, next steps (15m)</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEFINITIONS -->
+    <section>
+      <h2>Definitions (first use)</h2>
+      <ul class="tight">
+        <li><strong>Static website:</strong> HTML/CSS/JS files served as‑is; no server code.</li>
+        <li><strong>GitHub Pages:</strong> builds your repo and serves it on a public URL.</li>
+        <li><strong>User/Org site:</strong> repo named <code>&lt;account&gt;.github.io</code> → <code>https://&lt;account&gt;.github.io/</code>.</li>
+        <li><strong>Project site:</strong> any repo → <code>https://&lt;account&gt;.github.io/&lt;repo&gt;/</code>.</li>
+        <li><strong>Jekyll:</strong> static site generator that converts Markdown to HTML using themes.</li>
+        <li><strong>CI/CD:</strong> Continuous Integration (build/test on change) & Continuous Deployment (auto‑deploy when builds pass).</li>
+      </ul>
+    </section>
+
+    <!-- HOW PAGES WORKS + ANIMATION 1 -->
+    <section>
+      <h2>How GitHub Pages works</h2>
+      <div class="two-col">
+        <div class="col">
+          <ol class="tight">
+            <li>You commit to <code>main</code> (or a configured branch).</li>
+            <li>GitHub <strong>builds</strong> your site (Jekyll or custom Action).</li>
+            <li>GitHub <strong>deploys</strong> the build to a global CDN.</li>
+            <li>Visitors reach your site at a stable URL.</li>
+          </ol>
+          <div class="anim-controls">
+            <button class="btn primary" id="tlPlay">Play / Pause</button>
+            <button class="btn" id="tlStep">Step</button>
+            <button class="btn" id="tlReset">Reset</button>
+          </div>
+          <div class="stage"><span class="dot" id="sCommit"></span> Commit</div>
+          <div class="stage"><span class="dot" id="sBuild"></span> Build</div>
+          <div class="stage"><span class="dot" id="sDeploy"></span> Deploy</div>
+          <div class="stage"><span class="dot" id="sCDN"></span> CDN</div>
+        </div>
+        <div class="col">
+          <svg class="timeline" id="pagesTimeline" viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" aria-label="Commit→Build→Deploy timeline">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+              </marker>
+            </defs>
+            <text x="20" y="30" class="lbl" fill="#334155">time →</text>
+            <circle id="nCommit" cx="120" cy="120" r="14" fill="#e2e8f0"/>
+            <text x="90" y="150" class="lbl" fill="#334155">commit</text>
+            <circle id="nBuild" cx="360" cy="120" r="14" fill="#e2e8f0"/>
+            <text x="332" y="150" class="lbl" fill="#334155">build</text>
+            <circle id="nDeploy" cx="600" cy="120" r="14" fill="#e2e8f0"/>
+            <text x="565" y="150" class="lbl" fill="#334155">deploy</text>
+            <circle id="nCDN" cx="780" cy="240" r="14" fill="#e2e8f0"/>
+            <text x="760" y="270" class="lbl" fill="#334155">CDN</text>
+            <path id="e1" d="M134,120 L346,120" stroke="#94a3b8" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+            <path id="e2" d="M374,120 L586,120" stroke="#94a3b8" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+            <path id="e3" d="M614,120 C680,120 720,160 766,226" stroke="#94a3b8" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+          </svg>
+        </div>
+      </div>
+      <p class="muted">A push to <code>main</code> triggers build and deploy. That’s the "CD" part of CI/CD: delivery is automatic once changes are integrated.</p>
+    </section>
+
+    <!-- CREATE REPO & CHOOSE SITE TYPE -->
+    <section>
+      <h2>Create your site repo</h2>
+      <div class="two-col">
+        <div class="col">
+          <ol class="tight">
+            <li><strong>User site (recommended):</strong> create a public repo named <code>username.github.io</code>.</li>
+            <li><strong>Project site:</strong> create any repo (e.g., <code>cv-site</code>). URL will include <code>/cv-site/</code>.</li>
+            <li>Initialize with README. Clone locally using GitHub Desktop.</li>
+          </ol>
+          <div class="note">If the repo is private, GitHub Pages will not publish publicly (use public for CVs).</div>
+        </div>
+        <div class="col">
+<pre><code class="language-bash"># CLI (after creating repo on GitHub)
+# User site
+git clone https://github.com/&lt;you&gt;/&lt;you&gt;.github.io
+cd &lt;you&gt;.github.io
+
+# Project site
+# git clone https://github.com/&lt;you&gt;/cv-site && cd cv-site
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARKDOWN CV HOMEPAGE -->
+    <section>
+      <h2>Make a Markdown CV homepage</h2>
+      <div class="two-col">
+        <div class="col">
+          <p>Create <code>index.md</code> with YAML front matter so Jekyll treats it as a page. Keep content simple and text‑first.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-markdown">---
+title: "Your Name — CV"
+layout: default
+---
+
+# Your Name
+City, Country · email@example.com · https://linkedin.com/in/you
+
+## Profile
+1–2 sentences about your strengths and interests.
+
+## Skills
+- Python (pandas, scikit-learn)
+- R (tidyverse)
+- SQL, Git
+
+## Education
+**BSc, Subject**, University — 2024
+
+## Experience
+**Data Intern**, Org — 2023  
+- Bullet points with outcomes
+
+## Projects
+- **Project A** — one‑line summary, link
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIGURE THEME -->
+    <section>
+      <h2>Configure a theme</h2>
+      <div class="two-col">
+        <div class="col">
+          <p>Add <code>_config.yml</code>. The built‑in <code>minima</code> theme is fine to start. You can switch themes later.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-yaml">title: "Your Name"
+description: "Curriculum Vitae"
+markdown: kramdown
+# Built‑in Pages theme
+remote_theme: pages-themes/minimal@v0.2.0
+plugins:
+  - jekyll-remote-theme
+</code></pre>
+        </div>
+      </div>
+      <p class="muted">Alternative: <code>theme: minima</code> (requires whitelisted themes). <code>remote_theme</code> lets you use Pages themes without bundling gems.</p>
+    </section>
+
+    <!-- ENABLE PAGES (BRANCH) -->
+    <section>
+      <h2>Enable Pages (Deploy from branch)</h2>
+      <div class="two-col">
+        <div class="col">
+          <ol class="tight">
+            <li>Settings → Pages → <strong>Source</strong>: Deploy from a branch</li>
+            <li>Select <strong>Branch = main</strong>, Folder = <code>/(root)</code> (or <code>/docs</code>)</li>
+            <li>Save → wait for the green check → visit the URL</li>
+          </ol>
+          <p class="muted">Great for the first publish. We’ll switch to Actions next for CI/CD flexibility.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bash">git add index.md _config.yml
+git commit -m "Add CV homepage and config"
+git push -u origin main
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTIONS INTRO -->
+    <section>
+      <h2>GitHub Actions (CI/CD) — first use</h2>
+      <ul class="tight">
+        <li><strong>Workflow:</strong> a YAML file in <code>.github/workflows/</code>.</li>
+        <li><strong>Trigger:</strong> e.g., <code>on: push</code> to <code>main</code>.</li>
+        <li><strong>Jobs & steps:</strong> run on a <em>runner</em> (a VM) and perform tasks.</li>
+        <li><strong>Artifact → Deploy:</strong> build produces a folder (e.g., <code>_site</code>) uploaded and deployed to Pages.</li>
+      </ul>
+    </section>
+
+    <!-- ACTIONS WORKFLOW (COPY-PASTE) -->
+    <section>
+      <h2>Copy‑paste Pages workflow (Jekyll)</h2>
+      <div class="two-col">
+        <div class="col">
+          <p>Switch Settings → Pages → <strong>Build & deployment = GitHub Actions</strong>, then add this workflow as <code>.github/workflows/pages.yml</code>.</p>
+          <p class="muted">This builds Markdown with Jekyll and deploys to Pages on every push to <code>main</code>.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-yaml">name: Deploy Jekyll to GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+</code></pre>
+          <button class="btn" data-copy-prev>Copy workflow</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALTERNATIVE: CUSTOM BUILD -->
+    <section>
+      <h2>Alternative workflow (custom build)</h2>
+      <div class="two-col">
+        <div class="col">
+          <p>For non‑Jekyll static builds (e.g., plain HTML or another generator), replace the Jekyll step with your own build commands.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-yaml">jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Build site (custom)
+        run: |
+          mkdir -p _site
+          cp -r *.html assets _site/  # example: copy static files
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANIMATION 2: PIPELINE LIGHTS -->
+    <section>
+      <h2>CI/CD pipeline — visual</h2>
+      <div class="anim-controls">
+        <button class="btn primary" id="pipePlay">Play / Pause</button>
+        <button class="btn" id="pipeStep">Step</button>
+        <button class="btn" id="pipeReset">Reset</button>
+      </div>
+      <svg class="timeline" id="pipeline" viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" aria-label="Actions pipeline">
+        <defs>
+          <marker id="arrow2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+          </marker>
+        </defs>
+        <g id="p1">
+          <circle cx="120" cy="160" r="16" fill="#e2e8f0"/>
+          <text x="84" y="200" class="lbl" fill="#334155">checkout</text>
+        </g>
+        <path d="M136,160 L274,160" stroke="#94a3b8" stroke-width="3" fill="none" marker-end="url(#arrow2)"/>
+        <g id="p2">
+          <circle cx="290" cy="160" r="16" fill="#e2e8f0"/>
+          <text x="266" y="200" class="lbl" fill="#334155">configure</text>
+        </g>
+        <path d="M306,160 L444,160" stroke="#94a3b8" stroke-width="3" fill="none" marker-end="url(#arrow2)"/>
+        <g id="p3">
+          <circle cx="460" cy="160" r="16" fill="#e2e8f0"/>
+          <text x="448" y="200" class="lbl" fill="#334155">build</text>
+        </g>
+        <path d="M476,160 L614,160" stroke="#94a3b8" stroke-width="3" fill="none" marker-end="url(#arrow2)"/>
+        <g id="p4">
+          <circle cx="630" cy="160" r="16" fill="#e2e8f0"/>
+          <text x="594" y="200" class="lbl" fill="#334155">artifact</text>
+        </g>
+        <path d="M646,160 L784,160" stroke="#94a3b8" stroke-width="3" fill="none" marker-end="url(#arrow2)"/>
+        <g id="p5">
+          <circle cx="800" cy="160" r="16" fill="#e2e8f0"/>
+          <text x="776" y="200" class="lbl" fill="#334155">deploy</text>
+        </g>
+      </svg>
+      <p class="muted">Each circle corresponds to a <em>step</em>. If any fails, deploy won’t run — that’s your quality gate.</p>
+    </section>
+
+    <!-- AUTONOMOUS UPDATES -->
+    <section>
+      <h2>Autonomous updates: prove it</h2>
+      <div class="two-col">
+        <div class="col">
+          <ol class="tight">
+            <li>Edit <code>index.md</code> (add a new skill).</li>
+            <li>Commit & push to <code>main</code>.</li>
+            <li>Watch Actions → the workflow runs.</li>
+            <li>Refresh site — change is live.</li>
+          </ol>
+          <p class="muted">No manual deploy button. The commit itself is the trigger.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bash">git add index.md
+git commit -m "Add: Data Visualization (Altair)"
+git push
+# Observe: Actions → Deploy Jekyll to GitHub Pages → green check
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORGANIZATIONS -->
+    <section>
+      <h2>GitHub Organizations — first use</h2>
+      <ul class="tight">
+        <li><strong>Organization:</strong> a shared account that owns repos.</li>
+        <li><strong>Teams & roles:</strong> Owners, Maintainers, Members; repo roles: Admin, Maintain, Write, Triage, Read.</li>
+        <li><strong>Org Pages:</strong> repo named <code>orgname.github.io</code> serves at <code>https://orgname.github.io/</code>.</li>
+      </ul>
+      <p class="note">Typical course setup: an org per cohort, teams per lab group, project sites deployed from project repos.</p>
+    </section>
+
+    <!-- CUSTOM DOMAIN -->
+    <section>
+      <h2>Optional: custom domain & HTTPS</h2>
+      <div class="two-col">
+        <div class="col">
+          <ol class="tight">
+            <li>Settings → Pages → Custom domain, add <code>www.example.com</code>.</li>
+            <li>At your registrar: add DNS record (CNAME → <code>&lt;you&gt;.github.io</code>).</li>
+            <li>Enforce HTTPS (Pages provides TLS).</li>
+          </ol>
+        </div>
+        <div class="col">
+<pre><code class="language-plaintext">Repo writes CNAME → DNS points to GitHub Pages → HTTPS auto‑provisioned</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section>
+      <h2>Troubleshooting Pages</h2>
+      <ul class="tight">
+        <li><strong>404</strong> at root: missing <code>index.md</code>/<code>index.html</code> or wrong branch/folder.</li>
+        <li>Project site links broken: set <code>baseurl</code> in <code>_config.yml</code> and prefix internal links with it.</li>
+        <li>Theme not applied: ensure <code>remote_theme</code> and <code>jekyll-remote-theme</code> plugin are set.</li>
+        <li>Build fails: open Actions logs; fix YAML front matter or missing folders (e.g., <code>_site</code>).</li>
+        <li>Delay: give it a minute; hard refresh (cache).</li>
+      </ul>
+    </section>
+
+    <!-- PRACTICALS SUMMARY -->
+    <section>
+      <h2>Practicals</h2>
+      <ol class="tight">
+        <li><strong>A.</strong> Create <code>username.github.io</code>, add <code>index.md</code> CV, enable branch deploy, visit live site.</li>
+        <li><strong>B.</strong> Switch to Actions deploy with the copy‑paste workflow, commit change, watch CI run.</li>
+        <li><strong>C.</strong> Pair work: open a PR adding a CV section; require review; merge; observe auto‑deploy.</li>
+        <li><strong>D.</strong> (Optional) Add a link checker step; make it fail, fix, and re‑run.</li>
+      </ol>
+    </section>
+
+    <!-- CHEATSHEET -->
+    <section>
+      <h2>Cheat sheet (Windows‑friendly)</h2>
+      <div class="two-col">
+        <div class="col">
+<pre><code class="language-bash"># Create/update
+ni index.md -ItemType File           # PowerShell
+ni _config.yml -ItemType File
+
+# Commit & push
+git add .
+git commit -m "Initial CV"
+git push -u origin main
+</code></pre>
+        </div>
+        <div class="col">
+<pre><code class="language-yaml"># Minimal _config.yml
+title: "Your Name"
+remote_theme: pages-themes/minimal@v0.2.0
+plugins: [jekyll-remote-theme]
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- WRAP-UP -->
+    <section>
+      <h2>Wrap‑up & next steps</h2>
+      <ul class="tight">
+        <li>Pages builds static sites from your repo → auto‑deploys on push.</li>
+        <li>Markdown + Jekyll + Actions = simple, robust CV site.</li>
+        <li>Organizations structure collaboration; org‑level Pages are possible.</li>
+        <li>Use Actions logs to debug; add checks to improve quality.</li>
+      </ul>
+      <p class="muted">Next: switch themes, add a sitemap, or add PR‑based preview builds.</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+<script>
+  Reveal.initialize({ hash:true, progress:true, controls:true, center:true, width:1280, height:720, plugins:[RevealHighlight] });
+
+  // Copy buttons (copy last code block on a slide)
+  function flash(msg){
+    const f=document.createElement('div');
+    f.textContent=msg; f.style.position='fixed'; f.style.top='12px'; f.style.left='50%'; f.style.transform='translateX(-50%)';
+    f.style.background='#0f172a'; f.style.color='#fff'; f.style.padding='8px 12px'; f.style.borderRadius='10px'; f.style.zIndex='100';
+    document.body.appendChild(f); setTimeout(()=>f.remove(),1300);
+  }
+  document.addEventListener('click',(e)=>{
+    const prev=e.target.closest('[data-copy-prev]')||e.target.closest('.btn')?.matches('[data-copy-prev]');
+    const btn=e.target.closest('[data-copy-prev]');
+    if(btn){
+      const pre=e.target.closest('section').querySelector('pre:last-of-type');
+      if(pre){ const code=pre.innerText||pre.textContent; navigator.clipboard.writeText(code).then(()=>flash('Copied code')); }
+    }
+  });
+
+  // 4-hour session progress bar
+  const totalMinutes=240, start=Date.now(), bar=document.getElementById('sessionProgress');
+  setInterval(()=>{ const elapsed=(Date.now()-start)/60000; const pct=Math.min(100,(elapsed/totalMinutes)*100); bar.style.setProperty('--p', pct+'%'); }, 10000);
+
+  // Animation 1: Commit→Build→Deploy→CDN
+  (function(){
+    const nodes={
+      nCommit: document.getElementById('nCommit'),
+      nBuild: document.getElementById('nBuild'),
+      nDeploy: document.getElementById('nDeploy'),
+      nCDN: document.getElementById('nCDN'),
+      sCommit: document.getElementById('sCommit'),
+      sBuild: document.getElementById('sBuild'),
+      sDeploy: document.getElementById('sDeploy'),
+      sCDN: document.getElementById('sCDN'),
+    };
+    let step=0, playing=false, timer=null;
+    function set(node, active){ if(!node) return; node.style.fill=active? '#16a34a':'#e2e8f0'; }
+    function setDot(dot, state){ if(!dot) return; dot.className='dot'+(state? ' ok':'' ); }
+    function run(s){
+      set(nodes.nCommit,false); set(nodes.nBuild,false); set(nodes.nDeploy,false); set(nodes.nCDN,false);
+      setDot(nodes.sCommit,false); setDot(nodes.sBuild,false); setDot(nodes.sDeploy,false); setDot(nodes.sCDN,false);
+      if(s>=1){ set(nodes.nCommit,true); setDot(nodes.sCommit,true); }
+      if(s>=2){ set(nodes.nBuild,true); setDot(nodes.sBuild,true); }
+      if(s>=3){ set(nodes.nDeploy,true); setDot(nodes.sDeploy,true); }
+      if(s>=4){ set(nodes.nCDN,true); setDot(nodes.sCDN,true); }
+    }
+    function play(){ playing=true; timer=setInterval(()=>{ step=Math.min(4, step+1); run(step); if(step===4){ clearInterval(timer); playing=false; } }, 900); }
+    document.getElementById('tlPlay')?.addEventListener('click',()=>{ if(playing){ clearInterval(timer); playing=false; } else { play(); } });
+    document.getElementById('tlStep')?.addEventListener('click',()=>{ if(playing){ clearInterval(timer); playing=false; } step=Math.min(4, step+1); run(step); });
+    document.getElementById('tlReset')?.addEventListener('click',()=>{ if(playing){ clearInterval(timer); playing=false; } step=0; run(step); });
+    run(0);
+  })();
+
+  // Animation 2: Pipeline circles lighting up
+  (function(){
+    const ids=['p1','p2','p3','p4','p5'];
+    let i=0, playing=false, timer=null;
+    function set(iActive){ ids.forEach((id,idx)=>{
+      const g=document.getElementById(id);
+      const c=g.querySelector('circle');
+      c.setAttribute('fill', idx<iActive? '#16a34a':'#e2e8f0');
+    }); }
+    function play(){ playing=true; timer=setInterval(()=>{ i=Math.min(ids.length, i+1); set(i); if(i===ids.length){ clearInterval(timer); playing=false; } }, 800); }
+    document.getElementById('pipePlay')?.addEventListener('click',()=>{ if(playing){ clearInterval(timer); playing=false; } else { play(); } });
+    document.getElementById('pipeStep')?.addEventListener('click',()=>{ if(playing){ clearInterval(timer); playing=false; } i=Math.min(ids.length, i+1); set(i); });
+    document.getElementById('pipeReset')?.addEventListener('click',()=>{ if(playing){ clearInterval(timer); playing=false; } i=0; set(i); });
+    set(0);
+  })();
+</script>
+</body>
+</html>
