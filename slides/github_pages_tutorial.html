@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Joseph Mhango">
+<meta name="dcterms.date" content="2025-08-14">
+
+<title>Deployment &amp; Orchestration with GitHub Pages</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="github_pages_tutorial_files/libs/clipboard/clipboard.min.js"></script>
+<script src="github_pages_tutorial_files/libs/quarto-html/quarto.js"></script>
+<script src="github_pages_tutorial_files/libs/quarto-html/popper.min.js"></script>
+<script src="github_pages_tutorial_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="github_pages_tutorial_files/libs/quarto-html/anchor.min.js"></script>
+<link href="github_pages_tutorial_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="github_pages_tutorial_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="github_pages_tutorial_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="github_pages_tutorial_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="github_pages_tutorial_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#how-to-use-these-notes" id="toc-how-to-use-these-notes" class="nav-link active" data-scroll-target="#how-to-use-these-notes"><span class="header-section-number">1</span> How to use these notes</a></li>
+  <li><a href="#outcomes-you-will-be-able-to" id="toc-outcomes-you-will-be-able-to" class="nav-link" data-scroll-target="#outcomes-you-will-be-able-to"><span class="header-section-number">2</span> Outcomes (you will be able to)</a></li>
+  <li><a href="#first-principles-what-github-pages-is-and-isnt" id="toc-first-principles-what-github-pages-is-and-isnt" class="nav-link" data-scroll-target="#first-principles-what-github-pages-is-and-isnt"><span class="header-section-number">3</span> First principles — what GitHub Pages is (and isn’t)</a>
+  <ul class="collapse">
+  <li><a href="#primer-what-is-jekyll" id="toc-primer-what-is-jekyll" class="nav-link" data-scroll-target="#primer-what-is-jekyll"><span class="header-section-number">3.1</span> Primer: What is Jekyll?</a></li>
+  <li><a href="#primer-what-is-yaml-and-front-matter" id="toc-primer-what-is-yaml-and-front-matter" class="nav-link" data-scroll-target="#primer-what-is-yaml-and-front-matter"><span class="header-section-number">3.2</span> Primer: What is YAML (and front matter)?</a></li>
+  </ul></li>
+  <li><a href="#lab-1-create-your-pages-repo-15-min" id="toc-lab-1-create-your-pages-repo-15-min" class="nav-link" data-scroll-target="#lab-1-create-your-pages-repo-15-min"><span class="header-section-number">4</span> Lab 1 — Create your Pages repo (15 min)</a></li>
+  <li><a href="#lab-2-minimal-jekyll-cv-20-min" id="toc-lab-2-minimal-jekyll-cv-20-min" class="nav-link" data-scroll-target="#lab-2-minimal-jekyll-cv-20-min"><span class="header-section-number">5</span> Lab 2 — Minimal Jekyll CV (20 min)</a></li>
+  <li><a href="#enable-pages-deploy-from-branch-first-publish-10-min" id="toc-enable-pages-deploy-from-branch-first-publish-10-min" class="nav-link" data-scroll-target="#enable-pages-deploy-from-branch-first-publish-10-min"><span class="header-section-number">6</span> Enable Pages — Deploy from branch (first publish) (10 min)</a></li>
+  <li><a href="#lab-3-switch-to-github-actions-cicd-25-min" id="toc-lab-3-switch-to-github-actions-cicd-25-min" class="nav-link" data-scroll-target="#lab-3-switch-to-github-actions-cicd-25-min"><span class="header-section-number">7</span> Lab 3 — Switch to GitHub Actions CI/CD (25 min)</a></li>
+  <li><a href="#understanding-the-pipeline-and-why-it-fails" id="toc-understanding-the-pipeline-and-why-it-fails" class="nav-link" data-scroll-target="#understanding-the-pipeline-and-why-it-fails"><span class="header-section-number">8</span> Understanding the pipeline (and why it fails)</a></li>
+  <li><a href="#lab-4-custom-build-instead-of-jekyll-15-min" id="toc-lab-4-custom-build-instead-of-jekyll-15-min" class="nav-link" data-scroll-target="#lab-4-custom-build-instead-of-jekyll-15-min"><span class="header-section-number">9</span> Lab 4 — Custom build instead of Jekyll (15 min)</a></li>
+  <li><a href="#organizations-and-permissions-10-min" id="toc-organizations-and-permissions-10-min" class="nav-link" data-scroll-target="#organizations-and-permissions-10-min"><span class="header-section-number">10</span> Organizations and permissions (10 min)</a></li>
+  <li><a href="#custom-domains-https-10-min" id="toc-custom-domains-https-10-min" class="nav-link" data-scroll-target="#custom-domains-https-10-min"><span class="header-section-number">11</span> Custom domains &amp; HTTPS (10 min)</a></li>
+  <li><a href="#troubleshooting-fast-diagnostics-15-min" id="toc-troubleshooting-fast-diagnostics-15-min" class="nav-link" data-scroll-target="#troubleshooting-fast-diagnostics-15-min"><span class="header-section-number">12</span> Troubleshooting — fast diagnostics (15 min)</a></li>
+  <li><a href="#capstone-publish-your-cv-and-automate-checks-20-min" id="toc-capstone-publish-your-cv-and-automate-checks-20-min" class="nav-link" data-scroll-target="#capstone-publish-your-cv-and-automate-checks-20-min"><span class="header-section-number">13</span> Capstone — Publish your CV and automate checks (20 min)</a></li>
+  <li><a href="#cheat-sheet" id="toc-cheat-sheet" class="nav-link" data-scroll-target="#cheat-sheet"><span class="header-section-number">14</span> Cheat sheet</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">15</span> Further reading</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Deployment &amp; Orchestration with GitHub Pages</h1>
+<p class="subtitle lead">From Local Repo to Live Site with CI/CD (2‑Hour Guided Notes)</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Joseph Mhango </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 14, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>Source reference: These notes draw on and expand the slide deck: <a href="https://josephmhango.github.io/professional-study-skills/slides/github_pages.html">Deployment &amp; Orchestration: GitHub Pages</a>.</p>
+</blockquote>
+<section id="how-to-use-these-notes" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="how-to-use-these-notes"><span class="header-section-number">1</span> How to use these notes</h2>
+<ul>
+<li>Work through sections in order; each lab builds on the last.</li>
+<li>Prefer a fresh folder (e.g., <code>~/pages-lab</code>) to keep experiments clean.</li>
+<li>If you get stuck, jump to Troubleshooting and return.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These notes assume basic Git knowledge (init/add/commit/remote/push). If new, complete the Git tutorial first.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="outcomes-you-will-be-able-to" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="outcomes-you-will-be-able-to"><span class="header-section-number">2</span> Outcomes (you will be able to)</h2>
+<ul>
+<li>Explain how GitHub Pages builds and serves static sites</li>
+<li>Choose between User/Org sites vs Project sites</li>
+<li>Publish a Markdown site with Jekyll</li>
+<li>Switch to GitHub Actions for flexible CI/CD</li>
+<li>Add a custom domain and enforce HTTPS</li>
+<li>Diagnose and fix typical Pages build/deploy issues</li>
+</ul>
+<hr>
+</section>
+<section id="first-principles-what-github-pages-is-and-isnt" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="first-principles-what-github-pages-is-and-isnt"><span class="header-section-number">3</span> First principles — what GitHub Pages is (and isn’t)</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li><strong>Static website</strong>: a site made of files (HTML for structure, CSS for style, JS for behavior). There is no database or server code running for each visitor. Pages are served “as‑is” from storage to the browser.</li>
+<li><strong>GitHub Pages</strong>: a free hosting service from GitHub that can optionally “build” your site from source (e.g., Markdown) into HTML and then serve it on a public URL.</li>
+<li><strong>Two site types</strong>:
+<ul>
+<li><strong>User/Org site</strong>: a special repo named <code>&lt;account&gt;.github.io</code> → served at <code>https://&lt;account&gt;.github.io/</code> (one per account/org).</li>
+<li><strong>Project site</strong>: any repo → served at <code>https://&lt;account&gt;.github.io/&lt;repo&gt;/</code> (many per account).</li>
+</ul></li>
+<li><strong>Builders</strong>: GitHub can render Markdown into a site for you. The common default is Jekyll, but you can use other generators or plain HTML.</li>
+<li><strong>CI/CD (Continuous Integration/Continuous Deployment)</strong>: automate building and testing on every change (CI). If the build succeeds, automatically deploy (CD). With Pages, a push to your repo can trigger a build and then an automatic deploy to the Pages CDN.</li>
+</ul>
+</div><div class="column" style="width:45%;">
+<pre class="text"><code>Commit → Build (convert Markdown to HTML) → Deploy → CDN (global cache)</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify Git and Ruby (only needed if you build Jekyll locally)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ruby</span> <span class="at">--version</span> <span class="dv">2</span><span class="op">&gt;</span>/dev/null <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"Ruby optional (Actions will build for you)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Project sites inherit a path prefix (<code>/&lt;repo&gt;</code>). Account for this with <code>baseurl</code> in Jekyll so internal links work on the published URL.</p>
+</div>
+</div>
+<section id="primer-what-is-jekyll" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="primer-what-is-jekyll"><span class="header-section-number">3.1</span> Primer: What is Jekyll?</h3>
+<p>Jekyll is a “static site generator.” You write content in Markdown and configuration in a small YAML file. Jekyll turns that into HTML pages using layouts and themes. There is no server code to run later—only the pre‑built files are served. You don’t have to use Jekyll (plain HTML works, and other generators exist like Hugo or MkDocs), but Jekyll is tightly integrated with GitHub Pages, which is why it’s the default.</p>
+<p>Key ideas: - Pages are Markdown (<code>.md</code>) files with an optional header called “front matter.” - Front matter tells Jekyll how to treat that file (which layout to use, page title, etc.). - A layout (HTML template) and a theme handle consistent look‑and‑feel.</p>
+</section>
+<section id="primer-what-is-yaml-and-front-matter" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="primer-what-is-yaml-and-front-matter"><span class="header-section-number">3.2</span> Primer: What is YAML (and front matter)?</h3>
+<p>YAML is a human‑friendly data format. It uses indentation for structure and <code>key: value</code> pairs.</p>
+<p>Example front matter at the top of a Markdown file:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your Name — CV"</span><span class="co">     # a key called "title" with a string value</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span><span class="kw">:</span><span class="at"> default</span><span class="co">              # tells Jekyll which HTML layout to wrap around the content</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">show_toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="co">               # a boolean flag (true/false)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tags</span><span class="kw">:</span><span class="co">                        # a list</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> cv</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> profile</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Anything between the <code>---</code> lines is YAML front matter. Jekyll reads it to decide how to render the page (which layout, variables available in the template, etc.). Outside the front matter you write regular Markdown content which becomes the page body.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>YAML is whitespace‑sensitive: use spaces for indentation; don’t use tabs. Quote strings that include special characters (<code>:</code> or <code>#</code>).</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="lab-1-create-your-pages-repo-15-min" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="lab-1-create-your-pages-repo-15-min"><span class="header-section-number">4</span> Lab 1 — Create your Pages repo (15 min)</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Pick a site type: - User site (recommended): public repo named <code>&lt;you&gt;.github.io</code>. - Project site: any repo name (URL includes <code>/&lt;repo&gt;</code>).</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># After creating the repo on GitHub</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># User site</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/<span class="op">&lt;</span>you<span class="op">&gt;</span>/<span class="op">&lt;</span>you<span class="op">&gt;</span>.github.io</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="op">&lt;</span>you<span class="op">&gt;</span>.github.io</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Project site (example)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># git clone https://github.com/&lt;you&gt;/cv-site &amp;&amp; cd cv-site</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>User sites are ideal for a personal homepage or CV; project sites are perfect for documentation per repository.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="lab-2-minimal-jekyll-cv-20-min" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="lab-2-minimal-jekyll-cv-20-min"><span class="header-section-number">5</span> Lab 2 — Minimal Jekyll CV (20 min)</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Create <code>index.md</code> with YAML front matter so Jekyll treats it as a page. Keep content simple and text‑first; design can evolve later.</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Your Name — CV"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="an">layout:</span><span class="co"> default</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Your Name</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>City, Country · email@example.com · https://linkedin.com/in/you</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Profile</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>Short paragraph about your strengths and interests.</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Skills</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Python (pandas, scikit-learn)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>R (tidyverse)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>SQL, Git</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Education</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>**BSc, Subject**, University — 2024</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## Experience</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>**Data Intern**, Org — 2023  </span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Bullet points with outcomes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Add a theme via <code>_config.yml</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># _config.yml</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">remote_theme</span><span class="kw">:</span><span class="at"> pages-themes/minimal@v0.2.0</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plugins</span><span class="kw">:</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> jekyll-remote-theme</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Commit and push:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add index.md _config.yml</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add CV homepage and theme"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Alternative: <code>theme: minima</code> (requires whitelisted themes). <code>remote_theme</code> lets you use Pages themes without bundling gems.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="enable-pages-deploy-from-branch-first-publish-10-min" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="enable-pages-deploy-from-branch-first-publish-10-min"><span class="header-section-number">6</span> Enable Pages — Deploy from branch (first publish) (10 min)</h2>
+<ol type="1">
+<li>On GitHub: Settings → Pages → Source: Deploy from a branch.</li>
+<li>Select Branch = <code>main</code>, Folder = <code>/(root)</code> (or <code>/docs</code>).</li>
+<li>Save → wait for the green check → visit the URL in the Pages panel.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is great for first publish. For more control (build steps, asset pipelines), switch to GitHub Actions next.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="lab-3-switch-to-github-actions-cicd-25-min" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="lab-3-switch-to-github-actions-cicd-25-min"><span class="header-section-number">7</span> Lab 3 — Switch to GitHub Actions CI/CD (25 min)</h2>
+<p>Add a workflow at <code>.github/workflows/pages.yml</code> to build and deploy on every push to <code>main</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Deploy Jekyll to GitHub Pages</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at"> </span><span class="st">"main"</span><span class="at"> </span><span class="kw">]</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">workflow_dispatch</span><span class="kw">:</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">permissions</span><span class="kw">:</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">contents</span><span class="kw">:</span><span class="at"> read</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pages</span><span class="kw">:</span><span class="at"> write</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">id-token</span><span class="kw">:</span><span class="at"> write</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">concurrency</span><span class="kw">:</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">group</span><span class="kw">:</span><span class="at"> </span><span class="st">"pages"</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">cancel-in-progress</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/configure-pages@v5</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/jekyll-build-pages@v1</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">source</span><span class="kw">:</span><span class="at"> ./</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">destination</span><span class="kw">:</span><span class="at"> ./_site</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-pages-artifact@v3</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ./_site</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">deploy</span><span class="kw">:</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">needs</span><span class="kw">:</span><span class="at"> build</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> github-pages</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> ${{ steps.deployment.outputs.page_url }}</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> deployment</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/deploy-pages@v4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Commit/push and watch Actions run.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Add a link checker or spell‑check step before deploy to catch embarrassing mistakes automatically.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="understanding-the-pipeline-and-why-it-fails" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="understanding-the-pipeline-and-why-it-fails"><span class="header-section-number">8</span> Understanding the pipeline (and why it fails)</h2>
+<ul>
+<li><code>actions/checkout</code>: fetches your repo.</li>
+<li><code>actions/configure-pages</code>: prepares the Pages deployment environment.</li>
+<li>Build step: Jekyll (or your custom build).</li>
+<li><code>upload-pages-artifact</code>: hands the built output to the deploy job.</li>
+<li><code>deploy-pages</code>: publishes to the Pages CDN.</li>
+</ul>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If any job fails, deploy won’t run. This is your quality gate—fix the build first, then re‑push (or re‑run with “Re‑run jobs”).</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="lab-4-custom-build-instead-of-jekyll-15-min" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="lab-4-custom-build-instead-of-jekyll-15-min"><span class="header-section-number">9</span> Lab 4 — Custom build instead of Jekyll (15 min)</h2>
+<p>For pure HTML/JS sites (or another generator), replace Jekyll with your own build.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/configure-pages@v5</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Build site (custom)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>          mkdir -p _site</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>          cp -r *.html assets _site/ || true</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-pages-artifact@v3</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ./_site</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Keep your build idempotent and fast. Cache dependencies if you use a generator.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="organizations-and-permissions-10-min" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="organizations-and-permissions-10-min"><span class="header-section-number">10</span> Organizations and permissions (10 min)</h2>
+<ul>
+<li><strong>Organization</strong>: shared account that owns repos.</li>
+<li><strong>Teams &amp; roles</strong>: Owners, Maintainers, Members; repo roles: Admin, Maintain, Write, Triage, Read.</li>
+<li><strong>Org Pages</strong>: repo named <code>orgname.github.io</code> serves at <code>https://orgname.github.io/</code>.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Typical course setup: an org per cohort, teams per lab group, project sites deployed from project repos.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="custom-domains-https-10-min" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="custom-domains-https-10-min"><span class="header-section-number">11</span> Custom domains &amp; HTTPS (10 min)</h2>
+<ol type="1">
+<li>Settings → Pages → Custom domain: add <code>www.example.com</code>.</li>
+<li>At your registrar: CNAME to <code>&lt;you&gt;.github.io</code>.</li>
+<li>Enforce HTTPS (Pages provisions TLS for you).</li>
+</ol>
+<pre class="plaintext"><code>Repo writes CNAME → DNS points to GitHub Pages → HTTPS auto‑provisioned</code></pre>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>DNS changes can take time (minutes to hours). Verify with <code>dig</code>/<code>nslookup</code> and wait for propagation before retrying.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="troubleshooting-fast-diagnostics-15-min" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="troubleshooting-fast-diagnostics-15-min"><span class="header-section-number">12</span> Troubleshooting — fast diagnostics (15 min)</h2>
+<ul>
+<li>404 at root: missing <code>index.md</code>/<code>index.html</code> or wrong branch/folder.</li>
+<li>Broken links on project sites: set <code>baseurl</code> in <code>_config.yml</code> and prefix internal links with it.</li>
+<li>Theme not applied: ensure <code>remote_theme</code> and <code>jekyll-remote-theme</code> plugin are set.</li>
+<li>Build fails: open Actions logs; fix YAML front matter or missing folders (e.g., <code>_site</code>).</li>
+<li>Delay: give it a minute; hard refresh (browser cache).</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the build logs (locally, simulate Jekyll)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bundle</span> exec jekyll build <span class="dv">2</span><span class="op">&gt;</span>/dev/null <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"Using Actions to build remotely."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the Pages URL shown in the deploy step output. Bookmark it for quick checks.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="capstone-publish-your-cv-and-automate-checks-20-min" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="capstone-publish-your-cv-and-automate-checks-20-min"><span class="header-section-number">13</span> Capstone — Publish your CV and automate checks (20 min)</h2>
+<ol type="1">
+<li><p>Publish <code>index.md</code> CV on a User site and validate it loads publicly.</p></li>
+<li><p>Add a link checker step before deploy:</p></li>
+</ol>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Link check</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> lycheeverse/lychee-action@v1</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">args</span><span class="kw">:</span><span class="at"> --no-progress --quiet ./_site</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li>Make a change, commit, and watch CI enforce quality before deploy.</li>
+</ol>
+<hr>
+</section>
+<section id="cheat-sheet" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="cheat-sheet"><span class="header-section-number">14</span> Cheat sheet</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First publish (branch deploy)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Settings</span> → Pages → Source: Deploy from a branch</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Branch:</span> main, Folder: /<span class="er">(</span><span class="ex">root</span><span class="kw">)</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Switch to Actions</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="ex">.github/workflows/pages.yml</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom domain</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Settings</span> → Pages → Custom domain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="further-reading" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">15</span> Further reading</h2>
+<ul>
+<li>GitHub Docs — Pages, Actions workflows, and troubleshooting</li>
+<li>Static site generators: Jekyll, Hugo, MkDocs</li>
+<li>Slide deck: <a href="https://josephmhango.github.io/professional-study-skills/slides/github_pages.html">Deployment &amp; Orchestration: GitHub Pages</a></li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

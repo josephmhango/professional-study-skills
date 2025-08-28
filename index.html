@@ -192,10 +192,10 @@
     }
 
     function groupCardTemplate(g){
-      const defHref = g.defaultFile ? `_site/${encodeURIComponent(g.defaultFile)}` : '#';
+      const defHref = g.defaultFile ? `slides/${encodeURIComponent(g.defaultFile)}` : '#';
       const thumb = g.image ? `<img class="thumb" src="${g.image}" alt="Week ${g.week} slides" />` : `<div class="thumb" aria-hidden="true"></div>`;
       const list = g.slides.map(s=>{
-        const href = `_site/${encodeURIComponent(s.file)}`;
+        const href = `slides/${encodeURIComponent(s.file)}`;
         return `<li><a class="slide-link" href="${href}">${s.title}</a></li>`;
       }).join('');
       const count = g.slides.length;
