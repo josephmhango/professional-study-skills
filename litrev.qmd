@@ -1,0 +1,435 @@
+---
+title: "Research Skills for a Credible Literature Review (Data Science)"
+subtitle: "Reading Notes and Workflow Guide"
+author: "Dr Kanthu Joseph Mhango"
+date: "2025-08-17"
+---
+
+## Introduction
+
+::: {.columns}
+::: {.column width="55%"}
+This guide teaches you how to find, understand, judge, and combine research for a literature review. We use simple language and short steps. By the end, you’ll know how to:
+
+- turn a broad idea into a clear question
+- search in more than one place (not just Google)
+- read quickly with a purpose
+- judge quality and spot weak claims
+- take notes that make writing easy
+
+You do not need to know what a “database” or a “search string” is yet. We will explain each idea before you use it.
+:::
+
+::: {.column width="45%"}
+```text
+You will practice
+1) Asking a focused question
+2) Building a simple search
+3) Skimming papers to decide “keep or skip”
+4) Recording what matters (one small template)
+5) Writing what the field knows and what it doesn’t
+```
+:::
+:::
+
+---
+
+## Before we begin: three ideas (plain words)
+
+::: {.columns}
+::: {.column width="55%"}
+- Information source: a place that holds research (for example: Web of Science, Scopus, Google Scholar). We call these “databases”. They are search engines that focus on academic work.
+- Search string: the words you type into a database, plus connectors like AND or OR. Example: `wheat AND "no‑till"`.
+- Evidence map: your growing picture of what studies exist, what they claim, and how strong they are.
+
+We will build these gently, one step at a time.
+:::
+
+::: {.column width="45%"}
+```text
+Tiny glossary
+- Database = academic search engine
+- Search string = the query you type
+- Boolean = AND/OR/NOT connectors
+```
+:::
+:::
+
+---
+
+## Conceptual foundations: information literacy (kept simple)
+
+::: {.columns}
+::: {.column width="55%"}
+Information literacy means you can:
+1) notice what you need to know
+2) find good sources
+3) check whether claims are backed by evidence
+4) connect ideas across sources
+5) give credit correctly
+
+In data science this includes data itself: who made it, how, with what quality, and can others reproduce the work? Your goal is to build a fair summary of the field: what is well supported, what is debated, and what is still unknown.
+:::
+
+::: {.column width="45%"}
+```text
+Study habit
+- Write what the paper claims
+- Write what the data actually shows
+- Note one strength and one limit
+```
+:::
+:::
+
+---
+
+## A product‑agnostic workflow (step by step)
+
+### 1) Define scope and question (start small)
+
+::: {.columns}
+::: {.column width="55%"}
+Write one sharp question. If it feels too big, shrink the time, place, or method until it is answerable. Decide in advance what you will include and exclude (years, country, type of study). This stops you drifting off topic.
+:::
+
+::: {.column width="45%"}
+```text
+Example
+How do self‑supervised models improve UK crop‑yield
+prediction from satellite time series?
+Include: 2015+, UK, EO time series, SSL encoders
+Exclude: single images only, non‑agricultural targets
+```
+:::
+:::
+
+### 2) Plan a multi‑source search (what is a search, really?)
+
+::: {.columns}
+::: {.column width="55%"}
+A database is a website that lets you search academic records. Different databases cover different journals and conferences. Using more than one reduces blind spots.
+
+A search string is made of:
+- words for your topic (with quotation marks for phrases)
+- OR to join synonyms (either word is fine)
+- AND to join different ideas (both must appear)
+- NOT to remove noise (use sparingly)
+
+Example: `("winter wheat" OR wheat) AND ("no‑till" OR "reduced till*") AND (yield OR "grain yield")`
+
+Start with a quick “scoping” search. Skim 10–20 results. Steal useful words from titles/abstracts to expand your synonyms. Then tidy your string.
+:::
+
+::: {.column width="45%"}
+```text
+Plain rules
+- Use quotes for phrases: "greenhouse gas"
+- Use * for word endings: predict* (predict, prediction)
+- Use OR inside a block of similar words
+- Use AND between different idea blocks
+```
+:::
+:::
+
+### PICO/PECO (a simple way to structure your thinking)
+
+::: {.columns}
+::: {.column width="55%"}
+Use PICO to break a question into parts:
+- P: who/what is studied (e.g., UK winter wheat)
+- I/E: the change or condition (e.g., no‑till; drought exposure)
+- C: what you compare against (e.g., ploughing)
+- O: what you measure (e.g., yield, GHGs)
+
+This forces clarity and keeps your screening disciplined.
+:::
+
+::: {.column width="45%"}
+```text
+Check yourself
+- Is P concrete (place/time/species)?
+- Can I/E be measured (dose/timing)?
+- Is C explicit?
+- Are O’s prioritized and time‑bound?
+```
+:::
+:::
+
+### From PICO to a searchable question (beginner‑friendly)
+
+::: {.columns}
+::: {.column width="55%"}
+Turn each PICO part into a list of synonyms (an OR block). Join the blocks with AND. Keep a small NOT list to remove obvious noise. Save your exact strings in a log.
+:::
+
+::: {.column width="45%"}
+```text
+Portable skeleton
+(P OR P1 OR P2)
+AND (I OR I1 OR I2)
+AND (C OR C1)
+AND (O OR O1)
+```
+:::
+:::
+
+### From protocol to screening and extraction (one page)
+
+::: {.columns}
+::: {.column width="55%"}
+Write one page that states your PICO, databases, filters, include/exclude rules, and what you’ll extract. Screen titles/abstracts first; then full text. Log keep/reject with a short reason. Extract into a table with P, I/E, C, O, and a quality note.
+:::
+
+::: {.column width="45%"}
+```text
+Mini protocol
+- PICO (1 line)
+- Databases + filters
+- Include / Exclude
+- Extraction fields (P,I/E,C,O, quality)
+- How you’ll synthesise (themes)
+```
+:::
+:::
+
+---
+
+## Database‑aware tactics (without jargon)
+
+::: {.columns}
+::: {.column width="55%"}
+Use at least two databases so you see different corners of the field. Helpful options:
+- Web of Science (broad, strong metadata)
+- Scopus (broad, good analytics)
+- IEEE/ACM (computing/ML venues)
+- Google Scholar (wide net—verify details)
+
+Most databases let you limit by year, subject, and document type. Many also support proximity operators ("words near each other"), but you can do a strong review with just phrase quotes, *, AND/OR to start.
+:::
+
+::: {.column width="45%"}
+```text
+Starter moves
+- Filter years to keep it current
+- Use subject/category filters
+- Save your search and set an email alert
+```
+:::
+:::
+
+---
+
+## Rapid assimilation (read with a purpose)
+
+### A. Purpose‑led reading
+
+::: {.columns}
+::: {.column width="55%"}
+Decide what you want from a paper before you open it. For example: “I need a method I can replicate on Sentinel‑2 time series in the UK.” This stops aimless reading.
+:::
+
+::: {.column width="45%"}
+```text
+Purpose card
+- What problem am I checking?
+- What counts as useful?
+- What would make me discard it?
+```
+:::
+:::
+
+### B. Scan first, then decide
+
+::: {.columns}
+::: {.column width="55%"}
+Use a skim path: title → abstract → figures/tables → headings → conclusion. If still promising, keep for deeper reading. Otherwise, park it.
+:::
+
+::: {.column width="45%"}
+```text
+Keep if
+- Matches your PICO
+- Recent/relevant venue
+- Data/method align with your project
+```
+:::
+:::
+
+### C. Active questions while reading
+
+::: {.columns}
+::: {.column width="55%"}
+Ask: What’s the main claim? What data and setting? Any risk of leakage or unfair baselines? Write your own 2–3 sentence paraphrase to test understanding.
+:::
+
+::: {.column width="45%"}
+```text
+Question set
+- Claim?
+- Evidence?
+- Limits?
+```
+:::
+:::
+
+### D. Quick credibility checks
+
+::: {.columns}
+::: {.column width="55%"}
+Look for: venue/peer review, author/affiliation, recency, code/data links, UK relevance, and whether the conclusions match the evidence.
+:::
+
+::: {.column width="45%"}
+```text
+Signals
+- Code/data available
+- Replicable steps
+- Comparable baselines
+```
+:::
+:::
+
+---
+
+## Appraise, synthesise, and write (the short road)
+
+::: {.columns}
+::: {.column width="55%"}
+Appraise quality: venue, data provenance, method soundness, transparency, generalisability. Then synthesise: group by method/data/domain; state agreements, disagreements, likely reasons, and gaps. Finally, write with a simple structure: Introduction (scope & question), Themed body (comparative analysis), Limitations, Conclusion (known/contested/unknown; why your project now).
+:::
+
+::: {.column width="45%"}
+```text
+One-note template per paper
+- Claim
+- Data/setting
+- Method & checks
+- Findings & limits
+- Link (code/data)
+```
+:::
+:::
+
+---
+
+## What “credible” looks like (beginner checklist)
+
+- You show where and how you searched (strings, filters, databases)
+- You explain why you kept or rejected each paper
+- You show how you judged quality (quick checks plus any deeper appraisal)
+- You connect papers (similarities/differences) instead of listing them
+- You point to gaps that justify your project
+
+---
+
+## Scopus-based mini‑assignment (60 minutes)
+
+Goal: Use Scopus to discover what research on your campus looks like across three areas, then identify who to talk to at your university for each area.
+
+What you’ll produce
+- A one‑page note (or 3–4 slides) with: top topics, 3 highly‑cited papers per area with a one‑sentence finding each, and 1–2 suggested contacts per area (authors at your university).
+
+Set‑up (2 minutes)
+- Log into Scopus via your library. If Scopus is unavailable, use Google Scholar as a fallback (see “No Scopus?” below).
+
+Step 1 — Filter to your university (5 minutes)
+- In Scopus Advanced search, add an affiliation filter for your institution.
+- Replace <Your University> below with your institution’s name exactly as Scopus records it (use the Affiliation search if unsure).
+
+```text
+AFFIL("Harper Adams University")
+```
+
+Step 2 — Three quick topic scans (3 × 10 minutes = 30 minutes)
+For each area below, run a simple TITLE‑ABS‑KEY search ANDed with your affiliation filter. Sort results by Citations (high to low). Skim the top 5–10.
+
+A) Crops / agronomy
+```text
+AFFIL("Harper Adams University") AND TITLE-ABS-KEY(
+  crop OR crops OR cereal* OR wheat OR barley OR potato* OR "oilseed rape" OR "oil-seed rape" OR canola
+)
+```
+
+B) Animal science
+```text
+AFFIL("Harper Adams University") AND TITLE-ABS-KEY(
+  livestock OR dairy OR cattle OR sheep OR poultry OR swine OR animal nutrition OR animal health
+)
+```
+
+C) Machine learning / data science
+```text
+AFFIL("Harper Adams University") AND TITLE-ABS-KEY(
+  "machine learning" OR "deep learning" OR "neural network*" OR "self-supervised" OR "representation learning" OR "time series"
+)
+```
+
+For each area capture
+- Top 3 highly‑cited papers (title, year, venue, citation count)
+- One‑sentence takeaway per paper (what was found or contributed)
+- 1–2 local authors (from your university) who appear repeatedly in this area
+
+Tips (while scanning)
+- Use “Analyze results” → “Authors”/“Affiliations” to see who publishes most.
+- Open Author profiles to confirm affiliation and recent outputs.
+
+Step 3 — Pick contacts (8 minutes)
+- From your shortlists, pick 1–2 authors per area who (a) have multiple papers and (b) are current staff.
+- Record their names, department/school, and a portfolio link if available.
+
+Step 4 — Package your note (5 minutes)
+- Write 3 short sections (Crops; Animal Science; Machine Learning). In each, list: the 3 papers with one‑line findings and the suggested contacts.
+
+Suggested structure (copy/paste)
+```text
+Crops (Scopus, sorted by citations)
+- [Paper 1]: finding (1 sentence). Lead author(s). Venue (Year). Citations.
+- [Paper 2]: finding …
+- [Paper 3]: finding …
+Suggested contacts: Dr X (Dept), Prof Y (School)
+
+Animal Science …
+Machine Learning …
+```
+
+No Scopus? (fallback, 10 minutes for any one area)
+- Use Google Scholar or Google with an affiliation phrase (avoid site: filters). Start broad, then refine with quotes and OR blocks.
+
+Google Scholar examples (copy/paste and adjust terms)
+```text
+"Harper Adams University" (crop OR wheat OR potato OR "oilseed rape" OR canola)
+"Harper Adams University" (livestock OR dairy OR cattle OR sheep OR poultry OR "animal nutrition" OR "animal health")
+"Harper Adams University" ("machine learning" OR "deep learning" OR "neural network*" OR "self-supervised" OR "time series")
+```
+
+Google Web (optional operators)
+```text
+"Harper Adams University" (crop OR wheat OR potato) filetype:pdf
+"Harper Adams University" (machine learning OR "deep learning") inurl:repository|pure|eprints
+```
+Tips
+- Use phrase quotes for the affiliation
+- Add/remove country terms only if they help (they can hide results)
+- Harvest new synonyms from top results and iterate your OR blocks
+
+Marking (lightweight)
+- Completeness: 3 papers × 3 areas with one‑line findings; at least one plausible contact per area
+- Judgement: choices make sense (recent/influential, match the area)
+- Clarity: short, readable notes a supervisor could skim
+
+Time plan (60 minutes)
+- 2 min set‑up; 5 min affiliation; 30 min three scans; 8 min contacts; 5 min packaging; (buffer 10 min if needed)
+
+---
+
+## References (Harvard — Cite Them Right)
+
+Goulão, M.F. & Fombona, J. (2012) ‘Digital literacy and adults learners’ perception: The case of a second chance to University’, Procedia – Social and Behavioral Sciences, 46, pp. 350–355. https://doi.org/10.1016/j.sbspro.2012.05.121.
+
+Kaivola, T. & Taina, J. (2012) ‘In quest for better understanding of student learning experiences’, Procedia – Social and Behavioral Sciences, 46, pp. 8–12. https://doi.org/10.1016/j.sbspro.2012.05.057.
+
+Korucu, M.G. (2012) ‘GIS and types of GIS education programs’, Procedia – Social and Behavioral Sciences, 46, pp. 209–215. https://doi.org/10.1016/j.sbspro.2012.05.095.
+
+Küçükoğlu, H. (2013) ‘Improving reading skills through effective reading strategies’, Procedia – Social and Behavioral Sciences, 70, pp. 709–714. https://doi.org/10.1016/j.sbspro.2013.01.113.
+
+Manoli, P. & Papadopoulou, M. (2012) ‘Reading strategies versus reading skills: Two faces of the same coin’, Procedia – Social and Behavioral Sciences, 46, pp. 817–821. https://doi.org/10.1016/j.sbspro.2012.05.205. 

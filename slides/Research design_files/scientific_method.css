@@ -1,0 +1,47 @@
+/* Code and text blocks styling */
+pre, pre code {
+  display: block;
+  padding: 0.95rem 1.1rem;
+  background: #0a2540; /* dark blue */
+  color: #ffffff;       /* white text */
+  border-radius: 10px;
+  line-height: 1.5;
+}
+
+/* Inline code */
+code:not(pre code) {
+  background: #0a2540; /* dark blue */
+  color: #ffffff;      /* white */
+  padding: 0.05rem 0.35rem;
+  border-radius: 6px;
+}
+
+/* Base callout spacing */
+.callout { margin: 1rem 0; border: none !important; border-radius: 10px; }
+.callout .callout-title-container, .callout .callout-title { background: transparent !important; }
+.callout .callout-icon { filter: brightness(0) invert(1); }
+.callout a { color: #f0f9ff; }
+.callout a:hover { color: #ffffff; }
+
+/* TIP (green) */
+.callout-tip { background: #166534 !important; color: #ffffff !important; }
+.callout-tip .callout-title { color: #ffffff !important; font-weight: 700; }
+.callout-tip .callout-icon { filter: brightness(0) invert(1); }
+
+/* NOTE (green variant) */
+.callout-note { background: #15803d !important; color: #ffffff !important; }
+.callout-note .callout-title { color: #ffffff !important; font-weight: 700; }
+.callout-note .callout-icon { filter: brightness(0) invert(1); }
+
+/* CAUTION (orange) */
+.callout-caution { background: #b45309 !important; color: #ffffff !important; }
+.callout-caution .callout-title { color: #ffffff !important; font-weight: 800; }
+.callout-caution .callout-icon { filter: brightness(0) invert(1); }
+
+/* Columns gap */
+.columns { gap: 1.25rem; }
+
+/* Tables */
+table { border-collapse: collapse; }
+th, td { border: 1px solid #e5e7eb; padding: 0.4rem 0.6rem; }
+th { background: #f8fafc; } 

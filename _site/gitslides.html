@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Git on Windows — First Principles to Confident Collaboration (4 Hours, Revised)</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/league.css" id="theme">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --accent:#2563eb; --muted:#64748b; --main:#2563eb; --feat:#16a34a; --merge:#7c3aed; }
+    .reveal .slides{ max-width: 1400px; }
+    .reveal h1, .reveal h2, .reveal h3{ letter-spacing:.3px; }
+    .reveal h1{ text-shadow: none !important;font-size: clamp(36px,5vw,56px); }
+    .reveal h2{ font-size: clamp(28px,4vw,42px); }
+    .reveal h3{ font-size: clamp(22px,3vw,32px); }
+    .reveal p, .reveal li{ font-size: clamp(18px,2.1vw,26px); line-height:1.25; }
+    .muted{ color:var(--muted); }
+    .pill{ display:inline-block; font-weight:600; border-radius:999px; padding:.2rem .6rem; background:#e2e8f0; color:#0f172a; font-size:clamp(12px,1.2vw,14px); }
+    .note{ border-left:4px solid var(--accent); padding:.75rem 1rem; background:#000000; border-radius:8px; }
+    .tight ul{ margin:.5rem 0 0 1.2rem; }
+    .tight li{ margin:.15rem 0; }
+    .two-col{ display:grid; grid-template-columns:1.1fr 1fr; gap:1.2rem; align-items:start; }
+    .two-col .col{ min-width:0; }
+    .two-col pre{ margin:0; }
+    pre code{ font-size: clamp(12px,1.4vw,20px); max-height:60vh; display:block; overflow:auto; }
+    @media (max-width:1000px){ .two-col{ grid-template-columns:1fr; } }
+    #sessionProgress{ position:fixed; left:0; right:0; bottom:0; height:6px; background:linear-gradient(90deg, var(--accent) var(--p,0%), #e2e8f0 0); z-index:99; }
+    .ribbon{ position:fixed; right:10px; top:10px; z-index:99; background:transparent; padding:0; border-radius:0; }
+    .ribbon img{ height:40px; width:auto; display:block; }
+    .btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.45rem .75rem; border-radius:10px; border:1px solid #cbd5e1; background:#fff; font-size:clamp(12px,1.4vw,16px); cursor:pointer; }
+    .btn:hover{ border-color:#94a3b8; }
+    .reveal section{ padding:10px 0; }
+    svg#git-dag{ width:100%; height:60vh; max-height:60vh; border:1px dashed #e2e8f0; border-radius:12px; background:#ffffff; }
+    .lbl{ font-size:14px; paint-order: stroke; stroke: #fff; stroke-width:4px; }
+    /* Unified site aesthetic */
+    html, body{ height:100% }
+    body{ margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:#181c34; color:#e8ecff }
+    a{ color:inherit; text-decoration:none }
+    .reveal{ background:#181c34 }
+    .reveal .slides{ background:#181c34 }
+  </style>
+</head>
+<body>
+<div class="ribbon"><img src="../HAU-logo.svg" alt="Harper Adams University"></div>
+<div id="sessionProgress"></div>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- TITLE -->
+    <section>
+      <h1>Git on Windows</h1>
+      <h3 class="muted">First principles to confident collaboration — GitHub Desktop primary, CLI equivalent always defined</h3>
+      <p><span class="pill">Windows-first</span> <span class="pill">Beginner-friendly</span> <span class="pill">Print-ready notes</span></p>
+    </section>
+
+    <!-- OUTCOMES & AGENDA -->
+    <section>
+      <h2>Outcomes & Agenda (4 hours)</h2>
+      <div class="two-col">
+        <div class="col">
+          <h3>By the end you can…</h3>
+          <ul class="tight">
+            <li>Define: repository, working directory, staging area, commit, branch, HEAD, remote</li>
+            <li>Install Git on Windows & set identity</li>
+            <li>Create, stage, commit, view history; undo safely</li>
+            <li>Branch, merge, resolve conflicts</li>
+            <li>Collaborate via GitHub: clone, <strong>push</strong>, <strong>pull</strong>, <strong>fetch</strong>, <strong>pull request</strong>, reviews, issues</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Session plan</h3>
+          <ol class="tight">
+            <li>Foundations & Install (55m)</li>
+            <li>Record Changes & Undo (55m)</li>
+            <li>Branching & Merging (55m)</li>
+            <li>Collaboration on GitHub (55m)</li>
+            <li>Wrap-up & Rescue kit (10m)</li>
+          </ol>
+          <p class="muted">Two short breaks during transitions.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUNDATIONS -->
+    <section>
+      <h2>Git: what it is (and isn’t)</h2>
+      <div class="note"><strong>Definitions (first use):</strong> A <em>repository</em> (repo) is your project’s history stored in a hidden <code>.git</code> folder. The <em>working directory</em> is the files you edit. The <em>staging area</em> (index) is your “basket” of changes to include in the next snapshot. A <em>commit</em> is a named snapshot. A <em>branch</em> is a movable label pointing at a commit. <em>HEAD</em> is your current branch/commit.</div>
+      <p>Git is a <strong>local</strong> version control system. GitHub is a <strong>remote hosting service</strong> for your repo. You can use Git offline; you push when you want to share.</p>
+    </section>
+
+    <section>
+      <h2>How Git stores history (first principles)</h2>
+      <p>Git stores content by hash. Files → <em>blobs</em>, folders → <em>trees</em>, commits point to a tree plus parent commits. Commits are immutable snapshots linked together, enabling history and diffs.</p>
+    </section>
+
+    <!-- TERMINOLOGY: REMOTES/PUBLISH/PUSH/PULL/FETCH/PR/FORK -->
+    <section>
+      <h2>First‑use definitions: remotes, publish, push, pull, fetch, PR, fork</h2>
+      <ul class="tight">
+        <li><strong>Remote:</strong> a copy of your repo hosted elsewhere (e.g., <code>origin</code> on GitHub).</li>
+        <li><strong>Publish (GitHub Desktop):</strong> create the remote on GitHub <em>and</em> push your local commits there for the first time.</li>
+        <li><strong>Push:</strong> upload your local commits to a remote branch. After first push, it updates the same branch next time.</li>
+        <li><strong>Fetch:</strong> download new commits from the remote; your files don’t change yet.</li>
+        <li><strong>Pull:</strong> fetch <em>and then merge</em> the remote branch into your current branch (files update).</li>
+        <li><strong>Pull Request (PR):</strong> a <em>request</em> for maintainers to <em>pull</em> your branch into a target branch (e.g., into <code>main</code>). Not the same as <code>git pull</code>.</li>
+        <li><strong>Fork:</strong> a server‑side copy of someone else’s repo under your account; you clone your fork locally.</li>
+      </ul>
+      <p class="muted">Mnemonic: <em>Push up</em> your work; <em>pull down</em> others’ work; raise a <em>pull request</em> to propose changes into a shared branch.</p>
+    </section>
+
+    <!-- OPTIONAL: ANIMATION SLIDE LEFT OUT FOR BREVITY IN THIS REVISION -->
+
+    <!-- INSTALL ON WINDOWS -->
+    <section>
+      <h2>Install on Windows</h2>
+      <div class="two-col">
+        <div class="col">
+          <ul class="tight">
+            <li>Install <strong>Git for Windows</strong>; choose “Use Git from the command line”, enable Credential Manager, keep CRLF→LF on commit.</li>
+            <li>Install <strong>GitHub Desktop</strong>; sign in; set default editor and shell.</li>
+            <li>Set identity (applies to all repos unless overridden).</li>
+          </ul>
+        </div>
+        <div class="col">
+<pre><code class="language-bash">where.exe git
+git --version
+git config --global user.name "Your Name"
+git config --global user.email you@example.com
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- FIRST LOCAL REPO -->
+    <section>
+      <h2>Your first local repository</h2>
+      <div class="two-col">
+        <div class="col">
+          <p><strong>GitHub Desktop</strong>: File → New repository → name <code>hello-git</code> → initialize with README → Create.</p>
+          <p>History shows the initial commit <em>locally</em>. Use <strong>Publish</strong> to create <code>origin</code> on GitHub and push.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bash">mkdir hello-git && cd hello-git
+git init
+echo "# hello-git" > README.md
+git add README.md
+git commit -m "Initial commit"
+# First push sets upstream ("-u")
+git remote add origin https://github.com/&lt;you&gt;/hello-git.git
+git push -u origin main
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGE & COMMIT -->
+    <section>
+      <h2>Staging vs committing</h2>
+      <div class="two-col">
+        <div class="col">
+          <p>Edit files. Stage only what belongs together in the next snapshot; then write a clear message and commit. Small, focused commits make history meaningful.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bash">git status
+git add README.md notes.txt
+git commit -m "Add notes and expand README"
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- HISTORY & DIFFS -->
+    <section>
+      <h2>Viewing history & differences</h2>
+      <div class="two-col">
+        <div class="col">
+          <p>History shows who changed what and when. Diffs show only what changed, not entire files.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bash">git log --oneline --graph --decorate --all
+git diff            # working changes vs file on disk
+git diff --staged   # staged vs last commit
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- GITIGNORE -->
+    <section>
+      <h2>Ignoring files with .gitignore</h2>
+      <div class="two-col">
+        <div class="col">
+          <p>Avoid committing build artefacts, caches, and secrets. Add patterns to <code>.gitignore</code>; Git will skip matching files when you stage.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bash">echo "__pycache__/" >> .gitignore
+echo ".ipynb_checkpoints/" >> .gitignore
+git add .gitignore && git commit -m "Add ignore rules"
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- UNDO SAFELY -->
+    <section>
+      <h2>Undo, safely</h2>
+      <ul class="tight">
+        <li><strong>Unstage</strong> (take out of basket): <code>git restore --staged file</code></li>
+        <li><strong>Discard</strong> local edits: <code>git restore file</code></li>
+        <li><strong>Amend</strong> last commit (unpublished): <code>git commit --amend</code></li>
+        <li><strong>Revert</strong> a published commit: <code>git revert &lt;hash&gt;</code> (creates a new commit that undoes)</li>
+      </ul>
+    </section>
+
+    <!-- BRANCHING INTRO -->
+    <section>
+      <h2>Branches: safe parallel work</h2>
+      <p>A <strong>branch</strong> is a name pointing to a commit. Create a branch for a task, commit on it, then merge back when done. If <code>main</code> didn’t move, the merge <em>fast‑forwards</em> (just moves the pointer). Otherwise Git creates a <em>merge commit</em> to join lines of work.</p>
+    </section>
+
+    <section>
+      <h2>Create, switch, merge</h2>
+      <div class="two-col">
+        <div class="col">
+          <p>Create <code>feature/readme-badges</code>, commit, then merge into <code>main</code>.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bash">git switch -c feature/readme-badges
+# ...edit...
+git add README.md && git commit -m "Add badges"
+git switch main
+git merge feature/readme-badges
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Conflicts happen — resolve intent</h2>
+      <p>When two branches change the same lines, Git marks a <strong>conflict</strong>. Open the file, keep the correct final text, stage, and commit. Your message should explain the resolution.</p>
+<pre><code class="language-bash"># After editing to remove conflict markers
+git add conflicted_file.ext
+git commit   # completes the merge
+</code></pre>
+    </section>
+
+    <!-- COLLABORATION DEFINITIONS BEFORE ACTIONS -->
+    <section>
+      <h2>Before we collaborate: key terms (first use)</h2>
+      <ul class="tight">
+        <li><strong>Upstream tracking branch:</strong> a pairing between your local branch and its remote counterpart (set on first push with <code>-u</code>). Enables simple <code>git push</code>/<code>git pull</code> without extra arguments.</li>
+        <li><strong>Default remote name:</strong> <code>origin</code> (can be others).</li>
+        <li><strong>Default branch:</strong> often <code>main</code> (formerly <code>master</code>).</li>
+      </ul>
+    </section>
+
+    <!-- REMOTES / PUSH / PULL / FETCH -->
+    <section>
+      <h2>Going online: remotes, push, pull, fetch (with Desktop)</h2>
+      <div class="two-col">
+        <div class="col">
+          <p><strong>Publish</strong> (Desktop) = create remote + <strong>first push</strong>. Afterwards, use <strong>Push origin</strong> to upload new commits.</p>
+          <p><strong>Fetch origin</strong> downloads new commits without changing files; <strong>Pull origin</strong> fetches <em>and merges</em> into your current branch.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bash">git remote add origin https://github.com/&lt;you&gt;/hello-git.git
+# First push sets upstream
+git push -u origin main
+# Later
+git fetch
+git pull   # fetch + merge
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLONE & FORK -->
+    <section>
+      <h2>Clone vs Fork</h2>
+      <ul class="tight">
+        <li><strong>Clone:</strong> make a <em>local</em> copy of a remote repo you can read. You usually push back to the same remote.</li>
+        <li><strong>Fork:</strong> make your <em>own remote copy</em> under your account (server‑side). Then <strong>clone your fork</strong> locally. Used when you cannot push to the original repo.</li>
+      </ul>
+<pre><code class="language-bash"># Clone
+git clone https://github.com/org/repo.git
+# Fork (on GitHub UI), then clone your fork
+git clone https://github.com/you/repo.git
+</code></pre>
+    </section>
+
+    <!-- PULL REQUEST DEFINITION -->
+    <section>
+      <h2>Pull Request (PR): what and why the name?</h2>
+      <p>A PR is a <strong>proposal</strong> to merge changes from your branch (source) into a target branch (e.g., <code>main</code>) in a remote repository. You’re asking maintainers to <em>pull</em> your changes. It is <strong>not</strong> the same as <code>git pull</code>.</p>
+      <ul class="tight">
+        <li><strong>Anatomy:</strong> title + description; source branch → target branch; linked issues; checks (tests); reviewers.</li>
+        <li><strong>Outcomes:</strong> comments/review, changes requested, approval, then merge (merge commit / squash / rebase‑merge) according to project rules.</li>
+      </ul>
+      <p class="muted">Desktop opens the PR page in your browser; all discussion and review happens there.</p>
+    </section>
+
+    <!-- FEATURE WORKFLOW WITH DEFINITIONS EMBEDDED -->
+    <section>
+      <h2>Feature workflow with GitHub Desktop (CLI equivalents)</h2>
+      <ol class="tight">
+        <li>Create branch for your task (Desktop Branch → New; CLI <code>git switch -c feature/x</code>).</li>
+        <li>Commit locally as you progress (Desktop Changes; CLI <code>git add</code> + <code>git commit</code>).</li>
+        <li>Push branch (Desktop <em>Push origin</em>; CLI <code>git push -u origin feature/x</code> sets upstream).</li>
+        <li>Open a <strong>Pull Request</strong> (Desktop button → GitHub page); describe <em>what/why</em>, link issues (<code>Fixes #123</code>).</li>
+        <li>Review: peers comment, request changes, or approve.</li>
+        <li>Merge: often “Squash and merge” to keep one commit per feature; delete branch if project policy says so.</li>
+      </ol>
+    </section>
+
+    <!-- ISSUES -->
+    <section>
+      <h2>Issues: tracking work</h2>
+      <p>Use Issues to plan tasks and report bugs. Link them to PRs and commits. “Fixes #42” in a commit/PR description closes the issue on merge.</p>
+    </section>
+
+    <!-- AUTH -->
+    <section>
+      <h2>Authentication on Windows</h2>
+      <div class="two-col">
+        <div class="col">
+          <p>Use HTTPS with Git Credential Manager (default). If required, use SSH keys and add the public key to GitHub.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-bash">ssh-keygen -t ed25519 -C "you@example.com"
+# Add id_ed25519.pub to GitHub → Settings → SSH and GPG keys
+git remote -v
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESCUE KIT -->
+    <section>
+      <h2>Rescue kit</h2>
+      <ul class="tight">
+        <li><strong>Revert</strong> a published commit: <code>git revert &lt;hash&gt;</code></li>
+        <li><strong>Reset (mixed)</strong> to uncommit locally: <code>git reset HEAD^</code></li>
+        <li><strong>Reset --hard</strong> discards work (use with care): <code>git reset --hard &lt;hash&gt;</code></li>
+        <li><strong>Reflog</strong> to find lost commits: <code>git reflog</code></li>
+      </ul>
+    </section>
+
+    <!-- PITFALLS -->
+    <section>
+      <h2>Common Windows pitfalls</h2>
+      <ul class="tight">
+        <li>Line endings (CRLF/LF): default autocrlf is fine for mixed teams.</li>
+        <li>Large binaries: use Git LFS for big files; avoid committing raw datasets.</li>
+        <li>Multiple Git installs: ensure the one on PATH is Git for Windows (<code>where git</code>).</li>
+        <li>Identity mismatch: keep <code>user.name</code>/<code>user.email</code> consistent with GitHub.</li>
+      </ul>
+    </section>
+
+    <!-- CHECKLIST -->
+    <section>
+      <h2>Steady workflow checklist</h2>
+      <ol class="tight">
+        <li>Pull <code>main</code> before starting.</li>
+        <li>Create a branch per task.</li>
+        <li>Commit small, meaningful changes.</li>
+        <li>Push and open a PR; request review.</li>
+        <li>Merge, then clean up branches.</li>
+        <li>Use revert for published mistakes.</li>
+      </ol>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+<script>
+  Reveal.initialize({ hash:true, progress:true, controls:true, center:true, width:1280, height:720, plugins:[RevealHighlight] });
+  // 4-hour progress bar
+  const totalMinutes=240, start=Date.now(), bar=document.getElementById('sessionProgress');
+  setInterval(()=>{ const elapsed=(Date.now()-start)/60000; const pct=Math.min(100,(elapsed/totalMinutes)*100); bar.style.setProperty('--p', pct+'%'); }, 10000);
+</script>
+</body>
+</html>

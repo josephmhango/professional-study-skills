@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Joseph Mhango">
+<meta name="dcterms.date" content="2025-08-14">
+
+<title>Git and GitHub — From First Principles to Confident Collaboration</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="git_github_tutorial_files/libs/clipboard/clipboard.min.js"></script>
+<script src="git_github_tutorial_files/libs/quarto-html/quarto.js"></script>
+<script src="git_github_tutorial_files/libs/quarto-html/popper.min.js"></script>
+<script src="git_github_tutorial_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="git_github_tutorial_files/libs/quarto-html/anchor.min.js"></script>
+<link href="git_github_tutorial_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="git_github_tutorial_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="git_github_tutorial_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="git_github_tutorial_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="git_github_tutorial_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#how-to-use-these-notes" id="toc-how-to-use-these-notes" class="nav-link active" data-scroll-target="#how-to-use-these-notes"><span class="header-section-number">1</span> How to use these notes</a></li>
+  <li><a href="#outcomes-what-youll-be-able-to-do" id="toc-outcomes-what-youll-be-able-to-do" class="nav-link" data-scroll-target="#outcomes-what-youll-be-able-to-do"><span class="header-section-number">2</span> Outcomes (what you’ll be able to do)</a></li>
+  <li><a href="#core-concepts-precise-mental-model" id="toc-core-concepts-precise-mental-model" class="nav-link" data-scroll-target="#core-concepts-precise-mental-model"><span class="header-section-number">3</span> Core concepts — precise mental model</a></li>
+  <li><a href="#setup-install-and-identity" id="toc-setup-install-and-identity" class="nav-link" data-scroll-target="#setup-install-and-identity"><span class="header-section-number">4</span> Setup — install and identity</a></li>
+  <li><a href="#lab-1-your-first-repository-10-min" id="toc-lab-1-your-first-repository-10-min" class="nav-link" data-scroll-target="#lab-1-your-first-repository-10-min"><span class="header-section-number">5</span> Lab 1 — Your first repository (10 min)</a></li>
+  <li><a href="#staging-vs-committing-clear-separation" id="toc-staging-vs-committing-clear-separation" class="nav-link" data-scroll-target="#staging-vs-committing-clear-separation"><span class="header-section-number">6</span> Staging vs committing — clear separation</a></li>
+  <li><a href="#lab-2-branching-and-merging-25-min" id="toc-lab-2-branching-and-merging-25-min" class="nav-link" data-scroll-target="#lab-2-branching-and-merging-25-min"><span class="header-section-number">7</span> Lab 2 — Branching and merging (25 min)</a></li>
+  <li><a href="#conflicts-understand-and-fix-with-intent" id="toc-conflicts-understand-and-fix-with-intent" class="nav-link" data-scroll-target="#conflicts-understand-and-fix-with-intent"><span class="header-section-number">8</span> Conflicts — understand and fix with intent</a></li>
+  <li><a href="#remote-basics-github-flow" id="toc-remote-basics-github-flow" class="nav-link" data-scroll-target="#remote-basics-github-flow"><span class="header-section-number">9</span> Remote basics — GitHub flow</a></li>
+  <li><a href="#lab-3-feature-workflow-with-pr-30-min" id="toc-lab-3-feature-workflow-with-pr-30-min" class="nav-link" data-scroll-target="#lab-3-feature-workflow-with-pr-30-min"><span class="header-section-number">10</span> Lab 3 — Feature workflow with PR (30 min)</a></li>
+  <li><a href="#ignore-the-right-things-.gitignore-essentials" id="toc-ignore-the-right-things-.gitignore-essentials" class="nav-link" data-scroll-target="#ignore-the-right-things-.gitignore-essentials"><span class="header-section-number">11</span> Ignore the right things — .gitignore essentials</a></li>
+  <li><a href="#rescue-kit-safe-undo" id="toc-rescue-kit-safe-undo" class="nav-link" data-scroll-target="#rescue-kit-safe-undo"><span class="header-section-number">12</span> Rescue kit — safe undo</a></li>
+  <li><a href="#inspect-and-search-history" id="toc-inspect-and-search-history" class="nav-link" data-scroll-target="#inspect-and-search-history"><span class="header-section-number">13</span> Inspect and search history</a></li>
+  <li><a href="#authentication-choices" id="toc-authentication-choices" class="nav-link" data-scroll-target="#authentication-choices"><span class="header-section-number">14</span> Authentication choices</a></li>
+  <li><a href="#common-pitfalls-and-fixes" id="toc-common-pitfalls-and-fixes" class="nav-link" data-scroll-target="#common-pitfalls-and-fixes"><span class="header-section-number">15</span> Common pitfalls (and fixes)</a></li>
+  <li><a href="#capstone-lab-from-zero-to-website-25-min" id="toc-capstone-lab-from-zero-to-website-25-min" class="nav-link" data-scroll-target="#capstone-lab-from-zero-to-website-25-min"><span class="header-section-number">16</span> Capstone lab — from zero to website (25 min)</a></li>
+  <li><a href="#quick-reference-cheat-sheet" id="toc-quick-reference-cheat-sheet" class="nav-link" data-scroll-target="#quick-reference-cheat-sheet"><span class="header-section-number">17</span> Quick reference (cheat sheet)</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">18</span> Further reading</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Git and GitHub — From First Principles to Confident Collaboration</h1>
+<p class="subtitle lead">2‑Hour Study Notes and Guided Tutorial</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Joseph Mhango </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 14, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>Source reference: These notes draw on and expand the slide deck: <a href="https://josephmhango.github.io/professional-study-skills/slides/gitslides.html">Git on Windows — First Principles to Confident Collaboration</a>.</p>
+</blockquote>
+<section id="how-to-use-these-notes" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="how-to-use-these-notes"><span class="header-section-number">1</span> How to use these notes</h2>
+<ul>
+<li>Read the left‑hand prose, then immediately try the examples in your terminal.</li>
+<li>The tutorial is scaffolded: each section builds on the last.</li>
+<li>If you’re brand new, skim the definitions, then do the labs in order.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Tip: Use a fresh folder for this tutorial (e.g., <code>~/git-lab</code>) so your experiments are clean and disposable.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="outcomes-what-youll-be-able-to-do" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="outcomes-what-youll-be-able-to-do"><span class="header-section-number">2</span> Outcomes (what you’ll be able to do)</h2>
+<p>By the end, you can:</p>
+<ul>
+<li>Define: repository, working directory, staging area, commit, branch, HEAD, remote</li>
+<li>Install/configure Git; set your identity and verify it</li>
+<li>Record and inspect changes: status, add, commit, log, diff</li>
+<li>Branch, merge, and resolve conflicts safely</li>
+<li>Collaborate via GitHub: clone, push, pull/fetch, open a Pull Request (PR)</li>
+<li>Recover from mistakes with revert/reset and use the reflog</li>
+</ul>
+<hr>
+</section>
+<section id="core-concepts-precise-mental-model" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="core-concepts-precise-mental-model"><span class="header-section-number">3</span> Core concepts — precise mental model</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li><strong>Repository</strong>: a project folder with a hidden <code>.git</code> database that stores your history.</li>
+<li><strong>Working directory</strong>: your files on disk that you edit.</li>
+<li><strong>Staging area (index)</strong>: the “basket” of changes queued for the next commit.</li>
+<li><strong>Commit</strong>: a named snapshot of staged changes plus metadata.</li>
+<li><strong>Branch</strong>: a movable label pointing to a commit; <code>HEAD</code> points to your current branch/commit.</li>
+<li><strong>Remote</strong>: a copy of your repo hosted elsewhere (e.g., GitHub’s <code>origin</code>).</li>
+<li><strong>Clone</strong>: make a local copy of a remote; <strong>Publish</strong>: first push to create the remote.</li>
+</ul>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Where am I (repo root?)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Is this a Git repo?</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rev-parse <span class="at">--is-inside-work-tree</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Current branch and HEAD pointer</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status <span class="at">-sb</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Definition mnemonic: Working directory (files), Staging area (basket), Commit (snapshot), Branch/HEAD (labels), Remote (hosted copy).</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="setup-install-and-identity" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="setup-install-and-identity"><span class="header-section-number">4</span> Setup — install and identity</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Install Git, then set your identity so your commits are attributed correctly. Git reads configuration from three levels, merged in order: system (all users), global (you, typically at ~/.gitconfig), and local (per‑repository, .git/config). Set your global defaults first; override per repository when needed (e.g., a work email). Start with HTTPS for simplicity; once you’re comfortable, add SSH keys for frictionless pushes and automation.</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check install</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set identity (global defaults)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email you@example.com</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># See your config</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--list</span> <span class="at">--show-origin</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Keep the same <code>user.name</code>/<code>user.email</code> as your GitHub account to avoid mismatch warnings.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="lab-1-your-first-repository-10-min" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="lab-1-your-first-repository-10-min"><span class="header-section-number">5</span> Lab 1 — Your first repository (10 min)</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Create a new repo, add a README, and make your first commit. Practice status → add → commit → log.</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/git-lab/hello-git <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/git-lab/hello-git</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"# hello-git"</span> <span class="op">&gt;</span> README.md</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add README.md</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Initial commit"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--graph</span> <span class="at">--decorate</span> <span class="at">-n</span> 3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Commit messages should explain the “why” and “what”, not just file names.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="staging-vs-committing-clear-separation" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="staging-vs-committing-clear-separation"><span class="header-section-number">6</span> Staging vs committing — clear separation</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Staging is a deliberate queue (the “index”) that lets you curate exactly what goes into a snapshot. Think of it like packing a suitcase: your working directory is the wardrobe; the index is the suitcase; a commit is the tag on a packed suitcase. Use <code>git add -p</code> (patch mode) to stage hunks interactively, splitting noisy changes from meaningful ones. This discipline produces clear history and easier reviews.</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit README.md and notes.txt</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">"Notes\n"</span> <span class="op">&gt;&gt;</span> notes.txt</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Review changes</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff         <span class="co"># unstaged</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-p</span>       <span class="co"># stage selected hunks</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff <span class="at">--staged</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add initial notes with context"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Stage logically related changes together. Avoid mixing formatting and feature edits in one commit.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="lab-2-branching-and-merging-25-min" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="lab-2-branching-and-merging-25-min"><span class="header-section-number">7</span> Lab 2 — Branching and merging (25 min)</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Create a feature branch, commit on it, and merge back to <code>main</code>. Observe fast‑forward vs merge commit behavior.</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create and switch</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch <span class="at">-c</span> feature/readme-badges</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate work</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Badges: CI, Docs"</span> <span class="op">&gt;&gt;</span> README.md</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add README.md</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add badges section"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge back</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge feature/readme-badges</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fast‑forward merge happens when <code>main</code> hasn’t moved; Git just moves the branch pointer.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="conflicts-understand-and-fix-with-intent" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="conflicts-understand-and-fix-with-intent"><span class="header-section-number">8</span> Conflicts — understand and fix with intent</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Conflicts occur when two branches modify overlapping lines and Git can’t auto‑merge. You’ll see conflict markers in the file: <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> (your changes), a divider <code>=======</code>, then <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; other-branch</code>. Edit the file to the final intended content (often a thoughtful blend), delete all markers, save, then stage and commit. Prefer explaining the resolution in the commit message (what you kept and why).</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an intentional conflict</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">git</span> switch <span class="at">-c</span> feature/conflict</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a> <span class="bu">echo</span> <span class="st">"Line from feature"</span> <span class="op">&gt;&gt;</span> README.md</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">git</span> add README.md <span class="kw">&amp;&amp;</span> <span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Feature line"</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">git</span> switch main</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a> <span class="bu">echo</span> <span class="st">"Line from main"</span> <span class="op">&gt;&gt;</span> README.md</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">git</span> add README.md <span class="kw">&amp;&amp;</span> <span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Main line"</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a> <span class="fu">git</span> merge feature/conflict   <span class="co"># conflict appears</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Open README.md and resolve</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">git</span> add README.md</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a> <span class="fu">git</span> commit    <span class="co"># merge commit completes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Explain the resolution in your commit message, not just “fix conflict”.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="remote-basics-github-flow" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="remote-basics-github-flow"><span class="header-section-number">9</span> Remote basics — GitHub flow</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Add a remote and push to share your work. <code>git fetch</code> downloads new commits without touching your files; <code>git pull</code> = <code>fetch</code> + <code>merge</code> (or rebase, if configured). Use <code>-u</code> on the first push to set an upstream tracking pair, enabling simple <code>git push</code>/<code>git pull</code> with no extra args. Teams often prefer a clean, linear <code>main</code>; consider <code>git pull --rebase</code> on topic branches to replay your commits on top of new upstream history.</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new GitHub repo named hello-git, then:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Add remote and push first time</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin https://github.com/<span class="op">&lt;</span>you<span class="op">&gt;</span>/hello-git.git</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Later work</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull       <span class="co"># fetch + merge</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use branch names like <code>feature/...</code>, <code>fix/...</code>, <code>docs/...</code> to encode intent.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="lab-3-feature-workflow-with-pr-30-min" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="lab-3-feature-workflow-with-pr-30-min"><span class="header-section-number">10</span> Lab 3 — Feature workflow with PR (30 min)</h2>
+<ol type="1">
+<li>Create a branch and push it:</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch <span class="at">-c</span> feature/add-syllabus</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"## Syllabus"</span> <span class="op">&gt;&gt;</span> README.md</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add README.md</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add syllabus section"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin feature/add-syllabus</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><p>Open a Pull Request on GitHub (web). Describe what/why; link issues (<code>Fixes #123</code>).</p></li>
+<li><p>After review, squash‑merge via the GitHub UI. Pull the updated <code>main</code> locally:</p></li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PRs are conversations plus checks. Prefer small PRs; they review faster and break less.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="ignore-the-right-things-.gitignore-essentials" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="ignore-the-right-things-.gitignore-essentials"><span class="header-section-number">11</span> Ignore the right things — .gitignore essentials</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"__pycache__/"</span> <span class="op">&gt;&gt;</span> .gitignore</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">".ipynb_checkpoints/"</span> <span class="op">&gt;&gt;</span> .gitignore</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"*.env"</span> <span class="op">&gt;&gt;</span> .gitignore</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"*.DS_Store"</span> <span class="op">&gt;&gt;</span> .gitignore</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .gitignore <span class="kw">&amp;&amp;</span> <span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add common ignore rules"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Keep secrets out of Git. Use environment variables or a secrets manager; never commit raw API keys.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="rescue-kit-safe-undo" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="rescue-kit-safe-undo"><span class="header-section-number">12</span> Rescue kit — safe undo</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Choose the least destructive fix: - Unstage: <code>git restore --staged file</code> — removes a change from the basket but keeps it in your working files. - Discard local edits: <code>git restore file</code> — throws away unstaged changes in your working directory for that file. - Amend last commit (unpublished): <code>git commit --amend</code> — rewrites the most recent commit (safe before pushing). - Revert a published commit: <code>git revert &lt;hash&gt;</code> — creates a new commit that undoes the target without rewriting history. - Reset (hard) for local sandboxes only: <code>git reset --hard &lt;hash&gt;</code> — resets HEAD, index, and working tree to match <hash>. This DESTROYS uncommitted changes and can desynchronize you from collaborators if used on shared branches. Prefer <code>revert</code> for published mistakes; use <code>reset --hard</code> only when you’re certain and have no work to lose.</hash></p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unstage a file</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--staged</span> README.md</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Discard local changes</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore README.md</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Revert a published mistake</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> revert <span class="op">&lt;</span>hash<span class="op">&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Last resort (local only)</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--hard</span> <span class="op">&lt;</span>hash<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>reset --hard</code> rewrites your working tree. Use only when you understand the consequences.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="inspect-and-search-history" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="inspect-and-search-history"><span class="header-section-number">13</span> Inspect and search history</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--graph</span> <span class="at">--decorate</span> <span class="at">--all</span> <span class="at">--date</span><span class="op">=</span>relative <span class="at">--pretty</span><span class="op">=</span>format:<span class="st">"%C(yellow)%h%Creset %&lt;(12,trunc)%Cgreen%ad%Creset %s %C(bold blue)&lt;%an&gt;%Creset"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> blame <span class="at">-L</span> 1,50 README.md</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> grep <span class="at">-n</span> <span class="st">"pattern"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <code>git add -p</code> + <code>git commit --fixup=&lt;hash&gt;</code> and <code>git rebase --autosquash</code> to craft tidy histories before sharing.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="authentication-choices" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="authentication-choices"><span class="header-section-number">14</span> Authentication choices</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># HTTPS (default) — cache credentials</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> credential.helper store</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># SSH — generate a key and add to GitHub</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519 <span class="at">-C</span> <span class="st">"you@example.com"</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ~/.ssh/id_ed25519.pub   <span class="co"># paste into GitHub → Settings → SSH and GPG keys</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>HTTPS is simplest to start—Git will prompt and can cache credentials (<code>credential.helper</code>). SSH uses a keypair: you keep the private key locally, upload the public key to GitHub, and pushes/pulls authenticate without passwords. SSH is ideal for long‑lived setups, CI, and when corporate SSO prompts are disruptive.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="common-pitfalls-and-fixes" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="common-pitfalls-and-fixes"><span class="header-section-number">15</span> Common pitfalls (and fixes)</h2>
+<ul>
+<li>Mixed line endings: enable core.autocrlf appropriately (<code>input</code> on macOS/Linux, <code>true</code> on Windows).</li>
+<li>Large binaries: use Git LFS; avoid committing raw datasets.</li>
+<li>Multiple Git installs: verify with <code>which git</code> / <code>where git</code>.</li>
+<li>Identity mismatch: keep <code>user.name</code>/<code>user.email</code> consistent with GitHub.</li>
+</ul>
+<hr>
+</section>
+<section id="capstone-lab-from-zero-to-website-25-min" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="capstone-lab-from-zero-to-website-25-min"><span class="header-section-number">16</span> Capstone lab — from zero to website (25 min)</h2>
+<p>Build a Markdown profile repo and publish it with GitHub Pages.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) Create and initialize repo</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/git-lab/profile <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/git-lab/profile</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"# Your Name"</span> <span class="op">&gt;</span> index.md</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Short bio…"</span> <span class="op">&gt;&gt;</span> index.md</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"site: minimal"</span> <span class="op">&gt;</span> _config.yml</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Scaffold profile site"</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) Create GitHub repo and push (on GitHub UI first)</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin https://github.com/<span class="op">&lt;</span>you<span class="op">&gt;</span>/<span class="op">&lt;</span>you<span class="op">&gt;</span>.github.io.git</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then on GitHub: Settings → Pages → set Branch = <code>main</code>, Folder = <code>/ (root)</code>. Wait for the green check, then visit <code>https://&lt;you&gt;.github.io/</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Add a CI badge and a LICENSE file as stretch goals.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="quick-reference-cheat-sheet" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="quick-reference-cheat-sheet"><span class="header-section-number">17</span> Quick reference (cheat sheet)</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># New repo</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> proj <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> proj <span class="kw">&amp;&amp;</span> <span class="fu">git</span> init</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage/commit</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span> <span class="kw">&amp;&amp;</span> <span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Init"</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Branch workflow</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch <span class="at">-c</span> feature/x</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin feature/x</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Update local main</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main <span class="kw">&amp;&amp;</span> <span class="fu">git</span> pull</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status <span class="at">-sb</span><span class="kw">;</span> <span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--graph</span> <span class="at">--decorate</span> <span class="at">-n</span> 10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="further-reading" class="level2" data-number="18">
+<h2 data-number="18" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">18</span> Further reading</h2>
+<ul>
+<li>Pro Git (Chacon &amp; Straub) — free online book</li>
+<li>Git documentation — <code>git help &lt;command&gt;</code></li>
+<li>GitHub Docs — Pull Requests, Actions, Pages</li>
+<li>Slide deck: <a href="https://josephmhango.github.io/professional-study-skills/slides/gitslides.html">Git on Windows — First Principles to Confident Collaboration</a></li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

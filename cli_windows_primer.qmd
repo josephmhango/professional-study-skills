@@ -1,0 +1,684 @@
+---
+title: "CLI Foundations on Windows"
+subtitle: "Student Notes"
+author: "Joseph Mhango"
+date: "2025-08-14"
+---
+
+## What you will learn (and how to use these notes)
+
+These notes build your understanding from first principles, step by step. Read the prose on the left; try the commands on the right. By the end, you will be able to:
+
+- Distinguish terminal, shell, program, process, operating system (OS), and kernel
+- Explain how Windows resolves and runs commands (current directory, system paths, `PATH`, briefly `PATHEXT`)
+- Run scripts that accept arguments (in CMD and PowerShell)
+- Troubleshoot common path and environment issues
+
+::: {.callout-tip}
+Start by reading; then run the examples in your own terminal. Learning here is scaffolded: each section uses what you learned before.
+:::
+
+---
+
+## Core concepts (clear definitions first)
+
+::: {.columns}
+::: {.column width="55%"}
+- **Program**: Code on disk (e.g., `cmd.exe`, `powershell.exe`, `python.exe`, `hello.ps1`). A program is not running yet.
+- **Process**: A running instance of a program with its own memory, open files, and environment variables.
+- **Operating System (OS)**: All of Windows. Provides services to processes (files, networking, memory, scheduling).
+- **Kernel**: The privileged core of the OS that actually schedules processes and mediates access to hardware. You don’t run the kernel; programs call into it via system calls.
+- **Shell**: A program you interact with that parses what you type and starts other programs. On Windows, the main shells are:
+  - Command Prompt (`cmd.exe`)
+  - PowerShell (`pwsh.exe` or `powershell.exe`)
+- **Terminal**: The window/host that displays a shell (e.g., Windows Terminal, RStudio Terminal). The terminal is the “container”; the shell is the interpreter inside it.
+
+These distinctions matter: the shell (a program) creates processes to run other programs; the OS and kernel make that safe and efficient. Keep this mental model handy; we’ll reuse it in every section.
+:::
+
+::: {.column width="45%"}
+```powershell
+# Find which shell you’re in (PowerShell):
+$PSVersionTable
+
+# Which program is the current shell?
+(Get-Process -Id $PID).Path
+```
+
+```batch
+:: In CMD, check the shell executable:
+WHERE cmd
+```
+:::
+:::
+
+---
+
+## How Windows runs a command (resolution and launch)
+
+::: {.columns}
+::: {.column width="55%"}
+When you press Enter in a shell, a predictable sequence happens:
+
+1. The shell parses your input into a command and its arguments.
+2. Windows resolves the command to a file path:
+   - Checks the current directory
+   - Checks certain system folders
+   - Searches each directory listed in the `PATH` environment variable (first match wins)
+3. The shell asks the OS to start a new process for the found program, passing along the current environment variables.
+
+Notes on `PATHEXT` (brief): On Windows, `PATHEXT` lists extensions considered executable, e.g., `.EXE;.BAT;.CMD;.PS1`. Typing `git` lets Windows try `git.exe`, then `git.cmd`, etc. Useful, but don’t over-index on it—`PATH` order is more important.
+:::
+
+::: {.column width="45%"}
+```powershell
+# Show PATH as a list (PowerShell):
+$env:PATH -split ';' | Select-Object -First 10
+
+# Which program will run?
+where.exe git
+```
+
+```batch
+:: PATH and locating a tool (CMD):
+ECHO %PATH%
+WHERE git
+```
+:::
+:::
+
+---
+
+## Working with the current directory and paths
+
+::: {.columns}
+::: {.column width="55%"}
+Your “current working directory” is the anchor for relative paths. If you type a relative path, the shell interprets it from where you currently are. This is convenient for short commands but can cause surprises when you expect a different file or tool.
+
+Prefer explicit paths when clarity matters (especially in scripts or instructions you’ll share). On Windows, the current directory is considered during command resolution before searching `PATH`. That’s helpful during development, but it also means a tool in the current folder can mask a different one on `PATH`.
+
+A practical habit: use `where.exe toolname` (or `Get-Command` in PowerShell) to confirm exactly which program will run before you rely on it.
+:::
+
+::: {.column width="45%"}
+```powershell
+# PowerShell
+Set-Location C:\Projects\demo
+# Explicit relative path run is common
+.\script.ps1 -Name Alice
+```
+
+```batch
+:: CMD
+CD /D C:\Projects\demo
+script.cmd Alice
+```
+:::
+:::
+
+---
+
+## Anatomy of a command and passing arguments
+
+::: {.columns}
+::: {.column width="55%"}
+A command typically has four parts:
+- Program (what to run)
+- Optional subcommand (narrow the action)
+- Options/flags (modify how it runs)
+- Arguments (the things to act on)
+
+The same structure scales from tiny scripts to large tools. Read unfamiliar commands by labeling these parts—doing so turns long lines into something predictable and learnable.
+:::
+
+::: {.column width="45%"}
+```batch
+:: CMD style
+DIR /B /S "C:\Data Files"
+```
+
+```powershell
+# PowerShell style
+Get-ChildItem -Recurse -Filter *.csv
+```
+:::
+:::
+
+### Scripts that accept arguments
+
+::: {.columns}
+::: {.column width="55%"}
+Scripts are programs too. The key is that they accept arguments and often provide defaults. You can design your own scripts to behave like professional tools: parse inputs, validate them, and print clear messages.
+:::
+
+::: {.column width="45%"}
+```batch
+:: hello.cmd
+@ECHO OFF
+ECHO Hello, %~1!
+ECHO You ran %~n0
+```
+
+```powershell
+# hello.ps1
+param([string]$Name = "World")
+Write-Host "Hello, $Name!"
+```
+:::
+:::
+
+## Being productive with Command Prompt (CMD)
+
+### Getting set up
+
+::: {.columns}
+::: {.column width="55%"}
+Think of the prompt (e.g., `C:\Users\you>` ) as your “camera position” in the filesystem. Every command you run either acts on this folder or on a path you specify.
+
+- Absolute paths always start with a drive, e.g., `C:\data\projects`. They’re unambiguous.
+- Relative paths are interpreted from where you currently are. For example, `..\..` means “go up two folders from here”.
+- Windows exposes handy variables: `%USERPROFILE%` (your home), `%TEMP%`, `%CD%` (current), and `%HOMEDRIVE%%HOMEPATH%` (your home split into drive/path).
+- Paths with spaces must be quoted: `"C:\My Data\file.csv"`.
+- Switch drives by typing the drive letter + colon, e.g., `D:`. If you also need to change folders on another drive, prefer `cd /d`.
+
+Why a data scientist cares: absolute paths make notebooks and batch jobs reproducible; relative paths make scripts portable within a project. You’ll use both daily.
+
+::: {.callout-tip}
+Scenario: You clone `C:\ds\churn` and get a ZIP at `D:\downloads`. To inspect the data quickly, switch to `D:` then `cd /d "D:\downloads"` to unzip; later `cd /d "C:\ds\churn\data"` to run scripts relative to the project.
+:::
+:::
+
+::: {.column width="45%"}
+```batch
+:: Open Explorer at the current folder
+explorer .
+
+:: Switch drive
+D:
+
+:: Change drive and folder in one go
+cd /d "D:\datasets\census"
+```
+
+```text
+# Expected (illustrative):
+D:\>cd /d "D:\datasets\census"
+D:\datasets\census>
+```
+:::
+:::
+
+### Moving around the disk
+
+::: {.columns}
+::: {.column width="55%"}
+Use `cd` to print where you are, `dir` to list what’s there, and `cd ..` to go up. `tree /f` gives a quick sense of structure.
+
+Tip: `dir /b` (bare) is ideal for saving listings or feeding into other commands; `dir /s` recurses.
+
+Example flow: confirm you’re in the project root, list only CSVs recursively to see what’s available, then jump into the `raw` folder to inspect files.
+:::
+
+::: {.column width="45%"}
+```batch
+:: List variations
+dir
+
+:: Bare names (great for piping)
+dir /b
+
+:: Recursive listing
+dir /s /b *.csv
+
+:: Navigate
+cd
+cd ..
+cd /d "D:\datasets\census"
+
+tree /f
+```
+
+```text
+C:\data\projects>dir /b
+raw
+working
+README.md
+```
+:::
+:::
+
+### Two navigation superpowers
+
+::: {.columns}
+::: {.column width="55%"}
+- `pushd` / `popd` temporarily jump to a folder and come back—great for one-off searches.
+- Tab completion speeds up navigation: type a few letters of a file/folder, press Tab; Shift+Tab cycles backwards.
+
+Use case: you’re in a notebook outputs folder but need to quickly search logs elsewhere; `pushd` there, search, then `popd` to return.
+:::
+
+::: {.column width="45%"}
+```batch
+pushd "D:\bigdata\logs"
+dir /s /b *.log | findstr /i error
+popd
+```
+
+```text
+# After popd you’re back where you started.
+```
+:::
+:::
+
+### Finding things fast
+
+::: {.columns}
+::: {.column width="55%"}
+Use `where` to see exactly which program will run (crucial when multiple Pythons exist), `dir /s /b` for filename search, and `findstr` to scan file contents.
+
+Scenario (DS): you installed Python with Anaconda and Microsoft Store; which one is active in this shell? `where python` reveals precedence, avoiding mysterious package mismatches.
+:::
+
+::: {.column width="45%"}
+```batch
+:: Programs on PATH
+where python
+where /R "%USERPROFILE%" python.exe
+
+:: Files by name
+dir /s /b "D:\projects\*report*.xlsx"
+
+:: Text inside files
+findstr /s /n /i "error" *.log
+findstr /s /i /c:"feature importance" *.txt
+```
+
+```text
+C:\>where python
+C:\Users\you\anaconda3\python.exe
+C:\Windows\py.exe
+```
+:::
+:::
+
+### Filter, sort, and compose
+
+::: {.columns}
+::: {.column width="55%"}
+The pipeline character `|` connects commands. Build powerful one-liners: list files → filter → sort → save.
+
+Scenario: build a quick index of 2024 CSVs to share with a teammate.
+:::
+
+::: {.column width="45%"}
+```batch
+:: Filter and sort, save results
+dir /s /b *.csv | findstr /i "2024" | sort > index_2024.csv.txt
+```
+
+```text
+# index_2024.csv.txt (snippet)
+C:\data\raw\sales_2024_q1.csv
+C:\data\raw\sales_2024_q2.csv
+```
+:::
+:::
+
+### Make, copy, move, rename, delete
+
+::: {.columns}
+::: {.column width="55%"}
+For production-grade copies, prefer `robocopy` (retries, mirroring, timestamps). Use `move`/`ren` for reorganizing outputs. Remember: deletions with `del`/`rmdir` bypass Recycle Bin.
+
+Scenario (DS): copy only new CSVs from RAW into WORKING each morning, then archive yesterday’s intermediates.
+:::
+
+::: {.column width="45%"}
+```batch
+robocopy "C:\data\raw" "C:\data\working" *.csv /XO
+robocopy "D:\src" "E:\backup\src" /MIR      :: mirror (danger: deletes extras)
+robocopy "C:\A" "C:\B" *.parquet /S /XO       :: copy subfolders, skip older
+
+move "C:\data\working\old.csv" "C:\data\archive\"
+ren  "C:\data\raw\report 01.csv" report_01.csv
+
+del   "C:\data\working\temp_*.csv"
+rmdir /s /q "C:\data\working\cache"
+```
+
+```text
+# robocopy exit codes: 0 (nothing to copy), 1 (copied), >=8 (errors)
+```
+:::
+:::
+
+::: {.callout-caution}
+`del` and `rmdir` are permanent; test on a sandbox folder first.
+:::
+
+### Viewing and slicing files
+
+::: {.columns}
+::: {.column width="55%"}
+Use `type | more` for paging and `find /v /c ""` for a quick line count. For head/tail equivalents, call PowerShell from CMD.
+
+Scenario: sanity‑check the first and last lines of a CSV before ingesting into Python.
+:::
+
+::: {.column width="45%"}
+```batch
+:: Page through
+type data.csv | more
+
+:: Count lines
+find /v /c "" data.csv
+
+:: First / last N lines via PowerShell
+powershell -NoProfile -Command "Get-Content 'data.csv' -TotalCount 20"
+powershell -NoProfile -Command "Get-Content 'data.csv' -Tail 20"
+```
+:::
+:::
+
+### Redirection, piping, and chaining
+
+::: {.columns}
+::: {.column width="55%"}
+Redirect `>` (overwrite) and `>>` (append). Redirect errors with `2>`; merge streams with `2>&1`. Chain commands with `&&` (on success), `||` (on failure), and `&` (always).
+
+Scenario: run an ETL step and only launch the model if the ETL succeeded.
+:::
+
+::: {.column width="45%"}
+```batch
+:: Redirect output
+dir /s /b *.parquet > all_parquet.txt
+
+:: Append CSV index
+dir /s /b *.csv >> all_csv.txt
+
+:: Combine stdout + stderr
+etl_step.bat > etl.log 2>&1 && train_model.bat
+```
+:::
+:::
+
+### Loops you’ll actually use
+
+::: {.columns}
+::: {.column width="55%"}
+In interactive CMD, use single `%`. In `.bat` files, double them (`%%`). Combine `for` with `forfiles` to filter by size, age, or pattern.
+
+Scenario: move daily CSVs larger than 10 MB to an archive before ingestion.
+:::
+
+::: {.column width="45%"}
+```batch
+:: Loop files in current folder
+for %f in (*.csv) do echo %f
+
+:: Recurse subfolders
+for /r %f in (*.csv) do echo %f
+
+:: Move CSVs > 10 MB to archive
+for %f in (*.csv) do forfiles /P "%CD%" /M "%~nxf" /C "cmd /c if @fsize gtr 10485760 move /Y @path C:\data\archive"
+```
+:::
+:::
+
+### Guard rails and conditions
+
+::: {.columns}
+::: {.column width="55%"}
+Protect scripts with `if` checks to avoid destructive surprises. Case-insensitive compares via `/i`.
+:::
+
+::: {.column width="45%"}
+```batch
+if exist "*.parquet" echo Found parquet files
+if not exist "C:\data\archive" mkdir "C:\data\archive"
+
+if /i "%ENV%"=="prod" echo Production
+```
+:::
+:::
+
+### Environment variables and PATH
+
+::: {.columns}
+::: {.column width="55%"}
+Session variables (`set`) affect only the current window; `setx` persists to future sessions (you must reopen CMD). Use `where` to verify which interpreter you’re running.
+
+Scenario: pin to a specific Python in a build agent by prepending its folder to `PATH` for just the session.
+:::
+
+::: {.column width="45%"}
+```batch
+set                 :: list all
+set PATH
+set MYVAR=hello
+echo %MYVAR%
+
+setx MYVAR hello    :: persist (reopen CMD to see it)
+
+where python
+python --version
+```
+:::
+:::
+
+### Hashing, archives, and big files
+
+::: {.columns}
+::: {.column width="55%"}
+Use `certutil` to verify file integrity, `tar` to compress projects, and `forfiles` to find large files worth compressing or moving.
+:::
+
+::: {.column width="45%"}
+```batch
+certutil -hashfile data.csv SHA256
+
+tar -caf backup.tar.gz "C:\data\project1"
+tar -xaf backup.tar.gz -C "D:\restore_here"
+
+forfiles /S /M *.* /C "cmd /c if @fsize gtr 104857600 echo @fsize @path" > bigfiles.txt
+```
+:::
+:::
+
+### Networking odds and ends
+
+::: {.columns}
+::: {.column width="55%"}
+Use `curl` for quick downloads and `ping` to check connectivity.
+:::
+
+::: {.column width="45%"}
+```batch
+curl -L -o data.zip https://example.com/data.zip
+ping 8.8.8.8
+```
+:::
+:::
+
+### Launching tools you care about
+
+::: {.columns}
+::: {.column width="55%"}
+Create a virtual environment, activate it, and upgrade `pip`. If R is on `PATH`, call scripts with `Rscript`.
+:::
+
+::: {.column width="45%"}
+```batch
+py -3.11 -m venv .venv
+.venv\Scripts\activate
+python -m pip install -U pip
+
+Rscript my_analysis.R
+```
+:::
+:::
+
+### History, macros, and quality‑of‑life
+
+::: {.columns}
+::: {.column width="55%"}
+`doskey /history` shows previous commands; define session‑aliases with `doskey`. Switch to UTF‑8 (`chcp 65001`) to avoid garbled characters.
+:::
+
+::: {.column width="45%"}
+```batch
+doskey /history
+
+doskey ll=dir /a $*
+doskey l=dir /b $*
+doskey grep=findstr /s /i $*
+
+chcp 65001
+```
+:::
+:::
+
+### Real‑world recipes
+
+::: {.columns}
+::: {.column width="55%"}
+These end‑to‑end patterns map directly to daily DS tasks: inventorying data, consolidating results, copying only newer files, mining logs.
+:::
+
+::: {.column width="45%"}
+```batch
+:: 1) Build a reusable file index
+cd /d "D:\datasets"
+dir /s /b *.csv > all_csv.txt
+
+:: 2) Move all *_final.csv into one folder
+mkdir "D:\datasets\final"
+for /r %f in (*_final.csv) do move /Y "%f" "D:\datasets\final\"
+
+:: 3) Copy only newer CSVs
+robocopy "C:\data\raw" "C:\data\working" *.csv /XO
+
+:: 4) Find logs mentioning "timeout"
+cd /d "C:\service\logs"
+findstr /s /n /i "timeout" *.log > timeouts.txt
+```
+:::
+:::
+
+### Troubleshooting quick hits
+
+::: {.columns}
+::: {.column width="55%"}
+If a command isn’t found, verify install and `PATH`. For access errors, try a path you own or (only when required) an Administrator CMD. Inside `for` loops, escape reserved symbols as `^|`, `^>`, `^&`. In batch files, double percent signs.
+:::
+
+::: {.column width="45%"}
+```batch
+where toolname
+echo %PATH%
+```
+:::
+:::
+
+---
+
+## Practical examples
+
+### Organise files by extension (CMD)
+
+::: {.columns}
+::: {.column width="55%"}
+This Batch script creates one subfolder per file extension in the current folder and moves files accordingly. It’s a good example of loops, variable expansion, and careful quoting. Start with a copy of data until you trust your result.
+:::
+
+::: {.column width="45%"}
+```batch
+@ECHO OFF
+SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
+FOR %%F IN (*.*) DO (
+  SET "ext=%%~xF"
+  IF NOT "!ext!"=="" (
+    SET "ext=!ext:~1!"  & REM drop dot
+    IF NOT EXIST ".!ext!" MD ".!ext!"
+    MOVE /Y "%%~fF" ".!ext!\" >NUL
+  )
+)
+ECHO Done.
+```
+:::
+:::
+
+### Organise files by extension (PowerShell, recursive)
+
+::: {.columns}
+::: {.column width="55%"}
+PowerShell makes this ergonomic with object pipelines. This example groups files by extension and consolidates them into destination folders. Use `-WhatIf` in your own scripts to preview actions before moving files for real.
+:::
+
+::: {.column width="45%"}
+```powershell
+param([string]$Root = ".", [string]$Out = ".by-ext")
+
+Get-ChildItem -Path $Root -Recurse -File |
+  Group-Object Extension |
+  ForEach-Object {
+    $ext  = if ($_.Name) { $_.Name.TrimStart('.') } else { 'noext' }
+    $dest = Join-Path $Out $ext
+    New-Item -ItemType Directory -Path $dest -Force | Out-Null
+    $_.Group | ForEach-Object {
+      Move-Item -LiteralPath $_.FullName -Destination $dest -Force
+    }
+  }
+
+Write-Host "Organised files under" (Resolve-Path $Out)
+```
+:::
+:::
+
+---
+
+## Troubleshooting: “'pip' is not recognized”
+
+::: {.columns}
+::: {.column width="55%"}
+This happens when your shell can’t find `pip` on `PATH` or you’re using a shell session that wasn’t initialized for the Python you expect. Use this short diagnostic flow before changing your system:
+
+1. Check whether `pip` and `python` are on `PATH` for this session.
+2. Confirm which copies will run (there may be multiple installations).
+3. If using Conda/venv, activate the intended environment so `PATH` is updated.
+
+When in doubt, call pip via the interpreter (`python -m pip ...` or `py -m pip ...`) to remove ambiguity.
+:::
+
+::: {.column width="45%"}
+```powershell
+where.exe pip
+where.exe python
+$env:PATH -split ';' | Select-Object -First 10
+```
+
+```batch
+WHERE pip
+WHERE python
+ECHO %PATH%
+```
+:::
+:::
+
+---
+
+## Wrap‑up and glossary
+
+- Terminal (window/host) vs Shell (interpreter) vs Program (on disk) vs Process (running) vs OS vs Kernel
+- Command resolution: current directory → system folders → `PATH`; `PATHEXT` helps, but `PATH` order decides
+- Commands = program → optional subcommand → options → arguments
+- Scripts accept arguments like larger tools
+
+### Glossary (short forms)
+- Program: Code on disk (e.g., `git.exe`)
+- Process: Running instance of a program
+- Shell: Interpreter (e.g., PowerShell, CMD)
+- Terminal: Window hosting a shell
+- OS: The whole operating system (Windows)
+- Kernel: Core of the OS that schedules processes and manages hardware

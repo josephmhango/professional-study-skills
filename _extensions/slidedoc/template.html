@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>$title$</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff; --ink:#111827; --muted:#6b7280; --border:#e5e7eb;
+    --accent:#2563eb; --accent-2:#7c3aed; --shadow:0 10px 30px rgba(0,0,0,.08);
+    --slide-gap: clamp(24px, 4vw, 48px);
+    --slide-pad: clamp(20px, 4vw, 48px);
+    --tocw: 320px;
+    --hdrh: 56px;
+  }
+  *{box-sizing:border-box}
+  html, body{height:100%}
+  body{
+    margin:0; color:var(--ink); background:var(--bg);
+    font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    overflow:hidden;
+  }
+
+  /* Header */
+  header{
+    position:fixed; inset:0 0 auto 0; height:var(--hdrh); z-index:60;
+    background:#fffefc; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:14px; padding:0 12px;
+    backdrop-filter:saturate(120%) blur(6px);
+  }
+  .brand{display:flex; align-items:center; gap:12px; min-width:0}
+  .home-link{
+    display:inline-flex; align-items:center; gap:8px; padding:6px 10px;
+    border-radius:10px; text-decoration:none; color:var(--ink);
+    border:1px solid var(--border); background:white;
+  }
+  .home-link:hover{background:#f9fafb}
+  .title{font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .grow{flex:1}
+  .btn{
+    appearance:none; border:1px solid var(--border); background:#fff; color:var(--ink);
+    padding:8px 12px; border-radius:10px; cursor:pointer;
+  }
+  .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:white; border-color:transparent; font-weight:600}
+
+  /* Deck wrapper (below header) */
+  .deck{ position:relative; margin-top:var(--hdrh); }
+
+  /* Slides */
+  .slide{
+    position:relative;
+    width:100vw; height:calc(100vh - var(--hdrh));
+    scroll-snap-align:start;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--slide-gap);
+    padding: var(--slide-pad);
+    border-bottom:1px solid var(--border);
+    background:white; border-radius:14px; box-shadow:var(--shadow);
+  }
+  .slide:last-child{border-bottom:none}
+
+  .left{
+    max-width:min(50vw, 900px);
+    display:flex; flex-direction:column; justify-content:center;
+    overflow:auto;
+  }
+  .left .kicker{font-size:.85rem; color:var(--muted); text-transform:uppercase; letter-spacing:.08em}
+  .left h1, .left h2{margin:.25rem 0 .5rem}
+  .left h1{font-size:clamp(28px,4.8vw,48px); line-height:1.15}
+  .left h2{font-size:clamp(22px,3.8vw,36px); line-height:1.2}
+  .left p{max-width:70ch}
+  .pill{ display:inline-block; font-weight:600; border-radius:999px; padding:.2rem .6rem; background:#e2e8f0; color:#0f172a; font-size:.8rem; margin-right:.35rem }
+  .note{ border-left:4px solid var(--accent); padding:.75rem 1rem; background:#f8fafc; border-radius:8px }
+
+  .right{
+    display:grid; place-items:center; overflow:auto;
+    border:1px solid var(--border); border-radius:14px; background:#f9fafb;
+    box-shadow:var(--shadow);
+  }
+  .right > img{width:100%; height:100%; object-fit:cover; display:block}
+  .right pre{margin:0; width:100%; height:100%; overflow:auto; padding:16px; background:#0b1020; color:#e9eefb; border-radius:14px}
+  .right code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace; font-size:clamp(12px,1.6vw,18px); line-height:1.4}
+
+  /* Scroll snapping container */
+  .slides{
+    height:calc(100vh - var(--hdrh));
+    overflow-y:auto;
+    scroll-snap-type:y mandatory;
+  }
+  /* Desktop: keep TOC open and offset deck */
+  @media (min-width: 1000px){
+    .toc-drawer{ transform:none; }
+    .deck{ margin-left: var(--tocw); }
+    #tocBtn{ display:none; }
+  }
+
+  /* Scroll-down FAB */
+  .fab{
+    position:fixed; left:50%; transform:translateX(-50%);
+    bottom:16px; z-index:55;
+    padding:10px 14px; border-radius:999px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:white;
+    border:none; cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.2);
+    display:flex; align-items:center; gap:10px; font-weight:600;
+  }
+  .fab svg{display:block}
+
+  /* Progress dots */
+  .progress{
+    position:fixed; right:12px; top:calc(var(--hdrh) + 12px);
+    display:flex; flex-direction:column; gap:6px; z-index:55;
+  }
+  .dotnav{
+    width:10px; height:10px; border-radius:999px; background:#e5e7eb; border:1px solid #d1d5db
+  }
+  .dotnav.active{background:linear-gradient(135deg,var(--accent),var(--accent-2)); border-color:transparent}
+
+  /* Contents drawer (left sidebar) */
+  .toc-drawer{
+    position:fixed; inset:var(--hdrh) auto 0 0; width:var(--tocw);
+    background:white; border-right:1px solid var(--border);
+    transform:translateX(-100%); transition:transform .25s ease; z-index:70;
+    display:flex; flex-direction:column;
+  }
+  .toc-drawer.open{ transform:translateX(0) }
+  .toc-head{padding:10px 12px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px}
+  .toc-body{ padding:10px 12px; overflow:auto; }
+  .toc-body ul{list-style:none; margin:0; padding:0}
+  .toc-body li{margin:4px 0}
+  .toc-body a{display:block; padding:6px 8px; border-radius:8px; color:#374151; text-decoration:none}
+  .toc-body a:hover{background:#f3f4f6}
+  .toc-body a.active{color:var(--accent); font-weight:600}
+
+  /* Utility */
+  .visually-hidden{position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); border:0}
+  @media (max-width: 920px){
+    .slide{grid-template-columns:1fr; gap:16px}
+    .left{max-width:100%}
+  }
+</style>
+</head>
+<body>
+
+  <!-- Header with HOME link and buttons -->
+  <header>
+    <div class="brand">
+      <a class="home-link" id="homeLink" href="/">🏠 Home</a>
+      <div class="title" id="docTitle">$title$</div>
+    </div>
+    <div class="grow"></div>
+    <button id="tocBtn" class="btn" type="button">Contents</button>
+    <button id="printBtn" class="btn" type="button">Print</button>
+  </header>
+
+  <!-- Contents drawer -->
+  <aside class="toc-drawer" id="tocDrawer" aria-label="Contents">
+    <div class="toc-head">
+      <strong>Contents</strong>
+      <div class="grow"></div>
+      <button id="closeToc" class="btn" type="button">Close</button>
+    </div>
+    <div class="toc-body">
+      <ul id="tocList"></ul>
+    </div>
+  </aside>
+
+  <!-- Progress dots -->
+  <nav class="progress" id="progress" aria-label="Slide navigation"></nav>
+
+  <!-- Deck -->
+  <div class="deck">
+    <div class="slides" id="slides" tabindex="-1">
+
+      <!-- Quarto injects your rendered .qmd here -->
+      $body$
+
+    </div>
+  </div>
+
+  <!-- Scroll-down button -->
+  <button class="fab" id="nextBtn" type="button" aria-label="Next slide">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M6 9l6 6 6-6"></path>
+    </svg>
+    Scroll down
+  </button>
+
+  <span class="visually-hidden" id="live" aria-live="polite"></span>
+  <script>
+    // ---- Configurable home link (from Quarto YAML: home-url) ----
+    const HOME_URL = "$home-url$" || "/";
+    document.getElementById('homeLink').href = HOME_URL;
+
+    // After Quarto injects $body$, collect slides (expect sections with class="slide")
+    const slides = [...document.querySelectorAll('.slide')];
+    const deckEl = document.getElementById('slides');
+    const nextBtn = document.getElementById('nextBtn');
+    const progress = document.getElementById('progress');
+    const tocBtn = document.getElementById('tocBtn');
+    const tocDrawer = document.getElementById('tocDrawer');
+    const closeToc = document.getElementById('closeToc');
+    const tocList = document.getElementById('tocList');
+    const printBtn = document.getElementById('printBtn');
+    const live = document.getElementById('live');
+
+    // ---- Auto media injection on the right: code wins; else existing img; else data-img; else fallback ----
+    const FALLBACKS = [
+      "https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600&auto=format&fit=crop"
+    ];
+    slides.forEach((s, i) => {
+      const right = s.querySelector('.right');
+      if (!right) return;
+      const hasCode = right.querySelector('pre, code');
+      const hasImg  = right.querySelector('img');
+      if (!hasCode && !hasImg) {
+        const src = s.dataset.img || FALLBACKS[i % FALLBACKS.length];
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = s.dataset.title ? (s.dataset.title + " illustration") : "Illustration";
+        right.appendChild(img);
+      }
+    });
+
+    // ---- Build TOC and progress dots ----
+    slides.forEach((sec, i)=>{
+      const id = sec.id || ('s-' + (i+1)); sec.id = id;
+      const title = sec.dataset.title || sec.getAttribute('data-title') || 'Slide '.concat(i+1);
+
+      // TOC item
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '#' + id;
+      a.textContent = (i+1) + '. ' + title;
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        scrollToIndex(i);
+        closeTocDrawer();
+      });
+      li.appendChild(a);
+      tocList.appendChild(li);
+
+      // Progress dots
+      const dot = document.createElement('button');
+      dot.className = 'dotnav';
+      dot.setAttribute('aria-label', 'Go to ' + title);
+      dot.addEventListener('click', ()=> scrollToIndex(i));
+      progress.appendChild(dot);
+    });
+
+    const tocLinks = [...tocList.querySelectorAll('a')];
+    const dots = [...progress.querySelectorAll('.dotnav')];
+
+    // ---- Scroll helpers ----
+    function currentIndex(){
+      let idx = 0, min = Infinity;
+      slides.forEach((el,i)=>{
+        const r = el.getBoundingClientRect();
+        const d = Math.abs(r.top);
+        if(d < min){ min = d; idx = i; }
+      });
+      return idx;
+    }
+    function scrollToIndex(i){
+      slides[i].scrollIntoView({behavior:'smooth'});
+      highlight(i);
+    }
+    function next(){ const i = currentIndex(); if(i < slides.length-1){ scrollToIndex(i+1); }}
+    function prev(){ const i = currentIndex(); if(i > 0){ scrollToIndex(i-1); }}
+
+    // ---- UI updates ----
+    function highlight(i){
+      dots.forEach((d,j)=> d.classList.toggle('active', j===i));
+      tocLinks.forEach((a,j)=> a.classList.toggle('active', j===i));
+      live.textContent = 'Slide ' + (i+1) + ' of ' + slides.length;
+    }
+
+    // ---- Observe slide in-view for highlighting ----
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const idx = slides.indexOf(e.target);
+          highlight(idx);
+        }
+      });
+    }, {root: deckEl, threshold: 0.6});
+    slides.forEach(s => obs.observe(s));
+
+    // ---- Controls ----
+    nextBtn.addEventListener('click', next);
+    deckEl.addEventListener('keydown',(e)=>{
+      if(['ArrowRight','PageDown',' '].includes(e.key)){ e.preventDefault(); next(); }
+      if(['ArrowLeft','PageUp'].includes(e.key)){ e.preventDefault(); prev(); }
+      if(e.key==='Home'){ e.preventDefault(); scrollToIndex(0); }
+      if(e.key==='End'){ e.preventDefault(); scrollToIndex(slides.length-1); }
+    });
+    deckEl.tabIndex = 0; // make focusable
+
+    // ---- TOC drawer ----
+    function openTocDrawer(){ tocDrawer.classList.add('open'); }
+    function closeTocDrawer(){ tocDrawer.classList.remove('open'); }
+    tocBtn.addEventListener('click', openTocDrawer);
+    closeToc.addEventListener('click', closeTocDrawer);
+
+    // ---- Print ----
+    printBtn.addEventListener('click', ()=> window.print());
+
+    // ---- Start focused and initialize UI ----
+    window.addEventListener('load', ()=> {
+      deckEl.focus();
+      highlight(0);
+    });
+  </script>
+
+</body>
+</html>

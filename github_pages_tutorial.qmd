@@ -1,0 +1,377 @@
+---
+title: "Deployment & Orchestration with GitHub Pages"
+subtitle: "From Local Repo to Live Site with CI/CD (2‑Hour Guided Notes)"
+author: "Joseph Mhango"
+date: "2025-08-14"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+> Source reference: These notes draw on and expand the slide deck: [Deployment & Orchestration: GitHub Pages](https://josephmhango.github.io/professional-study-skills/slides/github_pages.html).
+
+## How to use these notes
+
+- Work through sections in order; each lab builds on the last.
+- Prefer a fresh folder (e.g., `~/pages-lab`) to keep experiments clean.
+- If you get stuck, jump to Troubleshooting and return.
+
+::: callout-tip
+These notes assume basic Git knowledge (init/add/commit/remote/push). If new, complete the Git tutorial first.
+:::
+
+---
+
+## Outcomes (you will be able to)
+
+- Explain how GitHub Pages builds and serves static sites
+- Choose between User/Org sites vs Project sites
+- Publish a Markdown site with Jekyll
+- Switch to GitHub Actions for flexible CI/CD
+- Add a custom domain and enforce HTTPS
+- Diagnose and fix typical Pages build/deploy issues
+
+---
+
+## First principles — what GitHub Pages is (and isn’t)
+
+:::: {.columns}
+::: {.column width="55%"}
+- **Static website**: a site made of files (HTML for structure, CSS for style, JS for behavior). There is no database or server code running for each visitor. Pages are served “as‑is” from storage to the browser.
+- **GitHub Pages**: a free hosting service from GitHub that can optionally “build” your site from source (e.g., Markdown) into HTML and then serve it on a public URL.
+- **Two site types**:
+  - **User/Org site**: a special repo named `<account>.github.io` → served at `https://<account>.github.io/` (one per account/org).
+  - **Project site**: any repo → served at `https://<account>.github.io/<repo>/` (many per account).
+- **Builders**: GitHub can render Markdown into a site for you. The common default is Jekyll, but you can use other generators or plain HTML.
+- **CI/CD (Continuous Integration/Continuous Deployment)**: automate building and testing on every change (CI). If the build succeeds, automatically deploy (CD). With Pages, a push to your repo can trigger a build and then an automatic deploy to the Pages CDN.
+:::
+::: {.column width="45%"}
+```text
+Commit → Build (convert Markdown to HTML) → Deploy → CDN (global cache)
+```
+
+```bash
+# Verify Git and Ruby (only needed if you build Jekyll locally)
+git --version
+ruby --version 2>/dev/null || echo "Ruby optional (Actions will build for you)"
+```
+:::
+::::
+
+::: callout-note
+Project sites inherit a path prefix (`/<repo>`). Account for this with `baseurl` in Jekyll so internal links work on the published URL.
+:::
+
+### Primer: What is Jekyll?
+
+Jekyll is a “static site generator.” You write content in Markdown and configuration in a small YAML file. Jekyll turns that into HTML pages using layouts and themes. There is no server code to run later—only the pre‑built files are served. You don’t have to use Jekyll (plain HTML works, and other generators exist like Hugo or MkDocs), but Jekyll is tightly integrated with GitHub Pages, which is why it’s the default.
+
+Key ideas:
+- Pages are Markdown (`.md`) files with an optional header called “front matter.”
+- Front matter tells Jekyll how to treat that file (which layout to use, page title, etc.).
+- A layout (HTML template) and a theme handle consistent look‑and‑feel.
+
+### Primer: What is YAML (and front matter)?
+
+YAML is a human‑friendly data format. It uses indentation for structure and `key: value` pairs.
+
+Example front matter at the top of a Markdown file:
+
+```yaml
+---
+title: "Your Name — CV"     # a key called "title" with a string value
+layout: default              # tells Jekyll which HTML layout to wrap around the content
+show_toc: true               # a boolean flag (true/false)
+tags:                        # a list
+  - cv
+  - profile
+---
+```
+
+Anything between the `---` lines is YAML front matter. Jekyll reads it to decide how to render the page (which layout, variables available in the template, etc.). Outside the front matter you write regular Markdown content which becomes the page body.
+
+::: callout-tip
+YAML is whitespace‑sensitive: use spaces for indentation; don’t use tabs. Quote strings that include special characters (`:` or `#`).
+:::
+
+---
+
+## Lab 1 — Create your Pages repo (15 min)
+
+:::: {.columns}
+::: {.column width="55%"}
+Pick a site type:
+- User site (recommended): public repo named `<you>.github.io`.
+- Project site: any repo name (URL includes `/<repo>`).
+:::
+::: {.column width="45%"}
+```bash
+# After creating the repo on GitHub
+# User site
+git clone https://github.com/<you>/<you>.github.io
+cd <you>.github.io
+
+# Project site (example)
+# git clone https://github.com/<you>/cv-site && cd cv-site
+```
+:::
+::::
+
+::: callout-tip
+User sites are ideal for a personal homepage or CV; project sites are perfect for documentation per repository.
+:::
+
+---
+
+## Lab 2 — Minimal Jekyll CV (20 min)
+
+:::: {.columns}
+::: {.column width="55%"}
+Create `index.md` with YAML front matter so Jekyll treats it as a page. Keep content simple and text‑first; design can evolve later.
+:::
+::: {.column width="45%"}
+```markdown
+---
+title: "Your Name — CV"
+layout: default
+---
+
+# Your Name
+City, Country · email@example.com · https://linkedin.com/in/you
+
+## Profile
+Short paragraph about your strengths and interests.
+
+## Skills
+- Python (pandas, scikit-learn)
+- R (tidyverse)
+- SQL, Git
+
+## Education
+**BSc, Subject**, University — 2024
+
+## Experience
+**Data Intern**, Org — 2023  
+- Bullet points with outcomes
+```
+:::
+::::
+
+Add a theme via `_config.yml`:
+
+```yaml
+# _config.yml
+remote_theme: pages-themes/minimal@v0.2.0
+plugins:
+  - jekyll-remote-theme
+```
+
+Commit and push:
+
+```bash
+git add index.md _config.yml
+git commit -m "Add CV homepage and theme"
+git push -u origin main
+```
+
+::: callout-note
+Alternative: `theme: minima` (requires whitelisted themes). `remote_theme` lets you use Pages themes without bundling gems.
+:::
+
+---
+
+## Enable Pages — Deploy from branch (first publish) (10 min)
+
+1. On GitHub: Settings → Pages → Source: Deploy from a branch.
+2. Select Branch = `main`, Folder = `/(root)` (or `/docs`).
+3. Save → wait for the green check → visit the URL in the Pages panel.
+
+::: callout-tip
+This is great for first publish. For more control (build steps, asset pipelines), switch to GitHub Actions next.
+:::
+
+---
+
+## Lab 3 — Switch to GitHub Actions CI/CD (25 min)
+
+Add a workflow at `.github/workflows/pages.yml` to build and deploy on every push to `main`.
+
+```yaml
+name: Deploy Jekyll to GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+Commit/push and watch Actions run.
+
+::: callout-tip
+Add a link checker or spell‑check step before deploy to catch embarrassing mistakes automatically.
+:::
+
+---
+
+## Understanding the pipeline (and why it fails)
+
+- `actions/checkout`: fetches your repo.
+- `actions/configure-pages`: prepares the Pages deployment environment.
+- Build step: Jekyll (or your custom build).
+- `upload-pages-artifact`: hands the built output to the deploy job.
+- `deploy-pages`: publishes to the Pages CDN.
+
+::: callout-caution
+If any job fails, deploy won’t run. This is your quality gate—fix the build first, then re‑push (or re‑run with “Re‑run jobs”).
+:::
+
+---
+
+## Lab 4 — Custom build instead of Jekyll (15 min)
+
+For pure HTML/JS sites (or another generator), replace Jekyll with your own build.
+
+```yaml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Build site (custom)
+        run: |
+          mkdir -p _site
+          cp -r *.html assets _site/ || true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+```
+
+::: callout-tip
+Keep your build idempotent and fast. Cache dependencies if you use a generator.
+:::
+
+---
+
+## Organizations and permissions (10 min)
+
+- **Organization**: shared account that owns repos.
+- **Teams & roles**: Owners, Maintainers, Members; repo roles: Admin, Maintain, Write, Triage, Read.
+- **Org Pages**: repo named `orgname.github.io` serves at `https://orgname.github.io/`.
+
+::: callout-note
+Typical course setup: an org per cohort, teams per lab group, project sites deployed from project repos.
+:::
+
+---
+
+## Custom domains & HTTPS (10 min)
+
+1. Settings → Pages → Custom domain: add `www.example.com`.
+2. At your registrar: CNAME to `<you>.github.io`.
+3. Enforce HTTPS (Pages provisions TLS for you).
+
+```plaintext
+Repo writes CNAME → DNS points to GitHub Pages → HTTPS auto‑provisioned
+```
+
+::: callout-caution
+DNS changes can take time (minutes to hours). Verify with `dig`/`nslookup` and wait for propagation before retrying.
+:::
+
+---
+
+## Troubleshooting — fast diagnostics (15 min)
+
+- 404 at root: missing `index.md`/`index.html` or wrong branch/folder.
+- Broken links on project sites: set `baseurl` in `_config.yml` and prefix internal links with it.
+- Theme not applied: ensure `remote_theme` and `jekyll-remote-theme` plugin are set.
+- Build fails: open Actions logs; fix YAML front matter or missing folders (e.g., `_site`).
+- Delay: give it a minute; hard refresh (browser cache).
+
+```bash
+# Inspect the build logs (locally, simulate Jekyll)
+bundle exec jekyll build 2>/dev/null || echo "Using Actions to build remotely."
+```
+
+::: callout-tip
+Use the Pages URL shown in the deploy step output. Bookmark it for quick checks.
+:::
+
+---
+
+## Capstone — Publish your CV and automate checks (20 min)
+
+1) Publish `index.md` CV on a User site and validate it loads publicly.
+
+2) Add a link checker step before deploy:
+
+```yaml
+- name: Link check
+  uses: lycheeverse/lychee-action@v1
+  with:
+    args: --no-progress --quiet ./_site
+```
+
+3) Make a change, commit, and watch CI enforce quality before deploy.
+
+---
+
+## Cheat sheet
+
+```bash
+# First publish (branch deploy)
+Settings → Pages → Source: Deploy from a branch
+Branch: main, Folder: /(root)
+
+# Switch to Actions
+.github/workflows/pages.yml
+
+# Custom domain
+Settings → Pages → Custom domain
+```
+
+---
+
+## Further reading
+
+- GitHub Docs — Pages, Actions workflows, and troubleshooting
+- Static site generators: Jekyll, Hugo, MkDocs
+- Slide deck: [Deployment & Orchestration: GitHub Pages](https://josephmhango.github.io/professional-study-skills/slides/github_pages.html) 

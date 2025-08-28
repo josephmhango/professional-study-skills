@@ -1,0 +1,14 @@
+title: Slidedoc (bookdown-like)
+author: you
+version: 0.0.1
+contributes:
+  formats:
+    html:
+      template: template.html
+      filters:
+        - slidedoc.lua
+      theme: default
+      css:
+        - slidedoc.css
+      resources:
+        - slidedoc.css

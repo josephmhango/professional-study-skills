@@ -1,0 +1,424 @@
+---
+title: "Git and GitHub — From First Principles to Confident Collaboration"
+subtitle: "2‑Hour Study Notes and Guided Tutorial"
+author: "Joseph Mhango"
+date: "2025-08-14"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+> Source reference: These notes draw on and expand the slide deck: [Git on Windows — First Principles to Confident Collaboration](https://josephmhango.github.io/professional-study-skills/slides/gitslides.html).
+
+## How to use these notes
+
+- Read the left‑hand prose, then immediately try the examples in your terminal.
+- The tutorial is scaffolded: each section builds on the last.
+- If you’re brand new, skim the definitions, then do the labs in order.
+
+::: callout-tip
+Tip: Use a fresh folder for this tutorial (e.g., `~/git-lab`) so your experiments are clean and disposable.
+:::
+
+---
+
+## Outcomes (what you’ll be able to do)
+
+By the end, you can:
+
+- Define: repository, working directory, staging area, commit, branch, HEAD, remote
+- Install/configure Git; set your identity and verify it
+- Record and inspect changes: status, add, commit, log, diff
+- Branch, merge, and resolve conflicts safely
+- Collaborate via GitHub: clone, push, pull/fetch, open a Pull Request (PR)
+- Recover from mistakes with revert/reset and use the reflog
+
+---
+
+## Core concepts — precise mental model
+
+:::: {.columns}
+::: {.column width="55%"}
+- **Repository**: a project folder with a hidden `.git` database that stores your history.
+- **Working directory**: your files on disk that you edit.
+- **Staging area (index)**: the “basket” of changes queued for the next commit.
+- **Commit**: a named snapshot of staged changes plus metadata.
+- **Branch**: a movable label pointing to a commit; `HEAD` points to your current branch/commit.
+- **Remote**: a copy of your repo hosted elsewhere (e.g., GitHub’s `origin`).
+- **Clone**: make a local copy of a remote; **Publish**: first push to create the remote.
+:::
+::: {.column width="45%"}
+```bash
+# Where am I (repo root?)
+pwd
+
+# Is this a Git repo?
+git rev-parse --is-inside-work-tree
+
+# Current branch and HEAD pointer
+git status -sb
+```
+:::
+::::
+
+::: callout-note
+Definition mnemonic: Working directory (files), Staging area (basket), Commit (snapshot), Branch/HEAD (labels), Remote (hosted copy).
+:::
+
+---
+
+## Setup — install and identity
+
+:::: {.columns}
+::: {.column width="55%"}
+Install Git, then set your identity so your commits are attributed correctly. Git reads configuration from three levels, merged in order: system (all users), global (you, typically at ~/.gitconfig), and local (per‑repository, .git/config). Set your global defaults first; override per repository when needed (e.g., a work email). Start with HTTPS for simplicity; once you’re comfortable, add SSH keys for frictionless pushes and automation.
+:::
+::: {.column width="45%"}
+```bash
+# Check install
+git --version
+
+# Set identity (global defaults)
+git config --global user.name "Your Name"
+git config --global user.email you@example.com
+
+# See your config
+git config --list --show-origin
+```
+:::
+::::
+
+::: callout-tip
+Keep the same `user.name`/`user.email` as your GitHub account to avoid mismatch warnings.
+:::
+
+---
+
+## Lab 1 — Your first repository (10 min)
+
+:::: {.columns}
+::: {.column width="55%"}
+Create a new repo, add a README, and make your first commit. Practice status → add → commit → log.
+:::
+::: {.column width="45%"}
+```bash
+mkdir -p ~/git-lab/hello-git && cd ~/git-lab/hello-git
+git init
+
+echo "# hello-git" > README.md
+
+git status
+git add README.md
+git commit -m "Initial commit"
+
+git log --oneline --graph --decorate -n 3
+```
+:::
+::::
+
+::: callout-important
+Commit messages should explain the “why” and “what”, not just file names.
+:::
+
+---
+
+## Staging vs committing — clear separation
+
+:::: {.columns}
+::: {.column width="55%"}
+Staging is a deliberate queue (the “index”) that lets you curate exactly what goes into a snapshot. Think of it like packing a suitcase: your working directory is the wardrobe; the index is the suitcase; a commit is the tag on a packed suitcase. Use `git add -p` (patch mode) to stage hunks interactively, splitting noisy changes from meaningful ones. This discipline produces clear history and easier reviews.
+:::
+::: {.column width="45%"}
+```bash
+# Edit README.md and notes.txt
+printf "Notes\n" >> notes.txt
+
+# Review changes
+git status
+
+git diff         # unstaged
+
+git add -p       # stage selected hunks
+
+git diff --staged
+git commit -m "Add initial notes with context"
+```
+:::
+::::
+
+::: callout-tip
+Stage logically related changes together. Avoid mixing formatting and feature edits in one commit.
+:::
+
+---
+
+## Lab 2 — Branching and merging (25 min)
+
+:::: {.columns}
+::: {.column width="55%"}
+Create a feature branch, commit on it, and merge back to `main`. Observe fast‑forward vs merge commit behavior.
+:::
+::: {.column width="45%"}
+```bash
+# Create and switch
+git switch -c feature/readme-badges
+
+# Simulate work
+echo "Badges: CI, Docs" >> README.md
+git add README.md
+git commit -m "Add badges section"
+
+# Merge back
+git switch main
+git merge feature/readme-badges
+```
+:::
+::::
+
+::: callout-note
+Fast‑forward merge happens when `main` hasn’t moved; Git just moves the branch pointer.
+:::
+
+---
+
+## Conflicts — understand and fix with intent
+
+:::: {.columns}
+::: {.column width="55%"}
+Conflicts occur when two branches modify overlapping lines and Git can’t auto‑merge. You’ll see conflict markers in the file: `<<<<<<< HEAD` (your changes), a divider `=======`, then `>>>>>>> other-branch`. Edit the file to the final intended content (often a thoughtful blend), delete all markers, save, then stage and commit. Prefer explaining the resolution in the commit message (what you kept and why).
+:::
+::: {.column width="45%"}
+```bash
+# Create an intentional conflict
+ git switch -c feature/conflict
+ echo "Line from feature" >> README.md
+ git add README.md && git commit -m "Feature line"
+
+ git switch main
+ echo "Line from main" >> README.md
+ git add README.md && git commit -m "Main line"
+
+ git merge feature/conflict   # conflict appears
+# Open README.md and resolve
+ git add README.md
+ git commit    # merge commit completes
+```
+:::
+::::
+
+::: callout-caution
+Explain the resolution in your commit message, not just “fix conflict”.
+:::
+
+---
+
+## Remote basics — GitHub flow
+
+:::: {.columns}
+::: {.column width="55%"}
+Add a remote and push to share your work. `git fetch` downloads new commits without touching your files; `git pull` = `fetch` + `merge` (or rebase, if configured). Use `-u` on the first push to set an upstream tracking pair, enabling simple `git push`/`git pull` with no extra args. Teams often prefer a clean, linear `main`; consider `git pull --rebase` on topic branches to replay your commits on top of new upstream history.
+:::
+::: {.column width="45%"}
+```bash
+# Create a new GitHub repo named hello-git, then:
+
+# Add remote and push first time
+git remote add origin https://github.com/<you>/hello-git.git
+git push -u origin main
+
+# Later work
+git fetch
+git pull       # fetch + merge
+
+git remote -v
+```
+:::
+::::
+
+::: callout-tip
+Use branch names like `feature/...`, `fix/...`, `docs/...` to encode intent.
+:::
+
+---
+
+## Lab 3 — Feature workflow with PR (30 min)
+
+1) Create a branch and push it:
+
+```bash
+git switch -c feature/add-syllabus
+echo "## Syllabus" >> README.md
+git add README.md
+git commit -m "Add syllabus section"
+git push -u origin feature/add-syllabus
+```
+
+2) Open a Pull Request on GitHub (web). Describe what/why; link issues (`Fixes #123`).
+
+3) After review, squash‑merge via the GitHub UI. Pull the updated `main` locally:
+
+```bash
+git switch main
+git pull
+```
+
+::: callout-note
+PRs are conversations plus checks. Prefer small PRs; they review faster and break less.
+:::
+
+---
+
+## Ignore the right things — .gitignore essentials
+
+```bash
+echo "__pycache__/" >> .gitignore
+echo ".ipynb_checkpoints/" >> .gitignore
+echo "*.env" >> .gitignore
+echo "*.DS_Store" >> .gitignore
+git add .gitignore && git commit -m "Add common ignore rules"
+```
+
+::: callout-tip
+Keep secrets out of Git. Use environment variables or a secrets manager; never commit raw API keys.
+:::
+
+---
+
+## Rescue kit — safe undo
+
+:::: {.columns}
+::: {.column width="55%"}
+Choose the least destructive fix:
+- Unstage: `git restore --staged file` — removes a change from the basket but keeps it in your working files.
+- Discard local edits: `git restore file` — throws away unstaged changes in your working directory for that file.
+- Amend last commit (unpublished): `git commit --amend` — rewrites the most recent commit (safe before pushing).
+- Revert a published commit: `git revert <hash>` — creates a new commit that undoes the target without rewriting history.
+- Reset (hard) for local sandboxes only: `git reset --hard <hash>` — resets HEAD, index, and working tree to match <hash>. This DESTROYS uncommitted changes and can desynchronize you from collaborators if used on shared branches. Prefer `revert` for published mistakes; use `reset --hard` only when you’re certain and have no work to lose.
+:::
+::: {.column width="45%"}
+```bash
+# Unstage a file
+git restore --staged README.md
+
+# Discard local changes
+git restore README.md
+
+# Revert a published mistake
+git revert <hash>
+
+# Last resort (local only)
+git reset --hard <hash>
+```
+:::
+::::
+
+::: callout-caution
+`reset --hard` rewrites your working tree. Use only when you understand the consequences.
+:::
+
+---
+
+## Inspect and search history
+
+```bash
+git log --oneline --graph --decorate --all --date=relative --pretty=format:"%C(yellow)%h%Creset %<(12,trunc)%Cgreen%ad%Creset %s %C(bold blue)<%an>%Creset"
+
+git blame -L 1,50 README.md
+
+git grep -n "pattern"
+```
+
+::: callout-tip
+Use `git add -p` + `git commit --fixup=<hash>` and `git rebase --autosquash` to craft tidy histories before sharing.
+:::
+
+---
+
+## Authentication choices
+
+```bash
+# HTTPS (default) — cache credentials
+git config --global credential.helper store
+
+# SSH — generate a key and add to GitHub
+ssh-keygen -t ed25519 -C "you@example.com"
+cat ~/.ssh/id_ed25519.pub   # paste into GitHub → Settings → SSH and GPG keys
+```
+
+::: callout-note
+HTTPS is simplest to start—Git will prompt and can cache credentials (`credential.helper`). SSH uses a keypair: you keep the private key locally, upload the public key to GitHub, and pushes/pulls authenticate without passwords. SSH is ideal for long‑lived setups, CI, and when corporate SSO prompts are disruptive.
+:::
+
+---
+
+## Common pitfalls (and fixes)
+
+- Mixed line endings: enable core.autocrlf appropriately (`input` on macOS/Linux, `true` on Windows).
+- Large binaries: use Git LFS; avoid committing raw datasets.
+- Multiple Git installs: verify with `which git` / `where git`.
+- Identity mismatch: keep `user.name`/`user.email` consistent with GitHub.
+
+---
+
+## Capstone lab — from zero to website (25 min)
+
+Build a Markdown profile repo and publish it with GitHub Pages.
+
+```bash
+# 1) Create and initialize repo
+mkdir -p ~/git-lab/profile && cd ~/git-lab/profile
+git init
+
+echo "# Your Name" > index.md
+echo "Short bio…" >> index.md
+echo "site: minimal" > _config.yml
+
+git add .
+git commit -m "Scaffold profile site"
+
+# 2) Create GitHub repo and push (on GitHub UI first)
+git remote add origin https://github.com/<you>/<you>.github.io.git
+git push -u origin main
+```
+
+Then on GitHub: Settings → Pages → set Branch = `main`, Folder = `/ (root)`. Wait for the green check, then visit `https://<you>.github.io/`.
+
+::: callout-tip
+Add a CI badge and a LICENSE file as stretch goals.
+:::
+
+---
+
+## Quick reference (cheat sheet)
+
+```bash
+# New repo
+mkdir proj && cd proj && git init
+
+# Stage/commit
+git add -A && git commit -m "Init"
+
+# Branch workflow
+git switch -c feature/x
+# ...
+git push -u origin feature/x
+
+# Update local main
+git switch main && git pull
+
+# Inspect
+git status -sb; git log --oneline --graph --decorate -n 10
+```
+
+---
+
+## Further reading
+
+- Pro Git (Chacon & Straub) — free online book
+- Git documentation — `git help <command>`
+- GitHub Docs — Pull Requests, Actions, Pages
+- Slide deck: [Git on Windows — First Principles to Confident Collaboration](https://josephmhango.github.io/professional-study-skills/slides/gitslides.html) 

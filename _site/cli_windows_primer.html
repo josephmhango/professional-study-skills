@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Joseph Mhango">
+<meta name="dcterms.date" content="2025-08-14">
+
+<title>CLI Foundations on Windows</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="cli_windows_primer_files/libs/clipboard/clipboard.min.js"></script>
+<script src="cli_windows_primer_files/libs/quarto-html/quarto.js"></script>
+<script src="cli_windows_primer_files/libs/quarto-html/popper.min.js"></script>
+<script src="cli_windows_primer_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="cli_windows_primer_files/libs/quarto-html/anchor.min.js"></script>
+<link href="cli_windows_primer_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="cli_windows_primer_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="cli_windows_primer_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="cli_windows_primer_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="cli_windows_primer_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-you-will-learn-and-how-to-use-these-notes" id="toc-what-you-will-learn-and-how-to-use-these-notes" class="nav-link active" data-scroll-target="#what-you-will-learn-and-how-to-use-these-notes"><span class="header-section-number">1</span> What you will learn (and how to use these notes)</a></li>
+  <li><a href="#core-concepts-clear-definitions-first" id="toc-core-concepts-clear-definitions-first" class="nav-link" data-scroll-target="#core-concepts-clear-definitions-first"><span class="header-section-number">2</span> Core concepts (clear definitions first)</a></li>
+  <li><a href="#how-windows-runs-a-command-resolution-and-launch" id="toc-how-windows-runs-a-command-resolution-and-launch" class="nav-link" data-scroll-target="#how-windows-runs-a-command-resolution-and-launch"><span class="header-section-number">3</span> How Windows runs a command (resolution and launch)</a></li>
+  <li><a href="#working-with-the-current-directory-and-paths" id="toc-working-with-the-current-directory-and-paths" class="nav-link" data-scroll-target="#working-with-the-current-directory-and-paths"><span class="header-section-number">4</span> Working with the current directory and paths</a></li>
+  <li><a href="#anatomy-of-a-command-and-passing-arguments" id="toc-anatomy-of-a-command-and-passing-arguments" class="nav-link" data-scroll-target="#anatomy-of-a-command-and-passing-arguments"><span class="header-section-number">5</span> Anatomy of a command and passing arguments</a>
+  <ul class="collapse">
+  <li><a href="#scripts-that-accept-arguments" id="toc-scripts-that-accept-arguments" class="nav-link" data-scroll-target="#scripts-that-accept-arguments"><span class="header-section-number">5.1</span> Scripts that accept arguments</a></li>
+  </ul></li>
+  <li><a href="#being-productive-with-command-prompt-cmd" id="toc-being-productive-with-command-prompt-cmd" class="nav-link" data-scroll-target="#being-productive-with-command-prompt-cmd"><span class="header-section-number">6</span> Being productive with Command Prompt (CMD)</a>
+  <ul class="collapse">
+  <li><a href="#getting-set-up" id="toc-getting-set-up" class="nav-link" data-scroll-target="#getting-set-up"><span class="header-section-number">6.1</span> Getting set up</a></li>
+  <li><a href="#moving-around-the-disk" id="toc-moving-around-the-disk" class="nav-link" data-scroll-target="#moving-around-the-disk"><span class="header-section-number">6.2</span> Moving around the disk</a></li>
+  <li><a href="#two-navigation-superpowers" id="toc-two-navigation-superpowers" class="nav-link" data-scroll-target="#two-navigation-superpowers"><span class="header-section-number">6.3</span> Two navigation superpowers</a></li>
+  <li><a href="#finding-things-fast" id="toc-finding-things-fast" class="nav-link" data-scroll-target="#finding-things-fast"><span class="header-section-number">6.4</span> Finding things fast</a></li>
+  <li><a href="#filter-sort-and-compose" id="toc-filter-sort-and-compose" class="nav-link" data-scroll-target="#filter-sort-and-compose"><span class="header-section-number">6.5</span> Filter, sort, and compose</a></li>
+  <li><a href="#make-copy-move-rename-delete" id="toc-make-copy-move-rename-delete" class="nav-link" data-scroll-target="#make-copy-move-rename-delete"><span class="header-section-number">6.6</span> Make, copy, move, rename, delete</a></li>
+  <li><a href="#viewing-and-slicing-files" id="toc-viewing-and-slicing-files" class="nav-link" data-scroll-target="#viewing-and-slicing-files"><span class="header-section-number">6.7</span> Viewing and slicing files</a></li>
+  <li><a href="#redirection-piping-and-chaining" id="toc-redirection-piping-and-chaining" class="nav-link" data-scroll-target="#redirection-piping-and-chaining"><span class="header-section-number">6.8</span> Redirection, piping, and chaining</a></li>
+  <li><a href="#loops-youll-actually-use" id="toc-loops-youll-actually-use" class="nav-link" data-scroll-target="#loops-youll-actually-use"><span class="header-section-number">6.9</span> Loops you’ll actually use</a></li>
+  <li><a href="#guard-rails-and-conditions" id="toc-guard-rails-and-conditions" class="nav-link" data-scroll-target="#guard-rails-and-conditions"><span class="header-section-number">6.10</span> Guard rails and conditions</a></li>
+  <li><a href="#environment-variables-and-path" id="toc-environment-variables-and-path" class="nav-link" data-scroll-target="#environment-variables-and-path"><span class="header-section-number">6.11</span> Environment variables and PATH</a></li>
+  <li><a href="#hashing-archives-and-big-files" id="toc-hashing-archives-and-big-files" class="nav-link" data-scroll-target="#hashing-archives-and-big-files"><span class="header-section-number">6.12</span> Hashing, archives, and big files</a></li>
+  <li><a href="#networking-odds-and-ends" id="toc-networking-odds-and-ends" class="nav-link" data-scroll-target="#networking-odds-and-ends"><span class="header-section-number">6.13</span> Networking odds and ends</a></li>
+  <li><a href="#launching-tools-you-care-about" id="toc-launching-tools-you-care-about" class="nav-link" data-scroll-target="#launching-tools-you-care-about"><span class="header-section-number">6.14</span> Launching tools you care about</a></li>
+  <li><a href="#history-macros-and-qualityoflife" id="toc-history-macros-and-qualityoflife" class="nav-link" data-scroll-target="#history-macros-and-qualityoflife"><span class="header-section-number">6.15</span> History, macros, and quality‑of‑life</a></li>
+  <li><a href="#realworld-recipes" id="toc-realworld-recipes" class="nav-link" data-scroll-target="#realworld-recipes"><span class="header-section-number">6.16</span> Real‑world recipes</a></li>
+  <li><a href="#troubleshooting-quick-hits" id="toc-troubleshooting-quick-hits" class="nav-link" data-scroll-target="#troubleshooting-quick-hits"><span class="header-section-number">6.17</span> Troubleshooting quick hits</a></li>
+  </ul></li>
+  <li><a href="#practical-examples" id="toc-practical-examples" class="nav-link" data-scroll-target="#practical-examples"><span class="header-section-number">7</span> Practical examples</a>
+  <ul class="collapse">
+  <li><a href="#organise-files-by-extension-cmd" id="toc-organise-files-by-extension-cmd" class="nav-link" data-scroll-target="#organise-files-by-extension-cmd"><span class="header-section-number">7.1</span> Organise files by extension (CMD)</a></li>
+  <li><a href="#organise-files-by-extension-powershell-recursive" id="toc-organise-files-by-extension-powershell-recursive" class="nav-link" data-scroll-target="#organise-files-by-extension-powershell-recursive"><span class="header-section-number">7.2</span> Organise files by extension (PowerShell, recursive)</a></li>
+  </ul></li>
+  <li><a href="#troubleshooting-pip-is-not-recognized" id="toc-troubleshooting-pip-is-not-recognized" class="nav-link" data-scroll-target="#troubleshooting-pip-is-not-recognized"><span class="header-section-number">8</span> Troubleshooting: “‘pip’ is not recognized”</a></li>
+  <li><a href="#wrapup-and-glossary" id="toc-wrapup-and-glossary" class="nav-link" data-scroll-target="#wrapup-and-glossary"><span class="header-section-number">9</span> Wrap‑up and glossary</a>
+  <ul class="collapse">
+  <li><a href="#glossary-short-forms" id="toc-glossary-short-forms" class="nav-link" data-scroll-target="#glossary-short-forms"><span class="header-section-number">9.1</span> Glossary (short forms)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">CLI Foundations on Windows</h1>
+<p class="subtitle lead">Student Notes</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Joseph Mhango </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 14, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="what-you-will-learn-and-how-to-use-these-notes" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="what-you-will-learn-and-how-to-use-these-notes"><span class="header-section-number">1</span> What you will learn (and how to use these notes)</h2>
+<p>These notes build your understanding from first principles, step by step. Read the prose on the left; try the commands on the right. By the end, you will be able to:</p>
+<ul>
+<li>Distinguish terminal, shell, program, process, operating system (OS), and kernel</li>
+<li>Explain how Windows resolves and runs commands (current directory, system paths, <code>PATH</code>, briefly <code>PATHEXT</code>)</li>
+<li>Run scripts that accept arguments (in CMD and PowerShell)</li>
+<li>Troubleshoot common path and environment issues</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Start by reading; then run the examples in your own terminal. Learning here is scaffolded: each section uses what you learned before.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="core-concepts-clear-definitions-first" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="core-concepts-clear-definitions-first"><span class="header-section-number">2</span> Core concepts (clear definitions first)</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li><strong>Program</strong>: Code on disk (e.g., <code>cmd.exe</code>, <code>powershell.exe</code>, <code>python.exe</code>, <code>hello.ps1</code>). A program is not running yet.</li>
+<li><strong>Process</strong>: A running instance of a program with its own memory, open files, and environment variables.</li>
+<li><strong>Operating System (OS)</strong>: All of Windows. Provides services to processes (files, networking, memory, scheduling).</li>
+<li><strong>Kernel</strong>: The privileged core of the OS that actually schedules processes and mediates access to hardware. You don’t run the kernel; programs call into it via system calls.</li>
+<li><strong>Shell</strong>: A program you interact with that parses what you type and starts other programs. On Windows, the main shells are:
+<ul>
+<li>Command Prompt (<code>cmd.exe</code>)</li>
+<li>PowerShell (<code>pwsh.exe</code> or <code>powershell.exe</code>)</li>
+</ul></li>
+<li><strong>Terminal</strong>: The window/host that displays a shell (e.g., Windows Terminal, RStudio Terminal). The terminal is the “container”; the shell is the interpreter inside it.</li>
+</ul>
+<p>These distinctions matter: the shell (a program) creates processes to run other programs; the OS and kernel make that safe and efficient. Keep this mental model handy; we’ll reuse it in every section.</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find which shell you’re in (PowerShell):</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">$PSVersionTable</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Which program is the current shell?</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">Get-Process</span> <span class="op">-</span>Id <span class="va">$PID</span><span class="op">).</span><span class="fu">Path</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="batch"><code>:: In CMD, check the shell executable:
+WHERE cmd</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="how-windows-runs-a-command-resolution-and-launch" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="how-windows-runs-a-command-resolution-and-launch"><span class="header-section-number">3</span> How Windows runs a command (resolution and launch)</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>When you press Enter in a shell, a predictable sequence happens:</p>
+<ol type="1">
+<li>The shell parses your input into a command and its arguments.</li>
+<li>Windows resolves the command to a file path:
+<ul>
+<li>Checks the current directory</li>
+<li>Checks certain system folders</li>
+<li>Searches each directory listed in the <code>PATH</code> environment variable (first match wins)</li>
+</ul></li>
+<li>The shell asks the OS to start a new process for the found program, passing along the current environment variables.</li>
+</ol>
+<p>Notes on <code>PATHEXT</code> (brief): On Windows, <code>PATHEXT</code> lists extensions considered executable, e.g., <code>.EXE;.BAT;.CMD;.PS1</code>. Typing <code>git</code> lets Windows try <code>git.exe</code>, then <code>git.cmd</code>, etc. Useful, but don’t over-index on it—<code>PATH</code> order is more important.</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show PATH as a list (PowerShell):</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">PATH</span> <span class="op">-split</span> <span class="st">';'</span> <span class="op">|</span> <span class="fu">Select-Object</span> <span class="op">-</span>First <span class="dv">10</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Which program will run?</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">where</span><span class="op">.</span><span class="fu">exe</span> git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="batch"><code>:: PATH and locating a tool (CMD):
+ECHO %PATH%
+WHERE git</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="working-with-the-current-directory-and-paths" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="working-with-the-current-directory-and-paths"><span class="header-section-number">4</span> Working with the current directory and paths</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Your “current working directory” is the anchor for relative paths. If you type a relative path, the shell interprets it from where you currently are. This is convenient for short commands but can cause surprises when you expect a different file or tool.</p>
+<p>Prefer explicit paths when clarity matters (especially in scripts or instructions you’ll share). On Windows, the current directory is considered during command resolution before searching <code>PATH</code>. That’s helpful during development, but it also means a tool in the current folder can mask a different one on <code>PATH</code>.</p>
+<p>A practical habit: use <code>where.exe toolname</code> (or <code>Get-Command</code> in PowerShell) to confirm exactly which program will run before you rely on it.</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb5"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PowerShell</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-Location</span> C<span class="op">:</span>\Projects\demo</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Explicit relative path run is common</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\script<span class="op">.</span><span class="fu">ps1</span> <span class="op">-</span>Name Alice</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="batch"><code>:: CMD
+CD /D C:\Projects\demo
+script.cmd Alice</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="anatomy-of-a-command-and-passing-arguments" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="anatomy-of-a-command-and-passing-arguments"><span class="header-section-number">5</span> Anatomy of a command and passing arguments</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>A command typically has four parts: - Program (what to run) - Optional subcommand (narrow the action) - Options/flags (modify how it runs) - Arguments (the things to act on)</p>
+<p>The same structure scales from tiny scripts to large tools. Read unfamiliar commands by labeling these parts—doing so turns long lines into something predictable and learnable.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>:: CMD style
+DIR /B /S "C:\Data Files"</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PowerShell style</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-ChildItem</span> <span class="op">-</span>Recurse <span class="op">-</span>Filter <span class="op">*.</span><span class="fu">csv</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<section id="scripts-that-accept-arguments" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="scripts-that-accept-arguments"><span class="header-section-number">5.1</span> Scripts that accept arguments</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Scripts are programs too. The key is that they accept arguments and often provide defaults. You can design your own scripts to behave like professional tools: parse inputs, validate them, and print clear messages.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>:: hello.cmd
+@ECHO OFF
+ECHO Hello, %~1!
+ECHO You ran %~n0</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hello.ps1</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">param</span><span class="op">([</span><span class="dt">string</span><span class="op">]</span><span class="va">$Name</span> <span class="op">=</span> <span class="st">"World"</span><span class="op">)</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Write-Host</span> <span class="st">"Hello, </span><span class="va">$Name</span><span class="st">!"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="being-productive-with-command-prompt-cmd" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="being-productive-with-command-prompt-cmd"><span class="header-section-number">6</span> Being productive with Command Prompt (CMD)</h2>
+<section id="getting-set-up" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="getting-set-up"><span class="header-section-number">6.1</span> Getting set up</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Think of the prompt (e.g., <code>C:\Users\you&gt;</code> ) as your “camera position” in the filesystem. Every command you run either acts on this folder or on a path you specify.</p>
+<ul>
+<li>Absolute paths always start with a drive, e.g., <code>C:\data\projects</code>. They’re unambiguous.</li>
+<li>Relative paths are interpreted from where you currently are. For example, <code>..\..</code> means “go up two folders from here”.</li>
+<li>Windows exposes handy variables: <code>%USERPROFILE%</code> (your home), <code>%TEMP%</code>, <code>%CD%</code> (current), and <code>%HOMEDRIVE%%HOMEPATH%</code> (your home split into drive/path).</li>
+<li>Paths with spaces must be quoted: <code>"C:\My Data\file.csv"</code>.</li>
+<li>Switch drives by typing the drive letter + colon, e.g., <code>D:</code>. If you also need to change folders on another drive, prefer <code>cd /d</code>.</li>
+</ul>
+<p>Why a data scientist cares: absolute paths make notebooks and batch jobs reproducible; relative paths make scripts portable within a project. You’ll use both daily.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Scenario: You clone <code>C:\ds\churn</code> and get a ZIP at <code>D:\downloads</code>. To inspect the data quickly, switch to <code>D:</code> then <code>cd /d "D:\downloads"</code> to unzip; later <code>cd /d "C:\ds\churn\data"</code> to run scripts relative to the project.</p>
+</div>
+</div>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>:: Open Explorer at the current folder
+explorer .
+
+:: Switch drive
+D:
+
+:: Change drive and folder in one go
+cd /d "D:\datasets\census"</code></pre>
+<pre class="text"><code># Expected (illustrative):
+D:\&gt;cd /d "D:\datasets\census"
+D:\datasets\census&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="moving-around-the-disk" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="moving-around-the-disk"><span class="header-section-number">6.2</span> Moving around the disk</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Use <code>cd</code> to print where you are, <code>dir</code> to list what’s there, and <code>cd ..</code> to go up. <code>tree /f</code> gives a quick sense of structure.</p>
+<p>Tip: <code>dir /b</code> (bare) is ideal for saving listings or feeding into other commands; <code>dir /s</code> recurses.</p>
+<p>Example flow: confirm you’re in the project root, list only CSVs recursively to see what’s available, then jump into the <code>raw</code> folder to inspect files.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>:: List variations
+dir
+
+:: Bare names (great for piping)
+dir /b
+
+:: Recursive listing
+dir /s /b *.csv
+
+:: Navigate
+cd
+cd ..
+cd /d "D:\datasets\census"
+
+tree /f</code></pre>
+<pre class="text"><code>C:\data\projects&gt;dir /b
+raw
+working
+README.md</code></pre>
+</div>
+</div>
+</section>
+<section id="two-navigation-superpowers" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="two-navigation-superpowers"><span class="header-section-number">6.3</span> Two navigation superpowers</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li><code>pushd</code> / <code>popd</code> temporarily jump to a folder and come back—great for one-off searches.</li>
+<li>Tab completion speeds up navigation: type a few letters of a file/folder, press Tab; Shift+Tab cycles backwards.</li>
+</ul>
+<p>Use case: you’re in a notebook outputs folder but need to quickly search logs elsewhere; <code>pushd</code> there, search, then <code>popd</code> to return.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>pushd "D:\bigdata\logs"
+dir /s /b *.log | findstr /i error
+popd</code></pre>
+<pre class="text"><code># After popd you’re back where you started.</code></pre>
+</div>
+</div>
+</section>
+<section id="finding-things-fast" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="finding-things-fast"><span class="header-section-number">6.4</span> Finding things fast</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Use <code>where</code> to see exactly which program will run (crucial when multiple Pythons exist), <code>dir /s /b</code> for filename search, and <code>findstr</code> to scan file contents.</p>
+<p>Scenario (DS): you installed Python with Anaconda and Microsoft Store; which one is active in this shell? <code>where python</code> reveals precedence, avoiding mysterious package mismatches.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>:: Programs on PATH
+where python
+where /R "%USERPROFILE%" python.exe
+
+:: Files by name
+dir /s /b "D:\projects\*report*.xlsx"
+
+:: Text inside files
+findstr /s /n /i "error" *.log
+findstr /s /i /c:"feature importance" *.txt</code></pre>
+<pre class="text"><code>C:\&gt;where python
+C:\Users\you\anaconda3\python.exe
+C:\Windows\py.exe</code></pre>
+</div>
+</div>
+</section>
+<section id="filter-sort-and-compose" class="level3" data-number="6.5">
+<h3 data-number="6.5" class="anchored" data-anchor-id="filter-sort-and-compose"><span class="header-section-number">6.5</span> Filter, sort, and compose</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>The pipeline character <code>|</code> connects commands. Build powerful one-liners: list files → filter → sort → save.</p>
+<p>Scenario: build a quick index of 2024 CSVs to share with a teammate.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>:: Filter and sort, save results
+dir /s /b *.csv | findstr /i "2024" | sort &gt; index_2024.csv.txt</code></pre>
+<pre class="text"><code># index_2024.csv.txt (snippet)
+C:\data\raw\sales_2024_q1.csv
+C:\data\raw\sales_2024_q2.csv</code></pre>
+</div>
+</div>
+</section>
+<section id="make-copy-move-rename-delete" class="level3" data-number="6.6">
+<h3 data-number="6.6" class="anchored" data-anchor-id="make-copy-move-rename-delete"><span class="header-section-number">6.6</span> Make, copy, move, rename, delete</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>For production-grade copies, prefer <code>robocopy</code> (retries, mirroring, timestamps). Use <code>move</code>/<code>ren</code> for reorganizing outputs. Remember: deletions with <code>del</code>/<code>rmdir</code> bypass Recycle Bin.</p>
+<p>Scenario (DS): copy only new CSVs from RAW into WORKING each morning, then archive yesterday’s intermediates.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>robocopy "C:\data\raw" "C:\data\working" *.csv /XO
+robocopy "D:\src" "E:\backup\src" /MIR      :: mirror (danger: deletes extras)
+robocopy "C:\A" "C:\B" *.parquet /S /XO       :: copy subfolders, skip older
+
+move "C:\data\working\old.csv" "C:\data\archive\"
+ren  "C:\data\raw\report 01.csv" report_01.csv
+
+del   "C:\data\working\temp_*.csv"
+rmdir /s /q "C:\data\working\cache"</code></pre>
+<pre class="text"><code># robocopy exit codes: 0 (nothing to copy), 1 (copied), &gt;=8 (errors)</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>del</code> and <code>rmdir</code> are permanent; test on a sandbox folder first.</p>
+</div>
+</div>
+</section>
+<section id="viewing-and-slicing-files" class="level3" data-number="6.7">
+<h3 data-number="6.7" class="anchored" data-anchor-id="viewing-and-slicing-files"><span class="header-section-number">6.7</span> Viewing and slicing files</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Use <code>type | more</code> for paging and <code>find /v /c ""</code> for a quick line count. For head/tail equivalents, call PowerShell from CMD.</p>
+<p>Scenario: sanity‑check the first and last lines of a CSV before ingesting into Python.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>:: Page through
+type data.csv | more
+
+:: Count lines
+find /v /c "" data.csv
+
+:: First / last N lines via PowerShell
+powershell -NoProfile -Command "Get-Content 'data.csv' -TotalCount 20"
+powershell -NoProfile -Command "Get-Content 'data.csv' -Tail 20"</code></pre>
+</div>
+</div>
+</section>
+<section id="redirection-piping-and-chaining" class="level3" data-number="6.8">
+<h3 data-number="6.8" class="anchored" data-anchor-id="redirection-piping-and-chaining"><span class="header-section-number">6.8</span> Redirection, piping, and chaining</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Redirect <code>&gt;</code> (overwrite) and <code>&gt;&gt;</code> (append). Redirect errors with <code>2&gt;</code>; merge streams with <code>2&gt;&amp;1</code>. Chain commands with <code>&amp;&amp;</code> (on success), <code>||</code> (on failure), and <code>&amp;</code> (always).</p>
+<p>Scenario: run an ETL step and only launch the model if the ETL succeeded.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>:: Redirect output
+dir /s /b *.parquet &gt; all_parquet.txt
+
+:: Append CSV index
+dir /s /b *.csv &gt;&gt; all_csv.txt
+
+:: Combine stdout + stderr
+etl_step.bat &gt; etl.log 2&gt;&amp;1 &amp;&amp; train_model.bat</code></pre>
+</div>
+</div>
+</section>
+<section id="loops-youll-actually-use" class="level3" data-number="6.9">
+<h3 data-number="6.9" class="anchored" data-anchor-id="loops-youll-actually-use"><span class="header-section-number">6.9</span> Loops you’ll actually use</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>In interactive CMD, use single <code>%</code>. In <code>.bat</code> files, double them (<code>%%</code>). Combine <code>for</code> with <code>forfiles</code> to filter by size, age, or pattern.</p>
+<p>Scenario: move daily CSVs larger than 10 MB to an archive before ingestion.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>:: Loop files in current folder
+for %f in (*.csv) do echo %f
+
+:: Recurse subfolders
+for /r %f in (*.csv) do echo %f
+
+:: Move CSVs &gt; 10 MB to archive
+for %f in (*.csv) do forfiles /P "%CD%" /M "%~nxf" /C "cmd /c if @fsize gtr 10485760 move /Y @path C:\data\archive"</code></pre>
+</div>
+</div>
+</section>
+<section id="guard-rails-and-conditions" class="level3" data-number="6.10">
+<h3 data-number="6.10" class="anchored" data-anchor-id="guard-rails-and-conditions"><span class="header-section-number">6.10</span> Guard rails and conditions</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Protect scripts with <code>if</code> checks to avoid destructive surprises. Case-insensitive compares via <code>/i</code>.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>if exist "*.parquet" echo Found parquet files
+if not exist "C:\data\archive" mkdir "C:\data\archive"
+
+if /i "%ENV%"=="prod" echo Production</code></pre>
+</div>
+</div>
+</section>
+<section id="environment-variables-and-path" class="level3" data-number="6.11">
+<h3 data-number="6.11" class="anchored" data-anchor-id="environment-variables-and-path"><span class="header-section-number">6.11</span> Environment variables and PATH</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Session variables (<code>set</code>) affect only the current window; <code>setx</code> persists to future sessions (you must reopen CMD). Use <code>where</code> to verify which interpreter you’re running.</p>
+<p>Scenario: pin to a specific Python in a build agent by prepending its folder to <code>PATH</code> for just the session.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>set                 :: list all
+set PATH
+set MYVAR=hello
+echo %MYVAR%
+
+setx MYVAR hello    :: persist (reopen CMD to see it)
+
+where python
+python --version</code></pre>
+</div>
+</div>
+</section>
+<section id="hashing-archives-and-big-files" class="level3" data-number="6.12">
+<h3 data-number="6.12" class="anchored" data-anchor-id="hashing-archives-and-big-files"><span class="header-section-number">6.12</span> Hashing, archives, and big files</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Use <code>certutil</code> to verify file integrity, <code>tar</code> to compress projects, and <code>forfiles</code> to find large files worth compressing or moving.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>certutil -hashfile data.csv SHA256
+
+tar -caf backup.tar.gz "C:\data\project1"
+tar -xaf backup.tar.gz -C "D:\restore_here"
+
+forfiles /S /M *.* /C "cmd /c if @fsize gtr 104857600 echo @fsize @path" &gt; bigfiles.txt</code></pre>
+</div>
+</div>
+</section>
+<section id="networking-odds-and-ends" class="level3" data-number="6.13">
+<h3 data-number="6.13" class="anchored" data-anchor-id="networking-odds-and-ends"><span class="header-section-number">6.13</span> Networking odds and ends</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Use <code>curl</code> for quick downloads and <code>ping</code> to check connectivity.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>curl -L -o data.zip https://example.com/data.zip
+ping 8.8.8.8</code></pre>
+</div>
+</div>
+</section>
+<section id="launching-tools-you-care-about" class="level3" data-number="6.14">
+<h3 data-number="6.14" class="anchored" data-anchor-id="launching-tools-you-care-about"><span class="header-section-number">6.14</span> Launching tools you care about</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Create a virtual environment, activate it, and upgrade <code>pip</code>. If R is on <code>PATH</code>, call scripts with <code>Rscript</code>.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>py -3.11 -m venv .venv
+.venv\Scripts\activate
+python -m pip install -U pip
+
+Rscript my_analysis.R</code></pre>
+</div>
+</div>
+</section>
+<section id="history-macros-and-qualityoflife" class="level3" data-number="6.15">
+<h3 data-number="6.15" class="anchored" data-anchor-id="history-macros-and-qualityoflife"><span class="header-section-number">6.15</span> History, macros, and quality‑of‑life</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><code>doskey /history</code> shows previous commands; define session‑aliases with <code>doskey</code>. Switch to UTF‑8 (<code>chcp 65001</code>) to avoid garbled characters.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>doskey /history
+
+doskey ll=dir /a $*
+doskey l=dir /b $*
+doskey grep=findstr /s /i $*
+
+chcp 65001</code></pre>
+</div>
+</div>
+</section>
+<section id="realworld-recipes" class="level3" data-number="6.16">
+<h3 data-number="6.16" class="anchored" data-anchor-id="realworld-recipes"><span class="header-section-number">6.16</span> Real‑world recipes</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>These end‑to‑end patterns map directly to daily DS tasks: inventorying data, consolidating results, copying only newer files, mining logs.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>:: 1) Build a reusable file index
+cd /d "D:\datasets"
+dir /s /b *.csv &gt; all_csv.txt
+
+:: 2) Move all *_final.csv into one folder
+mkdir "D:\datasets\final"
+for /r %f in (*_final.csv) do move /Y "%f" "D:\datasets\final\"
+
+:: 3) Copy only newer CSVs
+robocopy "C:\data\raw" "C:\data\working" *.csv /XO
+
+:: 4) Find logs mentioning "timeout"
+cd /d "C:\service\logs"
+findstr /s /n /i "timeout" *.log &gt; timeouts.txt</code></pre>
+</div>
+</div>
+</section>
+<section id="troubleshooting-quick-hits" class="level3" data-number="6.17">
+<h3 data-number="6.17" class="anchored" data-anchor-id="troubleshooting-quick-hits"><span class="header-section-number">6.17</span> Troubleshooting quick hits</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>If a command isn’t found, verify install and <code>PATH</code>. For access errors, try a path you own or (only when required) an Administrator CMD. Inside <code>for</code> loops, escape reserved symbols as <code>^|</code>, <code>^&gt;</code>, <code>^&amp;</code>. In batch files, double percent signs.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>where toolname
+echo %PATH%</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="practical-examples" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="practical-examples"><span class="header-section-number">7</span> Practical examples</h2>
+<section id="organise-files-by-extension-cmd" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="organise-files-by-extension-cmd"><span class="header-section-number">7.1</span> Organise files by extension (CMD)</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>This Batch script creates one subfolder per file extension in the current folder and moves files accordingly. It’s a good example of loops, variable expansion, and careful quoting. Start with a copy of data until you trust your result.</p>
+</div><div class="column" style="width:45%;">
+<pre class="batch"><code>@ECHO OFF
+SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
+FOR %%F IN (*.*) DO (
+  SET "ext=%%~xF"
+  IF NOT "!ext!"=="" (
+    SET "ext=!ext:~1!"  &amp; REM drop dot
+    IF NOT EXIST ".!ext!" MD ".!ext!"
+    MOVE /Y "%%~fF" ".!ext!\" &gt;NUL
+  )
+)
+ECHO Done.</code></pre>
+</div>
+</div>
+</section>
+<section id="organise-files-by-extension-powershell-recursive" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="organise-files-by-extension-powershell-recursive"><span class="header-section-number">7.2</span> Organise files by extension (PowerShell, recursive)</h3>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>PowerShell makes this ergonomic with object pipelines. This example groups files by extension and consolidates them into destination folders. Use <code>-WhatIf</code> in your own scripts to preview actions before moving files for real.</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb35"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">param</span><span class="op">([</span><span class="dt">string</span><span class="op">]</span><span class="va">$Root</span> <span class="op">=</span> <span class="st">"."</span><span class="op">,</span> <span class="op">[</span><span class="dt">string</span><span class="op">]</span><span class="va">$Out</span> <span class="op">=</span> <span class="st">".by-ext"</span><span class="op">)</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-ChildItem</span> <span class="op">-</span>Path <span class="va">$Root</span> <span class="op">-</span>Recurse <span class="op">-</span>File <span class="op">|</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Group-Object</span> Extension <span class="op">|</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ForEach-Object</span> <span class="op">{</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">$ext</span>  <span class="op">=</span> <span class="cf">if</span> <span class="op">(</span><span class="va">$_</span><span class="op">.</span><span class="fu">Name</span><span class="op">)</span> <span class="op">{</span> <span class="va">$_</span><span class="op">.</span><span class="fu">Name</span><span class="op">.</span><span class="fu">TrimStart</span><span class="op">(</span><span class="st">'.'</span><span class="op">)</span> <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span> <span class="st">'noext'</span> <span class="op">}</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$dest</span> <span class="op">=</span> <span class="fu">Join-Path</span> <span class="va">$Out</span> <span class="va">$ext</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">New-Item</span> <span class="op">-</span>ItemType Directory <span class="op">-</span>Path <span class="va">$dest</span> <span class="op">-</span>Force <span class="op">|</span> <span class="fu">Out-Null</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$_</span><span class="op">.</span><span class="fu">Group</span> <span class="op">|</span> <span class="fu">ForEach-Object</span> <span class="op">{</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">Move-Item</span> <span class="op">-</span>LiteralPath <span class="va">$_</span><span class="op">.</span><span class="fu">FullName</span> <span class="op">-</span>Destination <span class="va">$dest</span> <span class="op">-</span>Force</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="fu">Write-Host</span> <span class="st">"Organised files under"</span> <span class="op">(</span><span class="fu">Resolve-Path</span> <span class="va">$Out</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="troubleshooting-pip-is-not-recognized" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="troubleshooting-pip-is-not-recognized"><span class="header-section-number">8</span> Troubleshooting: “‘pip’ is not recognized”</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>This happens when your shell can’t find <code>pip</code> on <code>PATH</code> or you’re using a shell session that wasn’t initialized for the Python you expect. Use this short diagnostic flow before changing your system:</p>
+<ol type="1">
+<li>Check whether <code>pip</code> and <code>python</code> are on <code>PATH</code> for this session.</li>
+<li>Confirm which copies will run (there may be multiple installations).</li>
+<li>If using Conda/venv, activate the intended environment so <code>PATH</code> is updated.</li>
+</ol>
+<p>When in doubt, call pip via the interpreter (<code>python -m pip ...</code> or <code>py -m pip ...</code>) to remove ambiguity.</p>
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb36"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">where</span><span class="op">.</span><span class="fu">exe</span> pip</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">where</span><span class="op">.</span><span class="fu">exe</span> python</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">PATH</span> <span class="op">-split</span> <span class="st">';'</span> <span class="op">|</span> <span class="fu">Select-Object</span> <span class="op">-</span>First <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="batch"><code>WHERE pip
+WHERE python
+ECHO %PATH%</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="wrapup-and-glossary" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="wrapup-and-glossary"><span class="header-section-number">9</span> Wrap‑up and glossary</h2>
+<ul>
+<li>Terminal (window/host) vs Shell (interpreter) vs Program (on disk) vs Process (running) vs OS vs Kernel</li>
+<li>Command resolution: current directory → system folders → <code>PATH</code>; <code>PATHEXT</code> helps, but <code>PATH</code> order decides</li>
+<li>Commands = program → optional subcommand → options → arguments</li>
+<li>Scripts accept arguments like larger tools</li>
+</ul>
+<section id="glossary-short-forms" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="glossary-short-forms"><span class="header-section-number">9.1</span> Glossary (short forms)</h3>
+<ul>
+<li>Program: Code on disk (e.g., <code>git.exe</code>)</li>
+<li>Process: Running instance of a program</li>
+<li>Shell: Interpreter (e.g., PowerShell, CMD)</li>
+<li>Terminal: Window hosting a shell</li>
+<li>OS: The whole operating system (Windows)</li>
+<li>Kernel: Core of the OS that schedules processes and manages hardware</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

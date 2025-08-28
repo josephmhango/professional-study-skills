@@ -1,0 +1,679 @@
+---
+title: "CLI Foundations on Bash"
+subtitle: "Student Notes"
+author: "Joseph Mhango"
+date: "2025-08-14"
+---
+
+## What you will learn (and how to use these notes)
+
+These notes build your understanding from first principles, step by step. Read the prose on the left; try the commands on the right. By the end, you will be able to:
+
+- Distinguish terminal, shell, program, process, operating system (OS), and kernel
+- Explain how your system resolves and runs commands (current directory, system paths, `PATH`)
+- Run scripts that accept arguments (in Bash)
+- Troubleshoot common path and environment issues
+
+:::: {.callout-tip}
+Start by reading; then run the examples in your own terminal. Learning here is scaffolded: each section uses what you learned before.
+::::
+
+---
+
+## Core concepts (clear definitions first)
+
+:::: {.columns}
+:::: {.column width="55%"}
+- **Program**: Code on disk (e.g., `/bin/bash`, `/usr/bin/python3`, `hello.sh`). A program is not running yet.
+- **Process**: A running instance of a program with its own memory, open files, and environment variables.
+- **Operating System (OS)**: Linux/macOS. Provides services to processes (files, networking, memory, scheduling).
+- **Kernel**: The privileged core of the OS that schedules processes and mediates access to hardware. You don’t run the kernel; programs call into it via system calls.
+- **Shell**: A program you interact with that parses what you type and starts other programs. Common shells include:
+  - Bash (`/bin/bash`)
+  - Zsh (`/bin/zsh`)
+- **Terminal**: The window/host that displays a shell (e.g., GNOME Terminal, iTerm2, VS Code Terminal). The terminal is the “container”; the shell is the interpreter inside it.
+
+These distinctions matter: the shell (a program) creates processes to run other programs; the OS and kernel make that safe and efficient. Keep this mental model handy; we’ll reuse it in every section.
+::::
+
+:::: {.column width="45%"}
+```bash
+# Which shell am I running?
+echo "$0"      # often -bash or bash
+printf "SHELL=%s\n" "$SHELL"
+
+# Which program is the current shell process?
+ps -p $$ -o comm=
+```
+
+```bash
+# Where is bash on this system?
+which bash
+command -v bash
+```
+::::
+::::
+
+---
+
+## How the shell runs a command (resolution and launch)
+
+:::: {.columns}
+:::: {.column width="55%"}
+When you press Enter in a shell, a predictable sequence happens:
+
+1. The shell parses your input into a command and its arguments.
+2. The shell resolves the command to a file path by searching:
+   - The current directory (when you use an explicit relative/absolute path)
+   - Each directory listed in the `PATH` environment variable (first match wins)
+3. The shell asks the OS to start a new process for the found program, passing along the current environment variables.
+
+Remember: `PATH` order decides which copy of a tool you actually run. Verify when in doubt.
+::::
+
+:::: {.column width="45%"}
+```bash
+# Show PATH as a list
+printf "%s\n" ${PATH//:/$'\n'} | head
+
+# Which program will run?
+which -a git
+command -v git
+```
+
+```bash
+# Print PATH
+echo "$PATH"
+```
+::::
+::::
+
+---
+
+## Working with the current directory and paths
+
+:::: {.columns}
+:::: {.column width="55%"}
+Your “current working directory” is the anchor for relative paths. If you type a relative path, the shell interprets it from where you currently are. This is convenient for short commands but can cause surprises when you expect a different file or tool.
+
+Prefer explicit paths when clarity matters (especially in scripts or instructions you’ll share). A practical habit: use `which`/`command -v` to confirm exactly which program will run before you rely on it.
+::::
+
+:::: {.column width="45%"}
+```bash
+# Change directory
+cd "$HOME/projects/demo"
+
+# Explicit relative path run is common
+./script.sh Alice
+```
+
+```bash
+# Print current directory
+pwd
+```
+::::
+::::
+
+---
+
+## Anatomy of a command and passing arguments
+
+:::: {.columns}
+:::: {.column width="55%"}
+A command typically has four parts:
+- Program (what to run)
+- Optional subcommand (narrow the action)
+- Options/flags (modify how it runs)
+- Arguments (the things to act on)
+
+The same structure scales from tiny scripts to large tools. Read unfamiliar commands by labeling these parts—doing so turns long lines into something predictable and learnable.
+::::
+
+:::: {.column width="45%"}
+```bash
+# List recursively with bare names
+ls -1R "./Data Files"
+```
+
+```bash
+# Another style: subcommand + flags
+git log --oneline --graph --decorate --all
+```
+::::
+::::
+
+### Scripts that accept arguments
+
+:::: {.columns}
+:::: {.column width="55%"}
+Scripts are programs too. The key is that they accept arguments and often provide defaults. You can design your own scripts to behave like professional tools: parse inputs, validate them, and print clear messages.
+::::
+
+:::: {.column width="45%"}
+```bash
+# hello.sh
+#!/usr/bin/env bash
+name=${1:-World}
+echo "Hello, $name!"
+echo "You ran $(basename "$0")"
+```
+::::
+::::
+
+## Being productive with Bash
+
+### Getting set up
+
+:::: {.columns}
+:::: {.column width="55%"}
+Think of the prompt (e.g., `you@host:~/dir$`) as your “camera position” in the filesystem. Every command you run either acts on this folder or on a path you specify.
+
+- Absolute paths start with `/` (e.g., `/data/projects`). They’re unambiguous.
+- Relative paths are interpreted from where you currently are. For example, `../..` means “go up two folders from here”.
+- Useful variables: `$HOME` (your home), `$TMPDIR` or `/tmp`, `$PWD` (current directory).
+- Paths with spaces must be quoted: `"/home/you/My Data/file.csv"`.
+
+Why a data scientist cares: absolute paths make notebooks and batch jobs reproducible; relative paths make scripts portable within a project. You’ll use both daily.
+
+:::: {.callout-tip}
+Scenario: You clone `~/ds/churn` and download a ZIP to `~/Downloads`. To inspect the data quickly, `cd ~/Downloads` to unzip; later `cd ~/ds/churn/data` to run scripts relative to the project.
+::::
+::::
+
+:::: {.column width="45%"}
+```bash
+# Open file browser at the current folder (Linux/macOS)
+xdg-open . 2>/dev/null || open . 2>/dev/null || true
+
+# Change directory
+cd ~/datasets/census
+```
+
+```text
+# Expected (illustrative):
+$ cd ~/datasets/census
+~/datasets/census$
+```
+::::
+::::
+
+### Moving around the disk
+
+:::: {.columns}
+:::: {.column width="55%"}
+Use `pwd` to print where you are, `ls` to list what’s there, and `cd ..` to go up. `tree -F` (if installed) gives a quick sense of structure.
+
+Tip: `ls -1` (one per line) is ideal for piping; `find` recurses.
+
+Example flow: confirm you’re in the project root, list only CSVs recursively to see what’s available, then jump into the `raw` folder to inspect files.
+::::
+
+:::: {.column width="45%"}
+```bash
+# List variations
+ls -la
+
+# Bare names (great for piping)
+ls -1
+
+# Recursive listing of CSVs
+find . -type f -name '*.csv'
+
+# Navigate
+pwd
+cd ..
+cd ~/datasets/census
+
+# If available
+tree -F
+```
+
+```text
+$ ls -1
+raw
+working
+README.md
+```
+::::
+::::
+
+### Two navigation superpowers
+
+:::: {.columns}
+:::: {.column width="55%"}
+- `pushd` / `popd` temporarily jump to a folder and come back—great for one-off searches.
+- Tab completion speeds up navigation: type a few letters of a file/folder, press Tab; Shift+Tab cycles backwards.
+
+Use case: you’re in a notebook outputs folder but need to quickly search logs elsewhere; `pushd` there, search, then `popd` to return.
+::::
+
+:::: {.column width="45%"}
+```bash
+pushd ~/bigdata/logs >/dev/null
+find . -type f -name '*.log' -print0 | xargs -0 grep -i "error" || true
+popd >/dev/null
+```
+
+```text
+# After popd you’re back where you started.
+```
+::::
+::::
+
+### Finding things fast
+
+:::: {.columns}
+:::: {.column width="55%"}
+Use `which`/`command -v` to see exactly which program will run (crucial when multiple Pythons exist), `find` for filename search, and `grep` to scan file contents.
+
+Scenario (DS): you installed Python via system and Conda; which one is active in this shell? `which -a python3` reveals precedence, avoiding mysterious package mismatches.
+::::
+
+:::: {.column width="45%"}
+```bash
+# Programs on PATH
+which -a python3
+
+# Files by name
+find ~/projects -type f -name '*report*.xlsx'
+
+# Text inside files
+grep -Rni "error" -- *.log
+grep -Rni "feature importance" -- .
+```
+
+```text
+$ which -a python3
+/usr/bin/python3
+/home/you/miniconda3/bin/python3
+```
+::::
+::::
+
+### Filter, sort, and compose
+
+:::: {.columns}
+:::: {.column width="55%"}
+The pipeline character `|` connects commands. Build powerful one-liners: list files → filter → sort → save.
+
+Scenario: build a quick index of 2024 CSVs to share with a teammate.
+::::
+
+:::: {.column width="45%"}
+```bash
+# Filter and sort, save results
+find . -type f -name '*.csv' | grep -i '2024' | sort > index_2024.csv.txt
+```
+
+```text
+# index_2024.csv.txt (snippet)
+./data/raw/sales_2024_q1.csv
+./data/raw/sales_2024_q2.csv
+```
+::::
+::::
+
+### Make, copy, move, rename, delete
+
+:::: {.columns}
+:::: {.column width="55%"}
+For production-grade copies, prefer `rsync` (retries, mirroring, timestamps). Use `mv` for reorganizing outputs. Remember: deletions with `rm` bypass Trash.
+
+Scenario (DS): copy only new CSVs from RAW into WORKING each morning, then archive yesterday’s intermediates.
+::::
+
+:::: {.column width="45%"}
+```bash
+# Copy only newer CSVs
+rsync -av --update ./raw/ ./working/ --include='*.csv' --exclude='*'
+
+# Mirror source to destination (danger: deletes extras)
+rsync -av --delete ./src/ /backup/src/
+
+# Move / rename
+mv ./working/old.csv ./archive/
+mv "./raw/report 01.csv" ./raw/report_01.csv
+
+# Delete
+rm -f ./working/temp_*.csv
+rm -rf ./working/cache/
+```
+
+```text
+# rsync exit codes: 0 (success), 23 (partial), others vary
+```
+::::
+::::
+
+:::: {.callout-caution}
+`rm -rf` is permanent; test on a sandbox folder first.
+::::
+
+### Viewing and slicing files
+
+:::: {.columns}
+:::: {.column width="55%"}
+Use `less` for paging and `wc -l` for a quick line count. `head`/`tail` for the beginning/end of files.
+
+Scenario: sanity‑check the first and last lines of a CSV before ingesting into Python.
+::::
+
+:::: {.column width="45%"}
+```bash
+# Page through
+less data.csv
+
+# Count lines
+wc -l data.csv
+
+# First / last N lines
+head -n 20 data.csv
+tail -n 20 data.csv
+```
+::::
+::::
+
+### Redirection, piping, and chaining
+
+:::: {.columns}
+:::: {.column width="55%"}
+Redirect `>` (overwrite) and `>>` (append). Redirect errors with `2>`; merge streams with `2>&1`. Chain commands with `&&` (on success), `||` (on failure), and `;` (always).
+
+Scenario: run an ETL step and only launch the model if the ETL succeeded.
+::::
+
+:::: {.column width="45%"}
+```bash
+# Redirect output
+find . -type f -name '*.parquet' > all_parquet.txt
+
+# Append CSV index
+find . -type f -name '*.csv' >> all_csv.txt
+
+# Combine stdout + stderr
+./etl_step.sh > etl.log 2>&1 && ./train_model.sh
+```
+::::
+::::
+
+### Loops you’ll actually use
+
+:::: {.columns}
+:::: {.column width="55%"}
+Use `for` loops interactively or in scripts. Combine `find` filters to select by size, age, or pattern.
+
+Scenario: move daily CSVs larger than 10 MB to an archive before ingestion.
+::::
+
+:::: {.column width="45%"}
+```bash
+# Loop files in current folder
+for f in *.csv; do echo "$f"; done
+
+# Recurse subfolders
+find . -type f -name '*.csv' -print
+
+# Move CSVs > 10 MB to archive
+find . -type f -name '*.csv' -size +10M -exec mv -t "$HOME/data/archive" {} +
+```
+::::
+::::
+
+### Guard rails and conditions
+
+:::: {.columns}
+:::: {.column width="55%"}
+Protect scripts with `if` checks to avoid destructive surprises. Use `[[ ... ]]` for robust tests.
+::::
+
+:::: {.column width="45%"}
+```bash
+# If any parquet exists
+shopt -s nullglob
+parq=( *.parquet )
+[[ ${#parq[@]} -gt 0 ]] && echo "Found parquet files"
+
+# Ensure destination exists
+mkdir -p "$HOME/data/archive"
+
+# Environment checks
+[[ "$ENV" == "prod" ]] && echo "Production"
+```
+::::
+::::
+
+### Environment variables and PATH
+
+:::: {.columns}
+:::: {.column width="55%"}
+Session variables (`export`) affect only the current shell; add to your shell RC (e.g., `~/.bashrc`) to persist. Use `which` to verify which interpreter you’re running.
+
+Scenario: pin to a specific Python in a build agent by prepending its folder to `PATH` for just the session.
+::::
+
+:::: {.column width="45%"}
+```bash
+# List environment (snippet)
+printenv | head
+
+echo "$PATH"
+export MYVAR=hello
+echo "$MYVAR"
+
+# Prepend to PATH (session only)
+export PATH="$HOME/miniconda3/bin:$PATH"
+
+which python3
+python3 --version
+```
+::::
+::::
+
+### Hashing, archives, and big files
+
+:::: {.columns}
+:::: {.column width="55%"}
+Use `sha256sum` to verify file integrity, `tar` to compress projects, and `find` to list large files worth compressing or moving.
+::::
+
+:::: {.column width="45%"}
+```bash
+sha256sum data.csv
+
+tar -caf backup.tar.gz "$HOME/data/project1"
+tar -xaf backup.tar.gz -C "$HOME/restore_here"
+
+find . -type f -size +100M -printf "%s %p\n" > bigfiles.txt
+```
+::::
+::::
+
+### Networking odds and ends
+
+:::: {.columns}
+:::: {.column width="55%"}
+Use `curl` for quick downloads and `ping` to check connectivity.
+::::
+
+:::: {.column width="45%"}
+```bash
+curl -L -o data.zip https://example.com/data.zip
+ping -c 4 8.8.8.8
+```
+::::
+::::
+
+### Launching tools you care about
+
+:::: {.columns}
+:::: {.column width="55%"}
+Create a virtual environment, activate it, and upgrade `pip`. If R is on `PATH`, call scripts with `Rscript`.
+::::
+
+:::: {.column width="45%"}
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -U pip
+
+Rscript my_analysis.R
+```
+::::
+::::
+
+### History, aliases, and quality‑of‑life
+
+:::: {.columns}
+:::: {.column width="55%"}
+`history` shows previous commands; define session‑aliases with `alias`. Use UTF‑8 locales to avoid garbled characters.
+::::
+
+:::: {.column width="45%"}
+```bash
+history
+
+alias ll='ls -la'
+alias l='ls -1'
+alias grep='grep --color=auto -Rni'
+
+export LANG=C.UTF-8
+export LC_ALL=C.UTF-8
+```
+::::
+::::
+
+### Real‑world recipes
+
+:::: {.columns}
+:::: {.column width="55%"}
+These end‑to‑end patterns map directly to daily DS tasks: inventorying data, consolidating results, copying only newer files, mining logs.
+::::
+
+:::: {.column width="45%"}
+```bash
+# 1) Build a reusable file index
+cd ~/datasets
+find . -type f -name '*.csv' > all_csv.txt
+
+# 2) Move all *_final.csv into one folder
+mkdir -p ~/datasets/final
+find . -type f -name '*_final.csv' -exec mv -t ~/datasets/final {} +
+
+# 3) Copy only newer CSVs
+rsync -av --update ./raw/ ./working/ --include='*.csv' --exclude='*'
+
+# 4) Find logs mentioning "timeout"
+cd ~/service/logs
+grep -Rni "timeout" -- *.log > timeouts.txt
+```
+::::
+::::
+
+### Troubleshooting quick hits
+
+:::: {.columns}
+:::: {.column width="55%"}
+If a command isn’t found, verify install and `PATH`. For access errors, try a path you own or (only when required) `sudo`. In loops and scripts, quote variables and paths to handle spaces.
+::::
+
+:::: {.column width="45%"}
+```bash
+command -v toolname || which toolname
+echo "$PATH"
+```
+::::
+::::
+
+---
+
+## Practical examples
+
+### Organise files by extension (Bash)
+
+:::: {.columns}
+:::: {.column width="55%"}
+This Bash script creates one subfolder per file extension in the current folder and moves files accordingly. It’s a good example of loops, parameter expansion, and careful quoting. Start with a copy of data until you trust your result.
+::::
+
+:::: {.column width="45%"}
+```bash
+#!/usr/bin/env bash
+shopt -s nullglob
+for f in *.*; do
+  ext=${f##*.}
+  [[ -z "$ext" ]] && continue
+  mkdir -p ".$ext"
+  mv -v -- "$f" ".$ext/"
+done
+echo "Done."
+```
+::::
+::::
+
+### Organise files by extension (recursive)
+
+:::: {.columns}
+:::: {.column width="55%"}
+This example groups files by extension under a given root and consolidates them into destination folders. Use `-print0` with `xargs -0` to handle any filenames safely.
+::::
+
+:::: {.column width="45%"}
+```bash
+#!/usr/bin/env bash
+root=${1:-.}
+out=${2:-.by-ext}
+export root out
+find "$root" -type f -print0 | while IFS= read -r -d '' path; do
+  base=$(basename "$path")
+  ext=${base##*.}
+  [[ "$base" == "$ext" ]] && ext="noext"
+  dest="$out/$ext"
+  mkdir -p "$dest"
+  mv -v -- "$path" "$dest/"
+done
+echo "Organised files under $(realpath "$out")"
+```
+::::
+::::
+
+---
+
+## Troubleshooting: “pip: command not found”
+
+:::: {.columns}
+:::: {.column width="55%"}
+This happens when your shell can’t find `pip` on `PATH` or you’re using a shell session that wasn’t initialized for the Python you expect. Use this short diagnostic flow before changing your system:
+
+1. Check whether `pip`/`python3` are on `PATH` for this session.
+2. Confirm which copies will run (there may be multiple installations).
+3. If using Conda/venv, activate the intended environment so `PATH` is updated.
+
+When in doubt, call pip via the interpreter (`python3 -m pip ...`) to remove ambiguity.
+::::
+
+:::: {.column width="45%"}
+```bash
+command -v pip || which pip
+command -v python3 || which python3
+printf "%s\n" ${PATH//:/$'\n'} | head
+```
+::::
+::::
+
+---
+
+## Wrap‑up and glossary
+
+- Terminal (window/host) vs Shell (interpreter) vs Program (on disk) vs Process (running) vs OS vs Kernel
+- Command resolution: explicit paths or search via `PATH`; `PATH` order decides
+- Commands = program → optional subcommand → options → arguments
+- Scripts accept arguments like larger tools
+
+### Glossary (short forms)
+- Program: Code on disk (e.g., `git`)
+- Process: Running instance of a program
+- Shell: Interpreter (e.g., Bash, Zsh)
+- Terminal: Window hosting a shell
+- OS: The whole operating system (Linux/macOS)
+- Kernel: Core of the OS that schedules processes and manages hardware 

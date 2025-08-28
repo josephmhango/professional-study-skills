@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CLI Foundations on Windows — 1‑Hour Primer (Level 4 UK)</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/league.css" id="theme">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --accent:#2563eb; --muted:#64748b; }
+    .reveal .slides{ max-width:1400px; }
+    .reveal h1{ text-shadow: none !important;font-size:clamp(36px,5vw,56px); }
+    .reveal h2{ font-size:clamp(28px,4vw,42px); }
+    .reveal h3{ font-size:clamp(22px,3vw,32px); }
+    .reveal p, .reveal li{ font-size:clamp(18px,2.1vw,26px); line-height:1.25; }
+    .muted{ color:var(--muted); }
+    .pill{ display:inline-block; font-weight:600; border-radius:999px; padding:.2rem .6rem; background:#e2e8f0; color:#0f172a; font-size:clamp(12px,1.2vw,14px); }
+    .note{ border-left:4px solid var(--accent); padding:.75rem 1rem; background:#040505; border-radius:8px; }
+    .tight ul{ margin:.5rem 0 0 1.2rem; }
+    .tight li{ margin:.15rem 0; }
+    .two-col{ display:grid; grid-template-columns:1.1fr 1fr; gap:1.2rem; align-items:start; }
+    .two-col .col{ min-width:0; }
+    .two-col pre{ margin:0; }
+    pre code{ font-size:clamp(12px,1.4vw,20px); max-height:60vh; display:block; overflow:auto; }
+    @media (max-width:1000px){ .two-col{ grid-template-columns:1fr; } }
+    #sessionProgress{ position:fixed; left:0; right:0; bottom:0; height:6px; background:linear-gradient(90deg, var(--accent) var(--p,0%), #e2e8f0 0); z-index:99; }
+    .ribbon{ position:fixed; right:10px; top:10px; z-index:99; background:transparent; padding:0; border-radius:0; }
+    .ribbon img{ height:40px; width:auto; display:block; }
+    .reveal section{ padding:10px 0; }
+    /* Unified site aesthetic */
+    html, body{ height:100% }
+    body{ margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:#181c34; color:#e8ecff }
+    a{ color:inherit; text-decoration:none }
+    .reveal{ background:#181c34 }
+    .reveal .slides{ background:#181c34 }
+  </style>
+</head>
+<body>
+<div class="ribbon"><img src="../HAU-logo.svg" alt="Harper Adams University"></div>
+<div id="sessionProgress"></div>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- TITLE -->
+    <section>
+      <h1>CLI Foundations on Windows</h1>
+      <h3 class="muted">A first‑principles primer: from shells and processes to PATH, scripts, and real‑world use</h3>
+      <p><span class="pill">Windows only</span> <span class="pill">Beginner‑friendly</span> <span class="pill">Print‑ready study notes</span></p>
+    </section>
+
+    <!-- PURPOSE & OUTCOMES -->
+    <section>
+      <h2>Why this primer exists</h2>
+      <p>This session builds the mental model you need before learning Batch scripting or Bash-on-Windows. We explain, in plain language, how Windows runs commands, what a shell and a process really are, how the <em>PATH</em> and environment variables control what works, and how to run scripts and programs predictably. You won’t be asked to use Python or R here—the goal is to understand the machinery that later lets <code>conda</code>, <code>pip</code>, <code>git</code>, and Jupyter work without mystery.</p>
+      <div class="note"><strong>Outcomes:</strong> You can define terminal, shell, process, OS, and kernel; explain how Windows finds and runs a command; use and reason about PATH and environment variables; execute a simple script with arguments; and diagnose common pitfalls (e.g., “pip not recognized”).</div>
+    </section>
+
+    <!-- WINDOWS CLIs OVERVIEW -->
+    <section>
+      <h2>Two Windows command-line environments</h2>
+      <p><strong>Command Prompt (cmd.exe)</strong> is the classic Windows shell. It runs Batch files (<code>.cmd</code>/<code>.bat</code>) and uses commands such as <code>dir</code>, <code>copy</code>, and <code>set</code>. Syntax is terse and idiosyncratic but ubiquitous—many vendor scripts still target it.</p>
+      <p><strong>PowerShell</strong> is a newer shell built on .NET. It uses <em>commands</em> called <em>cmdlets</em> (e.g., <code>Get-ChildItem</code>), supports rich objects instead of plain text, and has clearer parameter syntax (e.g., <code>-Recurse</code>). PowerShell can run traditional programs and Batch files too.</p>
+      <p><strong>Terminal vs shell:</strong> Windows Terminal is just the <em>window</em>. Inside that window you run a <em>shell</em> (e.g., cmd or PowerShell). You can open multiple tabs and each tab can host a different shell.</p>
+    </section>
+
+    <!-- DEFINITIONS: SHELL / PROCESS / PROGRAM / OS / KERNEL -->
+    <section>
+      <h2>Shells, processes, programs, the OS, and the kernel</h2>
+      <p><strong>Program</strong> means the code on disk (an <code>.exe</code>, <code>.cmd</code>, or script). When Windows runs a program, it creates a <strong>process</strong>—a live instance with memory, open files, and environment variables.</p>
+      <p>The <strong>shell</strong> (cmd or PowerShell) is just another program. Its job is to read what you type, parse it into a command plus arguments, locate the executable or script, and ask Windows to start a process for it.</p>
+      <p><strong>Operating System (OS)</strong> refers to all of Windows. The <strong>kernel</strong> is the privileged core of the OS that manages memory, files, devices, and process scheduling. Most of your work happens in <em>user space</em>—ordinary programs and shells talking to the kernel via system calls.</p>
+    </section>
+
+    <!-- HOW WINDOWS FINDS A COMMAND (1) -->
+    <section>
+      <h2>How Windows finds and runs a command (1/2)</h2>
+      <p>When you press Enter, the shell performs these steps:</p>
+      <ol class="tight">
+        <li><strong>Parse</strong> the line into a command name and its arguments.</li>
+        <li><strong>Resolve</strong> the command name to a file path. Windows searches in a specific order that includes the <em>current working directory</em>, certain system folders, and the directories listed in <strong>PATH</strong>. The first match wins. On Windows, the <strong>PATHEXT</strong> variable lists which file extensions count as “executable” (e.g., <code>.EXE;.BAT;.CMD;.PS1</code>).</li>
+        <li><strong>Launch</strong> the found program or script as a new <em>process</em>, passing your environment variables to it.</li>
+      </ol>
+      <p>This resolution explains why two different installations of a tool (e.g., two Pythons) can compete. Path order determines which one you actually run.</p>
+    </section>
+
+    <!-- HOW WINDOWS FINDS A COMMAND (2) -->
+    <section>
+      <h2>How Windows finds and runs a command (2/2)</h2>
+      <p><strong>Current directory</strong>: If you type the name of a program or script that lives in your current folder, Windows may run it even if that folder is not on PATH—because the current folder is checked during resolution. This is why <code>mytool.cmd</code> can run by name when you are “in” that folder.</p>
+      <p><strong>Environment variables</strong> are key–value pairs the OS and applications use for configuration (examples: <code>PATH</code>, <code>TMP</code>, <code>HTTP_PROXY</code>). They are inherited by child processes. You can set them for your current session in the shell, or persistently via Windows’ System Properties.</p>
+      <div class="two-col">
+        <div class="col">
+<pre><code class="language-batch">:: CMD (Command Prompt)
+SET PATH
+SET HOME=C:\Users\Student
+</code></pre>
+        </div>
+        <div class="col">
+<pre><code class="language-powershell"># PowerShell
+$env:PATH
+$env:HOME = "C:\Users\Student"   # session only
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT PATH IS & WHY IT MATTERS -->
+    <section>
+      <h2>PATH and PATHEXT: what they are and why they matter</h2>
+      <p><strong>PATH</strong> is an ordered list of directories. When you run <code>git</code>, Windows looks for an executable named <code>git</code> inside each directory on PATH until it finds one. <strong>PATHEXT</strong> tells Windows which extensions can be implied (so typing <code>git</code> actually looks for <code>git.exe</code>, <code>git.cmd</code>, etc.).</p>
+      <p>To make a program runnable from anywhere, either place its executable in a directory already on PATH or add its installation directory to PATH. Remember: order matters—the first match wins.</p>
+      <div class="two-col">
+        <div class="col">
+<pre><code class="language-batch">:: CMD: view and add for this session
+ECHO %PATH%
+SET PATH=C:\Tools;%PATH%
+</code></pre>
+        </div>
+        <div class="col">
+<pre><code class="language-powershell"># PowerShell: view and add for this session
+$env:PATH
+$env:PATH = "C:\Tools;" + $env:PATH
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKING DIRECTORY BEHAVIOUR -->
+    <section>
+      <h2>Working directory behaviour</h2>
+      <p>Your <strong>working directory</strong> is the folder the shell considers “current.” File references without a drive/path are interpreted relative to it. Many commands behave differently depending on where you are. Running a program that sits in the working directory often works by name because Windows checks the current folder during command resolution.</p>
+      <div class="two-col">
+        <div class="col">
+<pre><code class="language-batch">:: CMD
+CD /D C:\Projects\demo
+MYTOOL.CMD         &rem may run if file exists here
+</code></pre>
+        </div>
+        <div class="col">
+<pre><code class="language-powershell"># PowerShell
+Set-Location C:\Projects\demo
+.\mytool.ps1       # explicit relative path is also common
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANATOMY OF A COMMAND LINE -->
+    <section>
+      <h2>Anatomy of a one‑line command</h2>
+      <p>A typical command has the <strong>program</strong> name, optional <strong>subcommand</strong>, zero or more <strong>options/flags</strong>, and one or more <strong>arguments</strong>. Options modify behaviour; arguments are the things to act on.</p>
+      <div class="two-col">
+        <div class="col">
+          <p><strong>CMD‑style example:</strong> <code>DIR /B /S "C:\Data Files"</code> — program <code>DIR</code>, flags <code>/B</code> (bare) and <code>/S</code> (recurse), argument is the target path.</p>
+          <p><strong>PowerShell‑style example:</strong> <code>Get-ChildItem -Recurse -Filter *.csv</code> — program <code>Get-ChildItem</code>, flags <code>-Recurse</code>, <code>-Filter</code>, implied argument pattern.</p>
+        </div>
+        <div class="col">
+<pre><code class="language-powershell"># Quoting spaces and escaping
+Get-ChildItem "C:\Data Files" -Filter *.csv
+# CMD quoting
+DIR "C:\Data Files" /B
+</code></pre>
+        </div>
+      </div>
+      <p>Many modern tools also support subcommands: e.g., <code>git commit</code> or <code>winget install</code>. The pattern is the same: program, subcommand, options, arguments.</p>
+    </section>
+
+    <!-- RUNNING A SCRIPT WITH ARGUMENTS -->
+    <section>
+      <h2>Running a script and passing arguments</h2>
+      <p>Scripts are just programs written in a shell language. Don’t worry about the syntax now—focus on the idea that scripts accept <em>arguments</em> and read them as values to act on.</p>
+      <div class="two-col">
+        <div class="col">
+<pre><code class="language-batch">:: hello.cmd (CMD)
+@ECHO OFF
+ECHO Hello, %~1!
+ECHO You passed %~n0 as the script name.
+REM Run:  hello.cmd Alice
+</code></pre>
+        </div>
+        <div class="col">
+<pre><code class="language-powershell"># hello.ps1 (PowerShell)
+param([string]$Name = "World")
+Write-Host "Hello, $Name!"
+# Run:  .\hello.ps1 -Name Alice
+</code></pre>
+        </div>
+      </div>
+      <p>Every complex tool you’ll use—such as <code>git</code>—is, at heart, a program that parses a command line and performs actions based on options and arguments. The mental model scales from these trivial scripts.</p>
+    </section>
+
+    <!-- SOFTWARE AS SCRIPTS/PROCESSES -->
+    <section>
+      <h2>From simple scripts to complex tools</h2>
+      <p>Whether it’s <code>git</code>, <code>python</code>, or <code>robocopy</code>, each is a program that becomes a <em>process</em> when started. The shell supplies arguments and environment variables. The OS kernel schedules the process and provides files, network, and memory. Understanding this chain makes new tools less intimidating—you already know how they fit.</p>
+    </section>
+
+    <!-- PACKAGE COMMANDS: PIP/CONDA CONCEPTUALLY -->
+    <section>
+      <h2>Installing add‑ons: the shape of <code>pip</code> and <code>conda</code> commands</h2>
+      <p>Package managers are programs that fetch and install modules into a language’s environment.</p>
+      <p><strong>Pip anatomy:</strong> <code>pip install pandas --upgrade --user</code> → program <code>pip</code>; subcommand <code>install</code>; argument <code>pandas</code>; flags <code>--upgrade</code> (newer version) and <code>--user</code> (install in user site).</p>
+      <p><strong>Conda anatomy:</strong> <code>conda install -n ds -c conda-forge numpy</code> → program <code>conda</code>; subcommand <code>install</code>; flags <code>-n ds</code> (target environment), <code>-c conda-forge</code> (channel); argument <code>numpy</code>.</p>
+      <p>Common pitfalls: running the wrong <code>pip</code> (belongs to a different Python), using a shell where the tool isn’t on PATH, or trying to install from a non‑default source without telling the tool where to find it.</p>
+    </section>
+
+    <!-- PITFALL SCENARIO & FIX -->
+    <section>
+      <h2>Scenario: “pip is not recognized” — diagnosing and fixing</h2>
+      <p>A student reads “run <code>pip install something</code>” and opens VS Code’s terminal. They have Python via Anaconda, but they never activated an environment and <code>conda</code> never initialized this shell. Result: <code>'pip' is not recognized as an internal or external command</code>.</p>
+      <p><strong>Diagnose in steps:</strong> 1) Is <code>pip</code> on PATH? 2) Which Python will run? 3) Is the intended environment active?</p>
+      <div class="two-col">
+        <div class="col">
+<pre><code class="language-powershell"># PowerShell
+where.exe pip
+where.exe python
+$env:PATH -split ';' | Select-Object -First 10
+</code></pre>
+        </div>
+        <div class="col">
+<pre><code class="language-batch">:: CMD
+WHERE pip
+WHERE python
+ECHO %PATH%
+</code></pre>
+        </div>
+      </div>
+      <p><strong>Fix options:</strong> Activate the right environment so PATH is updated (<code>conda activate ds</code>), or call pip via the interpreter (<code>python -m pip install something</code>), or add the correct directory to PATH for this session. If Python was installed by the Windows Store or a non‑standard path, use the <code>py</code> launcher: <code>py -m pip install something</code>.</p>
+    </section>
+
+    <!-- FILE ORGANISATION TASK (CMD) -->
+    <section>
+      <h2>Practical: organise files by type (Command Prompt)</h2>
+      <p>This Batch script creates one subfolder per file extension in the current folder and moves files accordingly. It shows loops, variable expansion, and safe quoting. Try it in a copy of a test folder first.</p>
+<pre><code class="language-batch">@ECHO OFF
+SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
+FOR %%F IN (*.*) DO (
+  SET "ext=%%~xF"
+  IF NOT "!ext!"=="" (
+    SET "ext=!ext:~1!"  & REM drop the dot
+    IF NOT EXIST ".!ext!" MD ".!ext!"
+    MOVE /Y "%%~fF" ".!ext!\" >NUL
+  )
+)
+ECHO Done.
+</code></pre>
+      <p><strong>What it does:</strong> For each file, grab its extension, create a folder named <code>.ext</code> if needed, and move the file into it.</p>
+    </section>
+
+    <!-- FILE ORGANISATION TASK (POWERSHELL) -->
+    <section>
+      <h2>Practical: organise files by type (PowerShell, recursive)</h2>
+      <p>This PowerShell script walks all subfolders, creates one folder per extension under a chosen target, and moves files there. It demonstrates recursion and object‑based pipelines.</p>
+<pre><code class="language-powershell">param([string]$Root = ".", [string]$Out = ".\by-ext")
+Get-ChildItem -Path $Root -Recurse -File |
+  Group-Object Extension |
+  ForEach-Object {
+    $ext = if ($_.Name) { $_.Name.TrimStart('.') } else { "noext" }
+    $dest = Join-Path $Out $ext
+    New-Item -ItemType Directory -Path $dest -Force | Out-Null
+    $_.Group | ForEach-Object { Move-Item -LiteralPath $_.FullName -Destination $dest -Force }
+  }
+Write-Host "Organised files under" (Resolve-Path $Out)
+</code></pre>
+      <p><strong>Notes:</strong> Use test data first; name collisions can overwrite files. Add checksums or <code>-WhatIf</code> in PowerShell if you need safety.</p>
+    </section>
+
+    <!-- WRAP-UP CHECKLIST -->
+    <section>
+      <h2>Wrap‑up: the mental checklist</h2>
+      <ul class="tight">
+        <li>Terminal (window) vs Shell (interpreter) vs Program (on disk) vs Process (running) vs OS vs Kernel.</li>
+        <li>Windows finds commands via current directory, system folders, and PATH; PATHEXT defines executable extensions.</li>
+        <li>Environment variables flow into child processes; PATH order decides which tool you run.</li>
+        <li>Commands = program + optional subcommand + options + arguments; quoting matters.</li>
+        <li>Scripts accept arguments just like big tools; the model scales.</li>
+        <li>When installs fail: check PATH, <code>where</code>/<code>which</code>, the active environment, and call <code>python -m pip</code> if unsure.</li>
+      </ul>
+      <p class="muted">Next steps: practice navigating, inspecting PATH, and running the file‑organisation scripts. With these fundamentals, Batch scripting and PowerShell automation will feel natural.</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+<script>
+  Reveal.initialize({ hash:true, progress:true, controls:true, center:true, width:1280, height:720, plugins:[RevealHighlight] });
+  const totalMinutes = 60, start = Date.now(), bar = document.getElementById('sessionProgress');
+  setInterval(()=>{ const pct = Math.min(100, ((Date.now()-start)/60000)/totalMinutes*100); bar.style.setProperty('--p', pct + '%'); }, 10000);
+</script>
+</body>
+</html>

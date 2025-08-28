@@ -121,10 +121,11 @@
       // --- Week 1---
     { title: "Introduction & Time Management", file: "01-introduction-time-management.html", week: 1, topics: ["Setting up IDEs","Intended module outcomes","Assignment description","Lead: Dr K.J. Mhango"], image: "thumbnails/intro.png" },
       // --- Week 2---
-      { title: "Research Skills", file: "02-research-skills.html", week: 2, topics: ["Information literacy","Effective searching","Assignment launch","Lead: Dr K.J. Mhango"], image: "thumbnails/scopus.jpg" },
-      { title: "Research Skills notes", file: "scientific_method.html", week: 2, topics: ["Information literacy","Effective searching","Assignment launch","Lead: Dr K.J. Mhango"], image: "thumbnails/scopus.jpg" },
+      { title: "Information literacy", file: "02-research-skills.html", week: 2, topics: ["Information literacy","Effective searching","Assignment launch","Lead: Dr K.J. Mhango"], image: "thumbnails/scopus.jpg" },
+      { title: "Study notes", file: "litrev.html", week: 2, topics: ["Information literacy","Effective searching","Assignment launch","Lead: Dr K.J. Mhango"], image: "thumbnails/scopus.jpg" },
       // --- Week 3---
       { title: "Research design, methodology and reporting", file: "03-research-design-methodology-reporting.html", week: 3, topics: ["Critical thinking and analytical skills","Research design and methodology","Report writing","Lead: Dr K.J. Mhango"],image: "thumbnails/research.jpg" },
+      { title: "Study notes", file: "Experimentation_planning.html", week: 3, topics: ["Critical thinking and analytical skills","Research design and methodology","Report writing","Lead: Dr K.J. Mhango"],image: "thumbnails/research.jpg" },
       // --- Week 4---
       { title: "Science Communication", file: "04-science-communication.html", week: 4, topics: ["Science communication principles","Presentation skills","Communication tools (Word, Powerpoint, Web)","Lead: Simon Bicknell"], image: "thumbnails/word.png" },
       // --- Week 5---
@@ -134,17 +135,21 @@
       // --- Week 7---
       { title: "1 - Command line interfaces", file: "cli.html", week: 7, topics: ["Batch scripting","Bash shell scripting","Lead: Dr K.J. Mhango"], image: "thumbnails/powershell.png" },
       { title: "2 - Windows Batch Scripting", file: "batch.html", week: 7, topics: ["Batch scripting","cmd.exe","Lead: Dr K.J. Mhango"] },
+      { title: "Study notes - CMD", file: "cli_windows_primer.html", week: 7, topics: ["Batch scripting","cmd.exe","Lead: Dr K.J. Mhango"] },
+      { title: "Study notes - Bash", file: "cli_bash_primer.html", week: 7, topics: ["Batch scripting","cmd.exe","Lead: Dr K.J. Mhango"] },
       
       // --- Week 8---
       { title: "Collaboration and version control", file: "gitslides.html", week: 8, topics: ["Git and its various versions (GitHub, GitLab)","Lead: Dr K.J. Mhango"], image: "thumbnails/github.png" },
+      { title: "Study notes", file: "git_github_tutorial.html", week: 8, topics: ["Git and its various versions (GitHub, GitLab)","Lead: Dr K.J. Mhango"], image: "thumbnails/github.png" },
       // --- Week 9---
       { title: "Deployment and Orchestration: GitHub pages", file: "github_pages.html", week: 9, topics: ["Showcase GitHub pages","Showcase GitHub actions","Lead: Dr K.J. Mhango"], image: "thumbnails/github_pages.png" },
+      { title: "Tutorial", file: "github_pages_tutorial.html", week: 9, topics: ["Showcase GitHub pages","Showcase GitHub actions","Lead: Dr K.J. Mhango"], image: "thumbnails/github_pages.png" },
       // --- Week 10---
       { title: "Professional development", file: "10-professional-development.html", week: 10, topics: ["Needs assessment skills","CPD (identification and evaluation)","Lead: Simon Bicknell"], image: "thumbnails/cpd.png" },
       // --- Week 11---
       { title: "Professional portfolio", file: "11-professional-portfolio.html", week: 11, topics: ["Curriculum vitae","Cover letters","Creating a personal portfolio","Lead: Simon Bicknell"], image: "thumbnails/cv.png" },
       // --- Week 12---
-      { title: "AI and Copilot", file: "12-ai-and-copilot.html", week: 12, topics: ["Effective use of coding assistants","Responsible use of AI","HAU policies","Lead: Dr K.J. Mhango"], image: "thumbnails/copilot.png" },
+      { title: "AI and Copilot", file: "effective_coding_assistants.html", week: 12, topics: ["Effective use of coding assistants","Responsible use of AI","HAU policies","Lead: Dr K.J. Mhango"], image: "thumbnails/copilot.png" },
       // --- Week 13---
       { title: "Assignment review", file: "13-assignment-review.html", week: 13, topics: ["Assignment overview","Responsible use of AI","HAU policies","Lead: Dr K.J. Mhango"], image: "thumbnails/assignment.png" }
     ];
@@ -187,10 +192,10 @@
     }
 
     function groupCardTemplate(g){
-      const defHref = g.defaultFile ? `slides/${encodeURIComponent(g.defaultFile)}` : '#';
+      const defHref = g.defaultFile ? `_site/${encodeURIComponent(g.defaultFile)}` : '#';
       const thumb = g.image ? `<img class="thumb" src="${g.image}" alt="Week ${g.week} slides" />` : `<div class="thumb" aria-hidden="true"></div>`;
       const list = g.slides.map(s=>{
-        const href = `slides/${encodeURIComponent(s.file)}`;
+        const href = `_site/${encodeURIComponent(s.file)}`;
         return `<li><a class="slide-link" href="${href}">${s.title}</a></li>`;
       }).join('');
       const count = g.slides.length;

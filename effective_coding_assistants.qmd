@@ -1,0 +1,172 @@
+---
+title: "Effective Use of Coding Assistants"
+subtitle: "Study Notes"
+author: "Joseph Mhango"
+date: "2025-08-14"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+---
+
+## Part 1 – Introduction & Motivation
+
+### What are coding assistants?
+
+- Chat‑based LLMs: ChatGPT, Claude, Gemini, etc. You converse in natural language to get explanations, code, tests, or reviews.
+- IDE‑integrated: GitHub Copilot, CodeWhisperer, TabNine. Code completion and inline suggestions as you type.
+- Domain‑specific: R helpers, data‑science notebooks with AI support, SQL copilots, API assistants, etc.
+
+::: callout-note
+In 2025, assistants are capable of multi‑file context, larger windows, and multimodal input (text + images). They can reason about small to medium programs, but still make mistakes.
+:::
+
+### Why they matter (benefits and risks)
+
+- Productivity: faster boilerplate, template generation, refactoring, tests.
+- Accessibility & learning: explain unfamiliar code, provide examples, suggest documentation.
+- Risks: hallucinations (confidently wrong), privacy (sending code to cloud), bias, dependency/deskilling, hidden cost.
+
+Poll prompt: “How often do you rely on coding assistants?” (Mentimeter or hands‑up scale).
+
+---
+
+## Part 2 – Assistant Types & Model Choices
+
+### Cloud‑based vs Local models
+
+- Cloud pros: scale, up‑to‑date models, multimodal features, strong coding priors.
+- Cloud cons: privacy concerns, cost, internet dependence, rate limits.
+- Local pros: privacy, offline work, cost control, customization.
+- Local cons: weaker models without GPU, setup friction, hardware requirements.
+
+Quick demo references: Ollama, LM Studio, HuggingFace transformers (5‑min slide).
+
+Hardware considerations: VRAM/CPU/RAM; quantized models for laptops; throughput vs latency trade‑offs.
+
+::: callout-tip
+Safety with open‑weights: smaller models can be great for syntax and patterns but weaker at long reasoning. Start with constrained tasks; validate outputs.
+:::
+
+### Model families and when to choose what
+
+- GPT‑series, LLaMA, Mistral; code‑specialised: StarCoder, DeepSeek‑Coder.
+- Quick syntax/boilerplate → Copilot‑like (inline completion).
+- Large conceptual debugging/design → Chat‑style assistants.
+- Offline/privacy → Local LLM (accept smaller context and capability).
+
+---
+
+## Part 3 – Known Issues & Pitfalls
+
+### Hallucinations
+
+- Definition: confidently wrong content presented as fact.
+- Where seen: incorrect APIs, non‑existent functions, pseudo‑documentation.
+- Mitigation: unit tests, run minimal repros, cross‑check authoritative docs.
+
+### “Fake literature” problem
+
+- Citation hallucination: fabricated DOIs, journals, author lists.
+- In‑class mini‑exercise: ask the assistant for a reference, then verify on Google Scholar / PubMed / arXiv.
+
+### Fact‑checking workflows
+
+- Code: run the tests; add minimal examples and assert expected outputs.
+- Text: triangulate 2–3 independent sources; prefer primary docs/specs.
+- Red flags: overconfident tone, untraceable sources, vague generalities; ask for source links and evaluate them.
+
+---
+
+## Part 4 – Contemporary Ethics Issues
+
+- Plagiarism & originality: Who owns assistant‑generated code? Check your institution and license constraints.
+- Bias & stereotyping: Models reflect training data; be critical of “default” choices.
+- Carbon cost: Large training/inference has energy costs; be judicious.
+- Dependency & deskilling: Overuse can reduce deep understanding; balance with deliberate practice.
+- Professional codes: ACM/IEEE principles; UK HE guidance on academic integrity and disclosure.
+
+Breakout discussion prompts:
+- Would you disclose AI‑assistance in coursework? Why/why not?
+- What constitutes “unfair advantage” vs acceptable assistance?
+
+---
+
+## Part 5 – Practical Guidance
+
+### Prompting well
+
+- Be clear, specific, and provide context (stack, versions, constraints).
+- Show examples and the desired shape of output (function signature, test cases).
+- State quality bars: “Prefer O(N log N)”, “No network calls”, “Add docstrings”.
+
+### Iterative prompting
+
+- Scaffold → refine → verify.
+- Ask for alternatives and trade‑offs.
+- Convert prose to tests and verify code with them.
+
+### Integrating responsibly
+
+- Keep sensitive code local or use local LLMs.
+- Always run linters/tests; review diffs critically.
+- Golden rule: Trust, but verify.
+
+---
+
+## Wrap‑up & Transition to Tutorial
+
+- Assistants are partners, not replacements.
+- Strengths: speed, scaffolding, exploration.
+- Weaknesses: hallucinations, gaps, hidden costs.
+- Next: apply structured prompting to generate and compare a literature review.
+
+---
+
+# Tutorial — Prompting‑Only Review Generation & Comparison
+
+## Part 1 – Framing the Exercise
+
+Task: simulate writing a literature review using only AI prompts.
+
+- Using the provided list of real review paper titles.
+- Workflow:
+  1) Pick one title and select all subtitles within it.
+  2) Use prompting to generate a review (no manual writing).
+  3) Obtain the real review (or abstract/TOC) and compare.
+  4) Analyse differences: coverage, accuracy, hallucinations, quality.
+  5) TIP: emphasise traceability (show prompts and outputs).
+
+
+::: callout-tip
+Example meta‑prompt: “Using the points above, write a 1,200‑word review with sections Background, Methods, Findings, Limitations, and Future Work. Include 6–10 verifiable references with DOIs.”
+:::
+
+## Part 2 – Hands‑on AI Prompting
+
+- Prompt an AI assistant (chat or local) to generate the review.
+- No manual writing. Prompt‑only generation.
+
+Artifacts to collect: prompt log, generated review, and iteration notes.
+
+## Part 3 – Peer review (exchange your generations with peers)
+
+Methods:
+- AI‑assisted diff: ask your chosen AI assistant to compare generated review vs real review and produce a table of matches/misses/errors.
+
+- Manual mapping: highlight key themes, methods, and gaps;.
+
+
+## Part 5 – Discussion & Reflection
+
+Guided questions:
+
+- How close was the AI version to the actual review?
+
+- Were hallucinations/citations a problem? How did you detect them?
+
+- Did the AI capture consensus themes or miss nuance and caveats?
+
+- How would you adapt this workflow for real assignments (with proper writing and references)?
