@@ -12,7 +12,10 @@ format:
 
 ::: {.columns}
 ::: {.column width="55%"}
-Research is a careful way of asking and answering questions about the world. The scientific method gives us a simple loop: observe → ask → guess (hypothesis) → test with data → analyse → conclude → share. If a guess isn’t supported, we refine it and try again. These notes explain each step with everyday and scientific examples, then show how data analysis, communication, and reporting principles make research trustworthy and useful.
+Research is a careful way of asking and answering questions about the world. The scientific method gives us a simple loop:  
+- observe → ask → guess (hypothesis) → test with data → analyse → conclude → share. 
+
+If a guess isn’t supported, we refine it and try again. These notes explain each step with everyday and scientific examples, then show how data analysis, communication, and reporting principles make research trustworthy and useful.
 :::
 
 ::: {.column width="45%"}
@@ -41,12 +44,13 @@ You will learn to
 5) Analysis → Conclusion (support/not support)
 6) Communicate → Others can check and build on it
 
-This is a cycle. “Not supported” is progress: it tells us to improve the question, method, or hypothesis and try again.
+This is a cycle. “Not supported conclusions” show progress: it tells us to improve the question, method, or hypothesis and try again.
 :::
 
 ::: {.column width="45%"}
 ```text
 Flow of ideas
+
 Observe → Ask
        ↘︎  Hypothesis → Test → Analyse → Share → (Refine) → …
 ```
@@ -63,13 +67,13 @@ Keep a simple research log (date, question, guess, key settings, result). It mak
 
 ::: {.columns}
 ::: {.column width="55%"}
-Good questions come from noticing something and asking “why/how?”. Make the question specific and testable.
+Good questions come from noticing something and asking “why/how?”. Make the question specific and testable.  
 
-Everyday examples
-- Warm classroom → “Why is this classroom so warm?”
+Everyday examples  
+- Warm classroom → “Why is this classroom so warm?”  
 - Toaster won’t work → “What’s wrong with this toaster?”
 
-Scientific example
+Scientific example  
 - Algae in a lake increased → “Does fertiliser runoff increase algae growth?”
 :::
 
@@ -107,20 +111,38 @@ Sources to scan
 :::
 
 ::: {.callout-note}
-Capture 3–5 keywords and 2 likely pitfalls you see repeatedly—these will shape your hypothesis and controls.
+Capture 3–5 keywords and 2 likely pitfalls you see repeatedly. These will shape your hypothesis and controls.
 :::
 
 ---
 
 ## Hypothesis (a testable prediction)
 
+A supposition or proposed explanation made on the basis of limited evidence as a starting point for further investigation
+
 ::: {.columns}
 ::: {.column width="55%"}
 A hypothesis links a cause (independent variable) to an effect (dependent variable). Write it as a clear “If … then …” prediction you can check with data.
 
-Examples
-- Classroom: If the air conditioner is off (cause), then the room will be warm (effect).
-- Toaster: If the outlet has no power, then other devices won’t work in that outlet.
+In science, words matter. They are not casual clothing we can swap for comfort; they are uniforms that carry rank, history, and weight. Yet some words, stripped of their rigor, wander into everyday speech like escaped lab mice. Theory is one of the most abused.
+
+When a physicist says, I have a theory, it is shorthand for something extraordinary: a framework built from observation, tested against data, and sharpened by attempts to prove it wrong. A theory in science is not a guess; it is a cathedral of evidence. Gravity is a theory. Evolution is a theory. Both have survived every experiment designed to topple them.
+
+But in the supermarket, on talk shows, and across social media, theory has been demoted to mean idea or hunch. Someone who says, “I have a theory that cats can sense bad vibes” is not presenting a theory. They are offering an untested speculation. The word has been stretched until it snaps.
+
+The same fate befalls significant. In statistics, significance is a cold, precise measure of probability. A result is significant because it is unlikely to be due to chance, given the chosen threshold. Outside science, however, significant is used to mean important. A “statistically significant but clinically trivial” effect becomes, in the public ear, a discovery of great consequence.
+
+Then there is hypothesis. For researchers, it is a carefully framed question: does factor A influence outcome B under condition C? For others, it is just another synonym for guesswork.
+
+And so the abuse continues. Words that once held scientific precision are diluted, spread thin, repurposed. This is not merely a semantic quibble. When the public hears “theory” as “guess,” they may dismiss climate science as if it were astrology. When they hear “significant” as “important,” they may overestimate minor results.
+
+Science depends on clarity. Each word is a tool, and when blunted by misuse, it can no longer cut through confusion.
+
+So next time someone says, I have a theory, it is worth asking: do you mean a cathedral of evidence, or just a hunch scribbled on a napkin?
+
+Hypothesis Examples  
+- Classroom: If the air conditioner is off (cause), then the room will be warm (effect).  
+- Toaster: If the outlet has no power, then other devices won’t work in that outlet.  
 - Plants: If plants receive fertiliser, then average height increases.
 :::
 
@@ -144,10 +166,11 @@ Write two rival hypotheses that explain the same effect. Design your test so at 
 
 ::: {.columns}
 ::: {.column width="55%"}
-A fair test changes the cause and observes the effect while keeping other factors steady. Use a control (baseline) and an experimental condition (with the change). Repeat enough times to reduce chance effects.
+A fair test changes the cause and observes the effect while keeping other factors steady. Use a control (baseline) and an experimental condition (with the change). Repeat enough times to reduce chance effects.  
 
-Types of studies
-- Controlled experiment: you manipulate the cause (e.g., add fertiliser to some tanks, not others).
+Types of studies  
+
+- Controlled experiment: you manipulate the cause (e.g., add fertiliser to some tanks, not others).  
 - Observational study: you measure what already varies (e.g., algae in lakes near vs far from farms). This is great when manipulation is impractical or unethical.
 :::
 
@@ -162,11 +185,13 @@ Design tips
 :::
 
 ::: {.callout-caution}
-Confounders creep in silently (e.g., light, temperature, prior treatment). List the top 3 and how you’ll control or measure them.
+Confounders creep in silently (e.g., light, temperature, prior treatment). List the top 3 and how you’ll control or measure them.  
 :::
 
 Everyday test (toaster)
-- Plug a coffee maker into the same outlet → Works? If no: outlet likely faulty (supports hypothesis). If yes: hypothesis not supported; try a new hypothesis (toaster’s fuse/heating element).
+- Plug a coffee maker into the same outlet → Works?  
+If no: outlet likely faulty (supports hypothesis).  
+If yes: hypothesis not supported; try a new hypothesis (toaster’s fuse/heating element).
 
 ---
 
@@ -176,11 +201,11 @@ Everyday test (toaster)
 ::: {.column width="55%"}
 Organise, visualise, and summarise your data. For numbers, compute averages and spreads; for categories, count themes. Use statistical tests when comparing groups or testing relationships.
 
-Interpret carefully
-- Data support or do not support the hypothesis; they don’t “prove” it.
-- Don’t confuse correlation with causation.
-- Discuss both statistical and practical importance.
-- Be transparent about uncertainty and limits.
+Interpret carefully  
+- Data support or do not support the hypothesis; they don’t “prove” it.  
+- Don’t confuse correlation with causation.  
+- Discuss both statistical and practical importance.  
+- Be transparent about uncertainty and limits.  
 :::
 
 ::: {.column width="45%"}
@@ -195,7 +220,7 @@ Quick workflow
 :::
 
 ::: {.callout-note}
-A tiny p‑value can hide a tiny effect. Always pair significance with an effect size and, when possible, a confidence interval.
+A tiny p‑value can hide a tiny effect. Always pair significance with an effect size and, when possible, a confidence interval.  
 :::
 
 ---
@@ -204,7 +229,7 @@ A tiny p‑value can hide a tiny effect. Always pair significance with an effect
 
 ::: {.columns}
 ::: {.column width="55%"}
-Share your methods, data (when ethical), and results clearly. Communication closes the loop and turns personal discovery into shared knowledge others can evaluate and build on.
+Share your methods, data (when ethical), and results clearly. Communication closes the loop and turns personal discovery into shared knowledge others can evaluate and build on.  
 :::
 
 ::: {.column width="45%"}
@@ -218,7 +243,7 @@ Formats
 :::
 
 ::: {.callout-tip}
-Use an IMRaD “skeleton slide” (one-liners for Intro, Methods, Results, Discussion) to plan both papers and talks before you draft.
+Use an IMRaD “skeleton slide” (one-liners for Intro, Methods, Results, Discussion) to plan both papers and talks before you draft.  
 :::
 
 ---
@@ -229,10 +254,10 @@ Use an IMRaD “skeleton slide” (one-liners for Intro, Methods, Results, Discu
 
 ::: {.columns}
 ::: {.column width="55%"}
-- Quantitative (numbers): counts or measurements
-  - Discrete: counts (e.g., colonies, cars per home)
-  - Continuous: measurements (e.g., height, temperature)
-- Qualitative (descriptions): notes, transcripts, categories
+- Quantitative (numbers): counts or measurements  
+  - Discrete: counts (e.g., colonies, cars per home)  
+  - Continuous: measurements (e.g., height, temperature)  
+- Qualitative (descriptions): notes, transcripts, categories  
 :::
 
 ::: {.column width="45%"}
@@ -246,7 +271,7 @@ Match method to type
 :::
 
 ::: {.callout-tip}
-Pick the plot that answers your question in one glance. If readers must “decode”, redesign the figure.
+Pick the plot that answers your question in one glance. If readers must “decode”, redesign the figure.  
 :::
 
 ### Collecting data
@@ -273,13 +298,31 @@ Standardise entries, handle missing values, detect outliers, compute needed vari
 - Results: what you found (figures/tables)
 - Discussion: what it means, limits, how it fits the field
 
-### Oral talks (10–20 minutes typical)
+### Oral talks
 
-Tell a short, clear story: why it matters, what you did, one or two key results, what’s next. Use readable visuals and practice timing.
+Think about a time when you ran a small experiment in your personal life. This could be anything—from testing a new study routine, trying a fitness app, comparing two cooking methods, or seeing if a change in your schedule improved your productivity.
 
-### Visuals (figures, posters, slides)
+Prepare a short slide deck (3–5 slides) to tell the story of your experiment.
 
-Design for clarity: labels, units, legends, honest scales, colour‑blind friendly palettes. Let visuals carry the message; keep text light.
+Your slides should cover:
+
+- Why it matters
+
+- What motivated you?
+
+- Why was this experiment important or interesting to you?
+
+- What you did
+
+- Briefly describe your setup: what did you change or test, and how?
+
+- One or two key results
+
+- Share the main finding(s). Use simple, readable visuals (chart, photo, diagram) to make it clear.
+
+- What did you learn?
+
+- Would you change anything, keep doing it, or test something new
 
 ---
 
@@ -305,7 +348,7 @@ Report honestly; do not fabricate/falsify. Follow human/animal ethics approvals.
 
 ## Conclusion
 
-The scientific method is a simple loop that builds reliable knowledge: ask, guess, test, analyse, and share. Data analysis turns raw observations into evidence; communication turns evidence into shared understanding; and good reporting principles maintain trust. Practise the cycle, be curious and cautious, and write so others can repeat your path. That’s how research moves from personal insight to progress for everyone. 
+The scientific method is a simple loop that builds reliable knowledge: ask, guess, test, analyse, and share. Data analysis turns raw observations into evidence; communication turns evidence into shared understanding; and good reporting principles maintain trust. Practice the cycle, be curious and cautious, and write so others can repeat your path. That’s how research moves from personal insight to progress for everyone. 
 
 ## Workshop: Reverse‑engineering a research plan (2 hours)
 
@@ -322,31 +365,31 @@ By the end, you will be able to:
   - one figure with error bars
 - If choosing is hard, use a paper from the shortlist provided in class.
 
-### Plan (minute‑by‑minute)
+### Plan 
 
-#### 0–10 min — Warm‑up
-- Goal: “Read like a scientist by reverse‑engineering the plan the authors likely had.”
+#### Warm‑up  
+- Goal: “Read like a scientist by reverse‑engineering the plan the authors likely had.”  
 - Skim your paper from title to the first results figure.
 
-#### 10–25 min — Paper snapshot and PICO
+#### Paper snapshot and PICO
 
 Start by capturing the “who/what, what changed, compared to what, and what was measured.” This is called PICO. Use the paper’s own words when you can.
 
-Paper snapshot (2–3 lines)
-- Citation; field; study type: experimental or observational (not a review)
-- One line that says what the study tried to find out
+Paper snapshot (2–3 lines)  
+- Citation; field; study type: experimental or observational (not a review)  
+- One line that says what the study tried to find out  
 
-What PICO means
-- P — Population/Problem: who or what was studied, and in what context
-- I/E — Intervention/Exposure (or key predictor): what was changed, tested, or focused on
-- C — Comparison/Control: what it was compared to (baseline group or condition)
-- O — Outcome(s): what was measured; if several, note which seems primary
+What PICO means  
+- P — Population/Problem: who or what was studied, and in what context  
+- I/E — Intervention/Exposure (or key predictor): what was changed, tested, or focused on  
+- C — Comparison/Control: what it was compared to (baseline group or condition)  
+- O — Outcome(s): what was measured; if several, note which seems primary  
 
-Where to find it fast
-- Title and abstract: the question and main comparison
-- Methods/Participants: the P (who/what) and sometimes the C (control)
-- Procedure/Measures: details for I/E and O
-- Results and figure captions: wording for outcomes and groups
+Where to find it fast  
+- Title and abstract: the question and main comparison  
+- Methods/Participants: the P (who/what) and sometimes the C (control)  
+- Procedure/Measures: details for I/E and O  
+- Results and figure captions: wording for outcomes and groups  
 
 ::: {.columns}
 ::: {.column width="52%"}
@@ -378,48 +421,48 @@ Adults given caffeine will have faster (lower) reaction times than placebo.
 :::
 :::
 
-#### 25–55 min — Reverse‑engineer the plan (core)
-Build a plain‑language plan from what’s reported:
-- Variables: name the main variables and how they were measured (units or scales)
-- Design: how were units selected/assigned? any groups? timing? about how many participants/samples?
-- Primary analysis: what comparison or model answers the main question? (name the test if stated; if not, say “compare group A vs B” or “relate X to Y”)
-- Figure plan: one figure that would answer the main question. State:
-  - type (bar/line/scatter/box/other)
-  - axes (x and y)
-  - summary (mean/median/other)
-  - error bars (SD/SE/95% CI) — write what the paper says; if unclear, write “not stated”
-- Outcome rule: complete the sentence “We would conclude … if …”.
+#### Reverse‑engineer the plan  
+Build a plain‑language plan from what’s reported:  
+- Variables: name the main variables and how they were measured (units or scales)  
+- Design: how were units selected/assigned? any groups? timing? about how many participants/samples?  
+- Primary analysis: what comparison or model answers the main question? (name the test if stated; if not, say “compar group A vs B” or “relate X to Y”)  
+- Figure plan: one figure that would answer the main question. State:  
+  - type (bar/line/scatter/box/other)  
+  - axes (x and y)  
+  - summary (mean/median/other)  
+  - error bars (SD/SE/95% CI) — write what the paper says; if unclear, write “not stated”  
+- Outcome rule: complete the sentence “We would conclude … if …”.  
 
-#### 55–75 min — Methods check: figure and uncertainty
-- Read the main figure carefully:
-  - What do the axes and units show?
-  - How many observations (n) per group/condition?
-  - What do the bars/points summarize (mean or median)?
-  - What do the error bars represent (SD, SE, or 95% CI)? If not stated, note that.
-- Name one possible weakness (e.g., small sample, missing comparison, unclear measure) and one thing done well.
+#### Methods check: figure and uncertainty  
+- Read the main figure carefully:  
+  - What do the axes and units show?  
+  - How many observations (n) per group/condition?  
+  - What do the bars/points summarize (mean or median)?  
+  - What do the error bars represent (SD, SE, or 95% CI)? If not stated, note that.  
+- Name one possible weakness (e.g., small sample, missing comparison, unclear measure) and one thing done well.  
 
-#### 75–95 min — Openness check (simple)
-Make a brief checklist from the paper and its links:
-- Data shared? where?
-- Code or analysis shared? which tool?
-- Materials shared (e.g., survey, stimuli, protocol)?
-- Any preregistration or protocol mentioned?
-Write one sentence on how openness could be improved.
+#### Openness check (simple)  
+Make a brief checklist from the paper and its links:  
+- Data shared? where?  
+- Code or analysis shared? which tool?  
+- Materials shared (e.g., survey, stimuli, protocol)?  
+- Any preregistration or protocol mentioned?  
+Write one sentence on how openness could be improved.  
 
-#### 95–110 min — 90‑second micro‑presentation
-Present to a nearby group:
-- 10 s: paper snapshot (question + design)
-- 40 s: reconstructed plan (primary analysis + your figure plan + outcome rule)
-- 30 s: one takeaway about uncertainty (what the error bars mean) + one limitation
-- 10 s: one concrete improvement you would make
-Swap roles and repeat.
+#### 90‑second micro‑presentation  
+Present to a nearby group:  
+- paper snapshot (question + design)  
+- reconstructed plan (primary analysis + your figure plan + outcome rule)  
+- one takeaway about uncertainty (what the error bars mean) + one limitation  
+- one concrete improvement you would make  
+Swap roles and repeat.  
+ 
+#### Class debrief  
+- What was easy to reconstruct? What was usually missing?  
+- Quick show of hands: who found a paper that clearly stated what its error bars mean?  
+- Exit ticket: “If I preregistered this study from scratch, I would change … because …”.  
 
-#### 110–120 min — Class debrief
-- What was easy to reconstruct? What was usually missing?
-- Quick show of hands: who found a paper that clearly stated what its error bars mean?
-- Exit ticket: “If I preregistered this study from scratch, I would change … because …”.
-
-### One‑page handouts (printable)
+### One‑page handout
 
 #### Paper Snapshot (PICO)
 ```text

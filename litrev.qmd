@@ -62,10 +62,15 @@ Tiny glossary
 ::: {.columns}
 ::: {.column width="55%"}
 Information literacy means you can:
+
 1) notice what you need to know
+
 2) find good sources
+
 3) check whether claims are backed by evidence
+
 4) connect ideas across sources
+
 5) give credit correctly
 
 In data science this includes data itself: who made it, how, with what quality, and can others reproduce the work? Your goal is to build a fair summary of the field: what is well supported, what is debated, and what is still unknown.
@@ -85,7 +90,7 @@ Study habit
 
 ## A product‑agnostic workflow (step by step)
 
-### 1) Define scope and question (start small)
+### Define scope and question
 
 ::: {.columns}
 ::: {.column width="55%"}
@@ -103,16 +108,20 @@ Exclude: single images only, non‑agricultural targets
 :::
 :::
 
-### 2) Plan a multi‑source search (what is a search, really?)
+### Plan a multi‑source search (what is a search, really?)
 
 ::: {.columns}
 ::: {.column width="55%"}
 A database is a website that lets you search academic records. Different databases cover different journals and conferences. Using more than one reduces blind spots.
 
 A search string is made of:
+
 - words for your topic (with quotation marks for phrases)
+
 - OR to join synonyms (either word is fine)
+
 - AND to join different ideas (both must appear)
+
 - NOT to remove noise (use sparingly)
 
 Example: `("winter wheat" OR wheat) AND ("no‑till" OR "reduced till*") AND (yield OR "grain yield")`
@@ -136,9 +145,13 @@ Plain rules
 ::: {.columns}
 ::: {.column width="55%"}
 Use PICO to break a question into parts:
+
 - P: who/what is studied (e.g., UK winter wheat)
+
 - I/E: the change or condition (e.g., no‑till; drought exposure)
+
 - C: what you compare against (e.g., ploughing)
+
 - O: what you measure (e.g., yield, GHGs)
 
 This forces clarity and keeps your screening disciplined.
@@ -155,7 +168,7 @@ Check yourself
 :::
 :::
 
-### From PICO to a searchable question (beginner‑friendly)
+### From PICO to a searchable question
 
 ::: {.columns}
 ::: {.column width="55%"}
@@ -173,7 +186,7 @@ AND (O OR O1)
 :::
 :::
 
-### From protocol to screening and extraction (one page)
+### From protocol to screening and extraction
 
 ::: {.columns}
 ::: {.column width="55%"}
@@ -194,14 +207,18 @@ Mini protocol
 
 ---
 
-## Database‑aware tactics (without jargon)
+## Database‑aware tactic
 
 ::: {.columns}
 ::: {.column width="55%"}
 Use at least two databases so you see different corners of the field. Helpful options:
+
 - Web of Science (broad, strong metadata)
+
 - Scopus (broad, good analytics)
+
 - IEEE/ACM (computing/ML venues)
+
 - Google Scholar (wide net—verify details)
 
 Most databases let you limit by year, subject, and document type. Many also support proximity operators ("words near each other"), but you can do a strong review with just phrase quotes, *, AND/OR to start.
@@ -221,7 +238,7 @@ Starter moves
 
 ## Rapid assimilation (read with a purpose)
 
-### A. Purpose‑led reading
+### Purpose‑led reading
 
 ::: {.columns}
 ::: {.column width="55%"}
@@ -238,7 +255,7 @@ Purpose card
 :::
 :::
 
-### B. Scan first, then decide
+### Scan first, then decide
 
 ::: {.columns}
 ::: {.column width="55%"}
@@ -255,7 +272,7 @@ Keep if
 :::
 :::
 
-### C. Active questions while reading
+### Active questions while reading
 
 ::: {.columns}
 ::: {.column width="55%"}
@@ -272,7 +289,7 @@ Question set
 :::
 :::
 
-### D. Quick credibility checks
+### Quick credibility checks
 
 ::: {.columns}
 ::: {.column width="55%"}
@@ -295,7 +312,19 @@ Signals
 
 ::: {.columns}
 ::: {.column width="55%"}
-Appraise quality: venue, data provenance, method soundness, transparency, generalisability. Then synthesise: group by method/data/domain; state agreements, disagreements, likely reasons, and gaps. Finally, write with a simple structure: Introduction (scope & question), Themed body (comparative analysis), Limitations, Conclusion (known/contested/unknown; why your project now).
+- Appraise quality: venue, data provenance, method soundness, transparency, generalisability. 
+
+- Then synthesise: group by method/data/domain; state agreements, disagreements, likely reasons, and gaps. 
+
+- Finally, write with a simple structure:
+
+  - Introduction (scope & question)
+  
+  - Themed body (comparative analysis)
+  
+  - Limitations
+  
+  - Conclusion (known/contested/unknown; why your project now).
 :::
 
 ::: {.column width="45%"}
@@ -312,7 +341,7 @@ One-note template per paper
 
 ---
 
-## What “credible” looks like (beginner checklist)
+## What “credible” looks like
 
 - You show where and how you searched (strings, filters, databases)
 - You explain why you kept or rejected each paper
@@ -322,26 +351,28 @@ One-note template per paper
 
 ---
 
-## Scopus-based mini‑assignment (60 minutes)
+## Scopus-based mini‑assignmen
 
 Goal: Use Scopus to discover what research on your campus looks like across three areas, then identify who to talk to at your university for each area.
 
-What you’ll produce
+What you’ll produce:
+
 - A one‑page note (or 3–4 slides) with: top topics, 3 highly‑cited papers per area with a one‑sentence finding each, and 1–2 suggested contacts per area (authors at your university).
 
-Set‑up (2 minutes)
-- Log into Scopus via your library. If Scopus is unavailable, use Google Scholar as a fallback (see “No Scopus?” below).
+Set‑up:
 
-Step 1 — Filter to your university (5 minutes)
-- In Scopus Advanced search, add an affiliation filter for your institution.
-- Replace <Your University> below with your institution’s name exactly as Scopus records it (use the Affiliation search if unsure).
+- Log into Scopus via the HAU library. If Scopus is unavailable, use Google Scholar as a fallback (see “No Scopus?” below).
+
+Step 1 — Filter to your university
+- In Scopus Advanced search, add an affiliation filter for your HAU.
 
 ```text
 AFFIL("Harper Adams University")
 ```
 
-Step 2 — Three quick topic scans (3 × 10 minutes = 30 minutes)
-For each area below, run a simple TITLE‑ABS‑KEY search ANDed with your affiliation filter. Sort results by Citations (high to low). Skim the top 5–10.
+Step 2 — Three quick topic scans:
+
+- For each area below, run a simple TITLE‑ABS‑KEY search ANDed with your affiliation filter. Sort results by Citations (high to low). Skim the top 5–10.
 
 A) Crops / agronomy
 ```text
@@ -364,21 +395,22 @@ AFFIL("Harper Adams University") AND TITLE-ABS-KEY(
 )
 ```
 
-For each area capture
-- Top 3 highly‑cited papers (title, year, venue, citation count)
-- One‑sentence takeaway per paper (what was found or contributed)
-- 1–2 local authors (from your university) who appear repeatedly in this area
+For each area capture:
 
-Tips (while scanning)
-- Use “Analyze results” → “Authors”/“Affiliations” to see who publishes most.
+- Top 3 highly‑cited papers (title, year, venue, citation count) 
+- One‑sentence takeaway per paper (what was found or contributed) 
+- 1–2 local authors (from your university) who appear repeatedly in this area  
+
+Tips (while scanning)  
+- Use “Analyze results” → “Authors”/“Affiliations” to see who publishes most.  
 - Open Author profiles to confirm affiliation and recent outputs.
 
-Step 3 — Pick contacts (8 minutes)
-- From your shortlists, pick 1–2 authors per area who (a) have multiple papers and (b) are current staff.
+Step 3 — Pick contacts  
+- From your shortlists, pick 1–2 authors per area who (a) have multiple papers and (b) are current staff.  
 - Record their names, department/school, and a portfolio link if available.
 
-Step 4 — Package your note (5 minutes)
-- Write 3 short sections (Crops; Animal Science; Machine Learning). In each, list: the 3 papers with one‑line findings and the suggested contacts.
+Step 4 — Package your note  
+- Write 3 short sections (Crops; Animal Science; Machine Learning). In each, list: the 3 papers with one‑line findings and the suggested contacts.  
 
 Suggested structure (copy/paste)
 ```text
@@ -392,8 +424,8 @@ Animal Science …
 Machine Learning …
 ```
 
-No Scopus? (fallback, 10 minutes for any one area)
-- Use Google Scholar or Google with an affiliation phrase (avoid site: filters). Start broad, then refine with quotes and OR blocks.
+No Scopus? (fallback)
+- Use Google Scholar or Google with an affiliation phrase (avoid site: filters). Start broad, then refine with quotes and OR blocks.  
 
 Google Scholar examples (copy/paste and adjust terms)
 ```text
@@ -407,18 +439,10 @@ Google Web (optional operators)
 "Harper Adams University" (crop OR wheat OR potato) filetype:pdf
 "Harper Adams University" (machine learning OR "deep learning") inurl:repository|pure|eprints
 ```
-Tips
-- Use phrase quotes for the affiliation
-- Add/remove country terms only if they help (they can hide results)
-- Harvest new synonyms from top results and iterate your OR blocks
-
-Marking (lightweight)
-- Completeness: 3 papers × 3 areas with one‑line findings; at least one plausible contact per area
-- Judgement: choices make sense (recent/influential, match the area)
-- Clarity: short, readable notes a supervisor could skim
-
-Time plan (60 minutes)
-- 2 min set‑up; 5 min affiliation; 30 min three scans; 8 min contacts; 5 min packaging; (buffer 10 min if needed)
+Tips  
+- Use phrase quotes for the affiliation  
+- Add/remove country terms only if they help (they can hide results)  
+- Harvest new synonyms from top results and iterate your OR blocks  
 
 ---
 

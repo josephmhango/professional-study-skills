@@ -75,7 +75,12 @@ Definition mnemonic: Working directory (files), Staging area (basket), Commit (s
 
 :::: {.columns}
 ::: {.column width="55%"}
-Install Git, then set your identity so your commits are attributed correctly. Git reads configuration from three levels, merged in order: system (all users), global (you, typically at ~/.gitconfig), and local (per‑repository, .git/config). Set your global defaults first; override per repository when needed (e.g., a work email). Start with HTTPS for simplicity; once you’re comfortable, add SSH keys for frictionless pushes and automation.
+Install Git, then set your identity so your commits are attributed correctly. Git reads configuration from three levels, merged in order:  
+- system (all users)  
+- global (you, typically at ~/.gitconfig)
+- local (per‑repository, .git/config).  
+
+Set your global defaults first and override per repository when needed (e.g., a work email). Start with HTTPS for simplicity; once you’re comfortable, add SSH keys for frictionless pushes and automation.
 :::
 ::: {.column width="45%"}
 ```bash
@@ -98,7 +103,7 @@ Keep the same `user.name`/`user.email` as your GitHub account to avoid mismatch 
 
 ---
 
-## Lab 1 — Your first repository (10 min)
+## Practice 1 — Your first repository
 
 :::: {.columns}
 ::: {.column width="55%"}
@@ -130,7 +135,7 @@ Commit messages should explain the “why” and “what”, not just file names
 
 :::: {.columns}
 ::: {.column width="55%"}
-Staging is a deliberate queue (the “index”) that lets you curate exactly what goes into a snapshot. Think of it like packing a suitcase: your working directory is the wardrobe; the index is the suitcase; a commit is the tag on a packed suitcase. Use `git add -p` (patch mode) to stage hunks interactively, splitting noisy changes from meaningful ones. This discipline produces clear history and easier reviews.
+Staging is a deliberate queue (the “index”) that lets you curate exactly what goes into a snapshot. Think of it like packing a suitcase: your working directory is the wardrobe and the index is the suitcase. A commit is the tag on a packed suitcase. Use `git add -p` (patch mode) to stage hunks (modified/untracked code or content in a file) interactively, splitting noisy changes from meaningful ones. This discipline produces clear history and easier reviews.
 :::
 ::: {.column width="45%"}
 ```bash
@@ -156,7 +161,7 @@ Stage logically related changes together. Avoid mixing formatting and feature ed
 
 ---
 
-## Lab 2 — Branching and merging (25 min)
+## Practice 2 — Branching and merging
 
 :::: {.columns}
 ::: {.column width="55%"}
@@ -180,7 +185,7 @@ git merge feature/readme-badges
 ::::
 
 ::: callout-note
-Fast‑forward merge happens when `main` hasn’t moved; Git just moves the branch pointer.
+Fast‑forward merge happens when `main` hasn’t moved. Git just moves the branch pointer.
 :::
 
 ---
@@ -189,7 +194,9 @@ Fast‑forward merge happens when `main` hasn’t moved; Git just moves the bran
 
 :::: {.columns}
 ::: {.column width="55%"}
-Conflicts occur when two branches modify overlapping lines and Git can’t auto‑merge. You’ll see conflict markers in the file: `<<<<<<< HEAD` (your changes), a divider `=======`, then `>>>>>>> other-branch`. Edit the file to the final intended content (often a thoughtful blend), delete all markers, save, then stage and commit. Prefer explaining the resolution in the commit message (what you kept and why).
+Conflicts occur when two branches modify overlapping lines and Git can’t auto‑merge. You’ll see conflict markers in the file: `<<<<<<< HEAD` (your changes), a divider `=======`, then `>>>>>>> other-branch`.  
+
+Edit the file to the final intended content (often a thoughtful blend), delete all markers, save, then stage and commit. Prefer explaining the resolution in the commit message (what you kept and why).
 :::
 ::: {.column width="45%"}
 ```bash
@@ -220,7 +227,11 @@ Explain the resolution in your commit message, not just “fix conflict”.
 
 :::: {.columns}
 ::: {.column width="55%"}
-Add a remote and push to share your work. `git fetch` downloads new commits without touching your files; `git pull` = `fetch` + `merge` (or rebase, if configured). Use `-u` on the first push to set an upstream tracking pair, enabling simple `git push`/`git pull` with no extra args. Teams often prefer a clean, linear `main`; consider `git pull --rebase` on topic branches to replay your commits on top of new upstream history.
+Add a remote and push to share your work. `git fetch` downloads new commits without touching your files; `git pull` = `fetch` + `merge` (or rebase, if configured).  
+
+Use `-u` on the first push to set an upstream tracking pair, enabling simple `git push`/`git pull` with no extra args.  
+
+Teams often prefer a clean, linear `main`; consider `git pull --rebase` on topic branches to replay your commits on top of new upstream history.
 :::
 ::: {.column width="45%"}
 ```bash
@@ -245,7 +256,7 @@ Use branch names like `feature/...`, `fix/...`, `docs/...` to encode intent.
 
 ---
 
-## Lab 3 — Feature workflow with PR (30 min)
+## Practice 3 — Feature workflow with PR
 
 1) Create a branch and push it:
 
@@ -292,12 +303,12 @@ Keep secrets out of Git. Use environment variables or a secrets manager; never c
 
 :::: {.columns}
 ::: {.column width="55%"}
-Choose the least destructive fix:
-- Unstage: `git restore --staged file` — removes a change from the basket but keeps it in your working files.
-- Discard local edits: `git restore file` — throws away unstaged changes in your working directory for that file.
-- Amend last commit (unpublished): `git commit --amend` — rewrites the most recent commit (safe before pushing).
-- Revert a published commit: `git revert <hash>` — creates a new commit that undoes the target without rewriting history.
-- Reset (hard) for local sandboxes only: `git reset --hard <hash>` — resets HEAD, index, and working tree to match <hash>. This DESTROYS uncommitted changes and can desynchronize you from collaborators if used on shared branches. Prefer `revert` for published mistakes; use `reset --hard` only when you’re certain and have no work to lose.
+Choose the least destructive fix:  
+- Unstage: `git restore --staged file` — removes a change from the basket but keeps it in your working files.  
+- Discard local edits: `git restore file` — throws away unstaged changes in your working directory for that file.  
+- Amend last commit (unpublished): `git commit --amend` — rewrites the most recent commit (safe before pushing).  
+- Revert a published commit: `git revert <hash>` — creates a new commit that undoes the target without rewriting history.  
+- Reset (hard) for local sandboxes only: `git reset --hard <hash>` — resets HEAD, index, and working tree to match <hash>. This DESTROYS uncommitted changes and can desynchronize you from collaborators if used on shared branches. Prefer `revert` for published mistakes; use `reset --hard` only when you’re certain and have no work to lose.  
 :::
 ::: {.column width="45%"}
 ```bash

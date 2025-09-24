@@ -1,0 +1,231 @@
+---
+title: "Week 1 — Hard Skills, Soft Skills & the Hidden Curriculum of Employability"
+subtitle: "Professional & Study Skills Module — 4‑Hour Session"
+author: "K.J. Mhango"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    code-fold: false
+    smooth-scroll: true
+    anchor-sections: true
+execute:
+  echo: false
+  warning: false
+  message: false
+lang: en-GB
+---
+
+> **Welcome to Week 1** of the Professional and Study Skills module. This session introduces what employers mean by "skills," how they develop throughout your time at university, and how you can actively take ownership of your growth — starting now.
+
+---
+
+# What This Session Covers
+
+This 4-hour workshop-style session invites you to:
+
+- Define and reflect on the difference between hard and soft skills.
+- Explore how these skills appear in your chosen degree track.
+- Participate in practical activities that reveal how social dynamics shape behaviour.
+- Investigate real-world job market data to uncover persistent and emerging skill demands.
+- Reflect on your personal starting point and create a development goal.
+
+By the end of the session, you build:
+
+- Your own understanding of hard and soft skills in your field.
+- Insight into how conformity affects individuality and performance.
+- A grounded perspective on what skills matter now and into the future.
+- A short reflection and development goal to add to your portfolio.
+
+---
+
+# Starting Reflection: What Skill Matters to You?
+
+Begin by answering this prompt:
+
+**What’s one skill you want to graduate with that makes you employable and adaptable?**
+
+Share aloud or submit anonymously (e.g. word cloud). Observe the range of ideas that emerge, from coding to confidence to leadership.
+
+Scan the module overview to see how your answer connects to what this module develops — including research, presentation, Excel, programming, and reflective practice.
+
+---
+
+# Defining Hard vs Soft Skills
+
+## Create Your Own Lists
+
+Now take 5–10 minutes to create two lists in your notes:
+
+- One for **hard skills** — technical or discipline-specific abilities.
+- One for **soft skills** — interpersonal, cognitive, and self-management abilities.
+
+Do not look up definitions. Work from your intuition. Ask yourself:
+
+- What counts as “hard” in my degree? What do I get taught directly?
+- What counts as “soft” in my experience? What have I had to pick up through group work or personal effort?
+
+## Group Discussion
+
+In groups, compare your lists. Look for similarities, disagreements, and surprising examples. Discuss:
+
+- How do your definitions differ?
+- Which soft skills are hardest to define — and why?
+- How do you know when someone is good at a soft skill?
+
+## Share Back
+
+As a class, contribute to a shared board or wall:
+
+- Add examples of **hard skills** by degree track (e.g., CAD in engineering, R programming in data science).
+- Add examples of **soft skills** everyone needs.
+
+Notice how many soft skills overlap across disciplines.
+
+---
+
+# Video Reflection: Strengthening Soft Skills
+
+Watch the TEDx talk:
+
+**Strengthening Soft Skills | Andy Wible | TEDxMuskegon**  
+<https://www.youtube.com/watch?v=gkLsn4ddmTs>
+
+<div style="aspect-ratio:16/9">
+<iframe width="100%" height="100%" src="https://www.youtube.com/embed/gkLsn4ddmTs" title="Strengthening Soft Skills | Andy Wible | TEDxMuskegon" frameborder="0" allowfullscreen></iframe>
+</div>
+
+After viewing, reflect and discuss:
+
+- What are the speaker’s key points about soft skills?
+- Which examples resonate with your own experience?
+- How do soft skills appear — often quietly — in your course and outside it?
+- Which soft skill will you now pay closer attention to?
+
+Make a short note in your journal or portfolio summarising what this video made you reconsider.
+
+---
+
+# Reflection on Individuality: Why Standing Out Matters
+
+This section explores how individuals adapt to groups — often without being aware — and how awareness of these social forces helps you preserve individuality and integrity in your learning and future work.
+
+## Activity 1 — Silent Clapping Synchrony
+
+- Stand in a large circle.
+- Begin clapping **at your own pace**. No instructions to follow any rhythm.
+- Watch what happens over the next 30–60 seconds.
+
+You may notice that the group **naturally synchronises** — without being told to.
+
+Repeat the exercise, this time **trying not to synchronise**. Notice what happens again.
+
+**Reflection:**
+- Why does synchronisation happen so easily?
+- What does this say about our tendency to conform?
+- What are the risks of automatic alignment in teams or social settings?
+- When is alignment helpful? When is individuality more important?
+
+Jot down a few sentences in your notes: *When have I gone along with something simply because others did? When have I stood apart? What made the difference?*
+
+## Activity 2 — Asch Conformity Experiment
+
+Watch this short video summary of the classic Asch experiment:
+
+**Conformity - The Asch Experiment**  
+<https://www.youtube.com/watch?v=_IUlV5KI5B0>
+
+<div style="aspect-ratio:16/9">
+<iframe width="100%" height="100%" src="https://www.youtube.com/embed/_IUlV5KI5B0" title="Conformity - The Asch Experiment" frameborder="0" allowfullscreen></iframe>
+</div>
+
+**Discuss:**
+
+- What happened in the video?
+- Why did people conform even when they knew the answer was wrong?
+- Have you ever been in a situation where you doubted yourself because the group disagreed?
+- How does this affect group decision-making in university projects or work settings?
+
+Write a reflection: *What will I do this semester to stay true to my thinking, even when it’s unpopular? How will I balance collaboration with independent judgement?*
+
+---
+
+# Reading the Job Market: WEF Future of Jobs Reports
+
+Now investigate what global employers are saying about skill needs — not by being told, but by reading for yourself.
+
+## Step 1 — Divide the Room
+
+- **Group A** reads the *WEF Future of Jobs Report 2016*  
+  PDF: <https://www3.weforum.org/docs/WEF_Future_of_Jobs.pdf>
+
+- **Group B** reads the *WEF Future of Jobs Report 2025*  
+  PDF: <https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf>
+
+## Step 2 — Investigate Your Report
+
+Skim the report. Focus on:
+
+- Top 10 Skills tables
+- Skills Outlook charts
+- Quotes and employer priorities
+
+Create a team list of:
+
+- Skills most in demand
+- Skills fading in importance
+- Predictions about the future of work
+
+## Step 3 — Present Your Findings
+
+Each group presents a 3-column list:
+
+| In Demand | Declining | Predictions |
+|-----------|-----------|-------------|
+
+Use quotes or data from the report to support your points.
+
+## Step 4 — Whole-Class Reflection
+
+Now come together and compare across reports:
+
+- Which skills appear in both lists (**persistent skills**)?
+- Which skills are just emerging?
+- Which skills were **hyped in 2016** but didn’t materialise?
+- Which skills are **still hyped now**, despite limited progress?
+- Which current trends are **likely to succeed**, and why?
+
+Make collective notes. This exercise is not just about employment trends — it’s about building **judgement**.
+
+---
+
+# Final Reflection and Development Plan
+
+Complete a written reflection:
+
+- List three transferable skills you already bring into university.
+- Identify one soft skill from today’s activities that felt vital — explain why.
+- Choose one persistent skill (from the WEF reports) to focus on this term — say how and where you’ll practise it.
+
+### Homework
+
+- Revisit the WEF 2025 report or summary.
+- Choose **one transferable skill** to improve this semester.
+- Write a 200-word action plan:
+  - Why this skill matters
+  - Where you’ll practise it (modules, work, societies)
+  - How you’ll measure improvement
+
+Consider this reflection in your professional portfolio.
+
+---
+
+# Useful Links
+
+- **TEDx Talk**: [Strengthening Soft Skills | Andy Wible](https://www.youtube.com/watch?v=gkLsn4ddmTs)
+- **Asch Experiment**: [Conformity - The Asch Experiment](https://www.youtube.com/watch?v=_IUlV5KI5B0)
+- **WEF 2016**: [Future of Jobs Report (PDF)](https://www3.weforum.org/docs/WEF_Future_of_Jobs.pdf)
+- **WEF 2025**: [Future of Jobs Report (PDF)](https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf)

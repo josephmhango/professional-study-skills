@@ -1,0 +1,332 @@
+---
+title: "Workshop: How Markdown Works"
+subtitle: "Student Scaffold – Build a Portfolio Tutorial"
+format: html
+author: "J. Mhango"
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# 📘 Your Mission
+
+You are going to write a compelling tutorial titled:\
+\# **How Markdown Works**
+
+By the end, you’ll have: - A clean, professional GitHub repository - A
+detailed, well-formatted tutorial - Your own authored Markdown showcase
+
+This document gives you **scaffolded prompts** and **examples**. Fill in
+the explanations yourself. Render often using GitHub’s preview.
+
+> ✨ Primary resources: - [Daring Fireball:
+> Markdown](https://daringfireball.net/projects/markdown/) - [GitHub
+> Flavored Markdown
+> Spec](https://github.github.com/gfm/#why-is-a-spec-needed-)
+
+------------------------------------------------------------------------
+
+# 🛠️ Setup Checklist
+
+-   [ ] Create a private GitHub repo named `how-markdown-works`
+-   [ ] Add a `README.md` file
+-   [ ] Edit in GitHub online (✏️ button)
+-   [ ] Use **Preview** tab to view how your writing renders
+
+------------------------------------------------------------------------
+
+# 🎯 Essential Elements
+
+These are **required** for a professional finish:
+
+## ✅ Add a Cover Image
+
+Place this right below your main heading:
+
+``` markdown
+![Cover Image](images/cover.png)
+```
+
+If you don’t have an image, you can use a free placeholder:
+
+``` markdown
+![Cover](https://via.placeholder.com/800x200?text=How+Markdown+Works)
+```
+
+## ✅ Build a Table of Contents
+
+Link to key sections within your README using anchor links or cross-file
+links.
+
+Example:
+
+``` markdown
+## Table of Contents
+
+- [Introduction](#your-mission)
+- [Headings](#️-headings)
+- [Emphasis](#️-emphasis-italic-bold)
+- [Code](#️-code)
+- [Tables](tables.md)
+- [Images](images.md)
+- [Reflections](#-reflections)
+```
+
+------------------------------------------------------------------------
+
+# 📚 Write Your Tutorial Sections
+
+Each section must: 1. Start with a heading (e.g.,
+`## How Headings Work`) 2. Explain in your own words 3. Show example
+code using triple backticks (```` ``` ````) 4. Show the rendered result
+after the code block
+
+------------------------------------------------------------------------
+
+## ✏️ Headings
+
+> 🔗 [GFM Spec — ATX
+> Headings](https://github.github.com/gfm/#atx-headings)
+
+**Your explanation here:**
+
+```` markdown
+```
+# H1
+## H2
+### H3
+```
+````
+
+## ✏️ Emphasis (Italic, Bold)
+
+> 🔗 [GFM —
+> Emphasis](https://github.github.com/gfm/#emphasis-and-strong-emphasis)
+
+**Your explanation here:**
+
+```` markdown
+```
+*italic*  **bold**  _also italic_  __also bold__
+```
+````
+
+## ✏️ Code
+
+> 🔗 [GFM — Code
+> Blocks](https://github.github.com/gfm/#fenced-code-blocks)
+
+**Your explanation here:**
+
+```` markdown
+```
+`inline code`
+
+```
+def greet():
+    print("Hello!")
+```
+````
+
+## ✏️ Blockquotes
+
+> 🔗 [GFM — Blockquotes](https://github.github.com/gfm/#block-quoting)
+
+**Your explanation here:**
+
+```` markdown
+```
+> This is a quote.
+```
+````
+
+## ✏️ Lists
+
+> 🔗 [GFM — Lists](https://github.github.com/gfm/#list-items)
+
+**Your explanation here:**
+
+```` markdown
+```
+- Item A
+  - Nested Item
+1. First
+2. Second
+```
+````
+
+## ✏️ Links
+
+> 🔗 [GFM — Links](https://github.github.com/gfm/#links)
+
+**Your explanation here:**
+
+```` markdown
+```
+[Visit OpenAI](https://www.openai.com)
+```
+````
+
+------------------------------------------------------------------------
+
+# 📊 Tables & Images
+
+## ✏️ Tables
+
+> 🔗 [GFM — Tables](https://github.github.com/gfm/#tables-extension)
+
+**Your explanation here:**
+
+```` markdown
+```
+| Name | Score |
+|------|-------|
+| Alice | 98 |
+| Bob   | 87 |
+```
+````
+
+## ✏️ Images
+
+> 🔗 [GFM — Images](https://github.github.com/gfm/#images)
+
+**Your explanation here:**
+
+```` markdown
+```
+![Example](https://via.placeholder.com/150)
+```
+````
+
+------------------------------------------------------------------------
+
+# 🚀 Advanced Markdown
+
+## ✏️ Badges
+
+> 🔗 [shields.io](https://shields.io)
+
+**Example badge code:**
+
+```` markdown
+```
+![GitHub repo size](https://img.shields.io/github/repo-size/yourname/how-markdown-works)
+```
+````
+
+## ✏️ Collapsible Sections
+
+**Example:**
+
+```` markdown
+```
+<details>
+<summary>Click to reveal</summary>
+
+Hidden content inside.
+
+</details>
+```
+````
+
+## ✏️ Task Lists
+
+```` markdown
+```
+- [x] Done
+- [ ] To do
+```
+````
+
+## ✏️ Tip Blocks (Callouts)
+
+> 🔗 [GitHub Callouts
+> Info](https://github.blog/changelog/2022-05-19-markdown-task-lists-tables-and-more-are-now-supported-in-comments/)
+
+GitHub supports **info boxes** using blockquotes and emojis:
+
+**Example:**
+
+``` markdown
+> ℹ️ **Tip:** You can preview your Markdown as you write by clicking the "Preview" tab above.
+```
+
+Which renders like: \> ℹ️ **Tip:** You can preview your Markdown as you
+write by clicking the "Preview" tab above.
+
+You can use emojis like 💡, ❗, ✅ to signal purpose.
+
+------------------------------------------------------------------------
+
+# 📂 Multipage Navigation
+
+-   Create new `.md` files (e.g., `tables.md`, `images.md`)
+-   Link to them from your README:
+
+```` markdown
+```
+[Next → Tables](tables.md)
+```
+````
+
+------------------------------------------------------------------------
+
+# 🪞 Reflections
+
+Write these at the end:
+
+``` markdown
+# Reflections
+
+- What surprised you?
+- What helped you learn Markdown faster?
+- What still confuses you?
+- How will you use Markdown in the future?
+```
+
+------------------------------------------------------------------------
+
+# 🧼 Showcase Polish
+
+-   Make sure your **cover image** is working
+-   Check that your **table of contents** links work
+-   Use spacing and headings consistently
+-   Make your opening paragraph shine:
+
+``` markdown
+> This tutorial was written by me to demonstrate my understanding of Markdown syntax on GitHub. All examples show the source code and its rendered output.
+```
+
+------------------------------------------------------------------------
+
+# 🔁 Stretch Yourself
+
+-   Add a GIF (use screen recorder and upload as image)
+
+-   Try inserting math:
+
+    ``` markdown
+    $E = mc^2$
+    ```
+
+-   Try styling tables with HTML (advanced)
+
+-   Make a [profile
+    README](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/about-your-profile)
+    at `yourusername/yourusername`
+
+------------------------------------------------------------------------
+
+# ✅ At the End...
+
+-   You’ll have created your own interactive Markdown tutorial
+-   Every concept you show is backed by code and rendered output
+-   You’ll be confident using Markdown for documentation, projects, or
+    teaching
+-   You can link this in your portfolio or CV as proof of technical
+    writing
+
+------------------------------------------------------------------------
+
+👏 **Well done. Don’t forget to push your final version to GitHub and
+make it public when you’re ready to showcase.**

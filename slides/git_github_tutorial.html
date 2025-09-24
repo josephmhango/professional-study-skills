@@ -85,12 +85,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#outcomes-what-youll-be-able-to-do" id="toc-outcomes-what-youll-be-able-to-do" class="nav-link" data-scroll-target="#outcomes-what-youll-be-able-to-do"><span class="header-section-number">2</span> Outcomes (what you’ll be able to do)</a></li>
   <li><a href="#core-concepts-precise-mental-model" id="toc-core-concepts-precise-mental-model" class="nav-link" data-scroll-target="#core-concepts-precise-mental-model"><span class="header-section-number">3</span> Core concepts — precise mental model</a></li>
   <li><a href="#setup-install-and-identity" id="toc-setup-install-and-identity" class="nav-link" data-scroll-target="#setup-install-and-identity"><span class="header-section-number">4</span> Setup — install and identity</a></li>
-  <li><a href="#lab-1-your-first-repository-10-min" id="toc-lab-1-your-first-repository-10-min" class="nav-link" data-scroll-target="#lab-1-your-first-repository-10-min"><span class="header-section-number">5</span> Lab 1 — Your first repository (10 min)</a></li>
+  <li><a href="#practice-1-your-first-repository" id="toc-practice-1-your-first-repository" class="nav-link" data-scroll-target="#practice-1-your-first-repository"><span class="header-section-number">5</span> Practice 1 — Your first repository</a></li>
   <li><a href="#staging-vs-committing-clear-separation" id="toc-staging-vs-committing-clear-separation" class="nav-link" data-scroll-target="#staging-vs-committing-clear-separation"><span class="header-section-number">6</span> Staging vs committing — clear separation</a></li>
-  <li><a href="#lab-2-branching-and-merging-25-min" id="toc-lab-2-branching-and-merging-25-min" class="nav-link" data-scroll-target="#lab-2-branching-and-merging-25-min"><span class="header-section-number">7</span> Lab 2 — Branching and merging (25 min)</a></li>
+  <li><a href="#practice-2-branching-and-merging" id="toc-practice-2-branching-and-merging" class="nav-link" data-scroll-target="#practice-2-branching-and-merging"><span class="header-section-number">7</span> Practice 2 — Branching and merging</a></li>
   <li><a href="#conflicts-understand-and-fix-with-intent" id="toc-conflicts-understand-and-fix-with-intent" class="nav-link" data-scroll-target="#conflicts-understand-and-fix-with-intent"><span class="header-section-number">8</span> Conflicts — understand and fix with intent</a></li>
   <li><a href="#remote-basics-github-flow" id="toc-remote-basics-github-flow" class="nav-link" data-scroll-target="#remote-basics-github-flow"><span class="header-section-number">9</span> Remote basics — GitHub flow</a></li>
-  <li><a href="#lab-3-feature-workflow-with-pr-30-min" id="toc-lab-3-feature-workflow-with-pr-30-min" class="nav-link" data-scroll-target="#lab-3-feature-workflow-with-pr-30-min"><span class="header-section-number">10</span> Lab 3 — Feature workflow with PR (30 min)</a></li>
+  <li><a href="#practice-3-feature-workflow-with-pr" id="toc-practice-3-feature-workflow-with-pr" class="nav-link" data-scroll-target="#practice-3-feature-workflow-with-pr"><span class="header-section-number">10</span> Practice 3 — Feature workflow with PR</a></li>
   <li><a href="#ignore-the-right-things-.gitignore-essentials" id="toc-ignore-the-right-things-.gitignore-essentials" class="nav-link" data-scroll-target="#ignore-the-right-things-.gitignore-essentials"><span class="header-section-number">11</span> Ignore the right things — .gitignore essentials</a></li>
   <li><a href="#rescue-kit-safe-undo" id="toc-rescue-kit-safe-undo" class="nav-link" data-scroll-target="#rescue-kit-safe-undo"><span class="header-section-number">12</span> Rescue kit — safe undo</a></li>
   <li><a href="#inspect-and-search-history" id="toc-inspect-and-search-history" class="nav-link" data-scroll-target="#inspect-and-search-history"><span class="header-section-number">13</span> Inspect and search history</a></li>
@@ -219,7 +219,10 @@ Note
 <h2 data-number="4" class="anchored" data-anchor-id="setup-install-and-identity"><span class="header-section-number">4</span> Setup — install and identity</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<p>Install Git, then set your identity so your commits are attributed correctly. Git reads configuration from three levels, merged in order: system (all users), global (you, typically at ~/.gitconfig), and local (per‑repository, .git/config). Set your global defaults first; override per repository when needed (e.g., a work email). Start with HTTPS for simplicity; once you’re comfortable, add SSH keys for frictionless pushes and automation.</p>
+<p>Install Git, then set your identity so your commits are attributed correctly. Git reads configuration from three levels, merged in order:<br>
+- system (all users)<br>
+- global (you, typically at ~/.gitconfig) - local (per‑repository, .git/config).</p>
+<p>Set your global defaults first and override per repository when needed (e.g., a work email). Start with HTTPS for simplicity; once you’re comfortable, add SSH keys for frictionless pushes and automation.</p>
 </div><div class="column" style="width:45%;">
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check install</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span>
@@ -247,8 +250,8 @@ Tip
 </div>
 <hr>
 </section>
-<section id="lab-1-your-first-repository-10-min" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="lab-1-your-first-repository-10-min"><span class="header-section-number">5</span> Lab 1 — Your first repository (10 min)</h2>
+<section id="practice-1-your-first-repository" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="practice-1-your-first-repository"><span class="header-section-number">5</span> Practice 1 — Your first repository</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
 <p>Create a new repo, add a README, and make your first commit. Practice status → add → commit → log.</p>
@@ -284,7 +287,7 @@ Important
 <h2 data-number="6" class="anchored" data-anchor-id="staging-vs-committing-clear-separation"><span class="header-section-number">6</span> Staging vs committing — clear separation</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<p>Staging is a deliberate queue (the “index”) that lets you curate exactly what goes into a snapshot. Think of it like packing a suitcase: your working directory is the wardrobe; the index is the suitcase; a commit is the tag on a packed suitcase. Use <code>git add -p</code> (patch mode) to stage hunks interactively, splitting noisy changes from meaningful ones. This discipline produces clear history and easier reviews.</p>
+<p>Staging is a deliberate queue (the “index”) that lets you curate exactly what goes into a snapshot. Think of it like packing a suitcase: your working directory is the wardrobe and the index is the suitcase. A commit is the tag on a packed suitcase. Use <code>git add -p</code> (patch mode) to stage hunks (modified/untracked code or content in a file) interactively, splitting noisy changes from meaningful ones. This discipline produces clear history and easier reviews.</p>
 </div><div class="column" style="width:45%;">
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit README.md and notes.txt</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">"Notes\n"</span> <span class="op">&gt;&gt;</span> notes.txt</span>
@@ -315,8 +318,8 @@ Tip
 </div>
 <hr>
 </section>
-<section id="lab-2-branching-and-merging-25-min" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="lab-2-branching-and-merging-25-min"><span class="header-section-number">7</span> Lab 2 — Branching and merging (25 min)</h2>
+<section id="practice-2-branching-and-merging" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="practice-2-branching-and-merging"><span class="header-section-number">7</span> Practice 2 — Branching and merging</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
 <p>Create a feature branch, commit on it, and merge back to <code>main</code>. Observe fast‑forward vs merge commit behavior.</p>
@@ -344,7 +347,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Fast‑forward merge happens when <code>main</code> hasn’t moved; Git just moves the branch pointer.</p>
+<p>Fast‑forward merge happens when <code>main</code> hasn’t moved. Git just moves the branch pointer.</p>
 </div>
 </div>
 <hr>
@@ -353,7 +356,8 @@ Note
 <h2 data-number="8" class="anchored" data-anchor-id="conflicts-understand-and-fix-with-intent"><span class="header-section-number">8</span> Conflicts — understand and fix with intent</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<p>Conflicts occur when two branches modify overlapping lines and Git can’t auto‑merge. You’ll see conflict markers in the file: <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> (your changes), a divider <code>=======</code>, then <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; other-branch</code>. Edit the file to the final intended content (often a thoughtful blend), delete all markers, save, then stage and commit. Prefer explaining the resolution in the commit message (what you kept and why).</p>
+<p>Conflicts occur when two branches modify overlapping lines and Git can’t auto‑merge. You’ll see conflict markers in the file: <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> (your changes), a divider <code>=======</code>, then <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; other-branch</code>.</p>
+<p>Edit the file to the final intended content (often a thoughtful blend), delete all markers, save, then stage and commit. Prefer explaining the resolution in the commit message (what you kept and why).</p>
 </div><div class="column" style="width:45%;">
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an intentional conflict</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">git</span> switch <span class="at">-c</span> feature/conflict</span>
@@ -389,7 +393,9 @@ Caution
 <h2 data-number="9" class="anchored" data-anchor-id="remote-basics-github-flow"><span class="header-section-number">9</span> Remote basics — GitHub flow</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<p>Add a remote and push to share your work. <code>git fetch</code> downloads new commits without touching your files; <code>git pull</code> = <code>fetch</code> + <code>merge</code> (or rebase, if configured). Use <code>-u</code> on the first push to set an upstream tracking pair, enabling simple <code>git push</code>/<code>git pull</code> with no extra args. Teams often prefer a clean, linear <code>main</code>; consider <code>git pull --rebase</code> on topic branches to replay your commits on top of new upstream history.</p>
+<p>Add a remote and push to share your work. <code>git fetch</code> downloads new commits without touching your files; <code>git pull</code> = <code>fetch</code> + <code>merge</code> (or rebase, if configured).</p>
+<p>Use <code>-u</code> on the first push to set an upstream tracking pair, enabling simple <code>git push</code>/<code>git pull</code> with no extra args.</p>
+<p>Teams often prefer a clean, linear <code>main</code>; consider <code>git pull --rebase</code> on topic branches to replay your commits on top of new upstream history.</p>
 </div><div class="column" style="width:45%;">
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new GitHub repo named hello-git, then:</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -419,8 +425,8 @@ Tip
 </div>
 <hr>
 </section>
-<section id="lab-3-feature-workflow-with-pr-30-min" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="lab-3-feature-workflow-with-pr-30-min"><span class="header-section-number">10</span> Lab 3 — Feature workflow with PR (30 min)</h2>
+<section id="practice-3-feature-workflow-with-pr" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="practice-3-feature-workflow-with-pr"><span class="header-section-number">10</span> Practice 3 — Feature workflow with PR</h2>
 <ol type="1">
 <li>Create a branch and push it:</li>
 </ol>
@@ -476,7 +482,12 @@ Tip
 <h2 data-number="12" class="anchored" data-anchor-id="rescue-kit-safe-undo"><span class="header-section-number">12</span> Rescue kit — safe undo</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<p>Choose the least destructive fix: - Unstage: <code>git restore --staged file</code> — removes a change from the basket but keeps it in your working files. - Discard local edits: <code>git restore file</code> — throws away unstaged changes in your working directory for that file. - Amend last commit (unpublished): <code>git commit --amend</code> — rewrites the most recent commit (safe before pushing). - Revert a published commit: <code>git revert &lt;hash&gt;</code> — creates a new commit that undoes the target without rewriting history. - Reset (hard) for local sandboxes only: <code>git reset --hard &lt;hash&gt;</code> — resets HEAD, index, and working tree to match <hash>. This DESTROYS uncommitted changes and can desynchronize you from collaborators if used on shared branches. Prefer <code>revert</code> for published mistakes; use <code>reset --hard</code> only when you’re certain and have no work to lose.</hash></p>
+<p>Choose the least destructive fix:<br>
+- Unstage: <code>git restore --staged file</code> — removes a change from the basket but keeps it in your working files.<br>
+- Discard local edits: <code>git restore file</code> — throws away unstaged changes in your working directory for that file.<br>
+- Amend last commit (unpublished): <code>git commit --amend</code> — rewrites the most recent commit (safe before pushing).<br>
+- Revert a published commit: <code>git revert &lt;hash&gt;</code> — creates a new commit that undoes the target without rewriting history.<br>
+- Reset (hard) for local sandboxes only: <code>git reset --hard &lt;hash&gt;</code> — resets HEAD, index, and working tree to match <hash>. This DESTROYS uncommitted changes and can desynchronize you from collaborators if used on shared branches. Prefer <code>revert</code> for published mistakes; use <code>reset --hard</code> only when you’re certain and have no work to lose.</hash></p>
 </div><div class="column" style="width:45%;">
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unstage a file</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--staged</span> README.md</span>
