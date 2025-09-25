@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="J.Mhango">
+
+<title>Collaborative GitHub Workshop: Team Portfolio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="github-task_files/libs/clipboard/clipboard.min.js"></script>
+<script src="github-task_files/libs/quarto-html/quarto.js"></script>
+<script src="github-task_files/libs/quarto-html/popper.min.js"></script>
+<script src="github-task_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="github-task_files/libs/quarto-html/anchor.min.js"></script>
+<link href="github-task_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="github-task_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="github-task_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="github-task_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="github-task_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#learning-outcomes" id="toc-learning-outcomes" class="nav-link active" data-scroll-target="#learning-outcomes"><span class="header-section-number">1</span> Learning outcomes</a></li>
+  <li><a href="#ground-rules-for-collaboration-read-together" id="toc-ground-rules-for-collaboration-read-together" class="nav-link" data-scroll-target="#ground-rules-for-collaboration-read-together"><span class="header-section-number">2</span> Ground rules for collaboration (read together)</a></li>
+  <li><a href="#repository-bootstrap-group" id="toc-repository-bootstrap-group" class="nav-link" data-scroll-target="#repository-bootstrap-group"><span class="header-section-number">3</span> 1) Repository bootstrap (group)</a></li>
+  <li><a href="#personal-branches-bios-individual-team-review" id="toc-personal-branches-bios-individual-team-review" class="nav-link" data-scroll-target="#personal-branches-bios-individual-team-review"><span class="header-section-number">4</span> 2) Personal branches &amp; bios (individual → team review)</a></li>
+  <li><a href="#issue-driven-work-small-features-team" id="toc-issue-driven-work-small-features-team" class="nav-link" data-scroll-target="#issue-driven-work-small-features-team"><span class="header-section-number">5</span> 3) Issue-driven work &amp; small features (team)</a></li>
+  <li><a href="#conflict-lab-co-author-the-same-lines-everyone" id="toc-conflict-lab-co-author-the-same-lines-everyone" class="nav-link" data-scroll-target="#conflict-lab-co-author-the-same-lines-everyone"><span class="header-section-number">6</span> 4) Conflict Lab: co-author the same lines (everyone)</a></li>
+  <li><a href="#project-showcase-distributed-prs-with-review-rotation" id="toc-project-showcase-distributed-prs-with-review-rotation" class="nav-link" data-scroll-target="#project-showcase-distributed-prs-with-review-rotation"><span class="header-section-number">7</span> 5) Project showcase (distributed PRs with review rotation)</a></li>
+  <li><a href="#polish-and-consistency-team" id="toc-polish-and-consistency-team" class="nav-link" data-scroll-target="#polish-and-consistency-team"><span class="header-section-number">8</span> 6) Polish and consistency (team)</a></li>
+  <li><a href="#release-showcase-group" id="toc-release-showcase-group" class="nav-link" data-scroll-target="#release-showcase-group"><span class="header-section-number">9</span> 7) Release &amp; showcase (group)</a></li>
+  <li><a href="#appendix-cheatsheet" id="toc-appendix-cheatsheet" class="nav-link" data-scroll-target="#appendix-cheatsheet"><span class="header-section-number">10</span> Appendix — Cheatsheet</a>
+  <ul class="collapse">
+  <li><a href="#final-reflection-add-to-portfolio.md-end" id="toc-final-reflection-add-to-portfolio.md-end" class="nav-link" data-scroll-target="#final-reflection-add-to-portfolio.md-end"><span class="header-section-number">10.1</span> Final Reflection (add to <code>portfolio.md</code> end)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Collaborative GitHub Workshop: Team Portfolio</h1>
+<p class="subtitle lead">A self-guided, collaboration-first workflow using GitHub + Codespaces</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>J.Mhango </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><strong>Purpose</strong>: In this workshop you will <strong>build a single team portfolio (Markdown)</strong> while practicing the <strong>complete GitHub workflow</strong>: repository setup, branching, committing, pull requests (PRs), code reviews, issues, conflict resolution (including hunks), and release notes. The activities are intentionally designed so that <strong>you cannot progress without collaborating</strong> with others.</p>
+</blockquote>
+<hr>
+<section id="learning-outcomes" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="learning-outcomes"><span class="header-section-number">1</span> Learning outcomes</h2>
+<p>By the end, your team will be able to:</p>
+<ul>
+<li>Create, protect, and manage a GitHub repository collaboratively</li>
+<li>Use feature branches, meaningful commits, PRs, and structured reviews</li>
+<li>Open, triage, assign, and close Issues tied to PRs</li>
+<li><strong>Resolve merge conflicts</strong> and selectively stage <strong>hunks</strong></li>
+<li>Enforce contribution standards with conventions you agree as a group</li>
+<li>Ship a <strong>v1.0</strong> of a polished team portfolio with release notes</li>
+</ul>
+<hr>
+</section>
+<section id="ground-rules-for-collaboration-read-together" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ground-rules-for-collaboration-read-together"><span class="header-section-number">2</span> Ground rules for collaboration (read together)</h2>
+<ul>
+<li>We are <strong>one team</strong> (8 people). There is <strong>one repository</strong>. Everyone uses <strong>branches</strong> — <strong>no direct pushes to <code>main</code></strong>.</li>
+<li>Every change to <code>main</code> goes through a <strong>PR</strong> with at least <strong>one peer review</strong>. If a step below says “You cannot proceed until…”, that is a <strong>hard gate</strong>.</li>
+<li>Each section includes <strong>Reflection</strong> prompts — do them. They are as important as the hands-on tasks.</li>
+</ul>
+<hr>
+</section>
+<section id="repository-bootstrap-group" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="repository-bootstrap-group"><span class="header-section-number">3</span> 1) Repository bootstrap (group)</h2>
+<blockquote class="blockquote">
+<p><strong>Goal</strong>: Create the shared repo, enforce collaboration gates, and seed starter files.</p>
+</blockquote>
+<ol type="1">
+<li>Nominate a <strong>Repo Lead</strong> (temporary role) who will:
+<ul>
+<li>Create a new GitHub repository (organisation or personal, private or public as directed).</li>
+<li>Add <strong>all 7 teammates as collaborators</strong>.</li>
+<li>Enable <strong>branch protection</strong> for <code>main</code> (require pull request reviews, disallow direct pushes).</li>
+</ul></li>
+<li>As a group, decide what starter files you need. At a minimum, you must include:
+<ul>
+<li><code>README.md</code></li>
+<li><code>portfolio.md</code></li>
+<li>contribution guidelines (decide format and filename)</li>
+<li>at least one Issue template and one PR template (you design them)</li>
+</ul></li>
+<li>Repo Lead creates a short-lived branch (e.g., <code>chore/bootstrap</code>), adds the agreed starter files, and opens a PR for review.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Gate: You cannot proceed</strong> until the bootstrap PR is reviewed by <strong>two peers</strong> and merged to <code>main</code>. Everyone fetches/pulls latest.</p>
+</blockquote>
+<p><strong>Reflection (whole group):</strong> - What decisions did you need to make about structure before writing anything? - How does branch protection change behaviour compared to a free-for-all repo?</p>
+<hr>
+</section>
+<section id="personal-branches-bios-individual-team-review" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="personal-branches-bios-individual-team-review"><span class="header-section-number">4</span> 2) Personal branches &amp; bios (individual → team review)</h2>
+<blockquote class="blockquote">
+<p><strong>Goal</strong>: Each person contributes a bio via their own branch and PR. No one edits <code>main</code> directly.</p>
+</blockquote>
+<ol type="1">
+<li><strong>Everyone</strong> creates and switches to a branch:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> feature/<span class="op">&lt;</span>your-firstname<span class="op">&gt;</span>-bio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><p>Add <strong>your bio</strong> under <code>## People</code> in <code>portfolio.md</code>. Make <strong>at least two commits</strong> (e.g., “Add bio header” then “Add links”).</p></li>
+<li><p>Open a <strong>PR</strong> to <code>main</code> and <strong>request a reviewer</strong> (choose someone <strong>not</strong> sitting immediately next to you). Respond to any requested changes.</p></li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Gate: You cannot proceed</strong> until your PR is approved and merged. Then <strong>pull the latest <code>main</code></strong>.</p>
+</blockquote>
+<p><strong>Reflection (pairs):</strong> - What makes a good PR description? Compare two examples and critique them. - What feedback style helped you improve clarity in <code>portfolio.md</code>?</p>
+<hr>
+</section>
+<section id="issue-driven-work-small-features-team" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="issue-driven-work-small-features-team"><span class="header-section-number">5</span> 3) Issue-driven work &amp; small features (team)</h2>
+<blockquote class="blockquote">
+<p><strong>Goal</strong>: Practice Issues, assignment, labels, and linking PRs.</p>
+</blockquote>
+<ol type="1">
+<li>As a group, brainstorm <strong>5–8 enhancements</strong> for <code>portfolio.md</code> (e.g., Table of Contents, badges, consistent headings, project showcase table).</li>
+<li>Create Issues using your own template, apply labels, and self-assign. Aim for <strong>one Issue per person</strong>.</li>
+<li>For each Issue:
+<ul>
+<li>Create a branch <code>feature/&lt;name&gt;-&lt;issue-slug&gt;</code></li>
+<li>Commit small changes; open a PR that <strong>links</strong> the Issue (e.g., “Closes #7”)</li>
+<li>Request a reviewer; update per feedback</li>
+</ul></li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Gate: You cannot proceed</strong> until <strong>every Issue has a linked PR</strong> and at least <strong>one reviewer</strong> approval.</p>
+</blockquote>
+<p><strong>Reflection (small groups):</strong> - How did Issues change the way you planned your changes? - What labelling scheme would you adopt in a real team?</p>
+<hr>
+</section>
+<section id="conflict-lab-co-author-the-same-lines-everyone" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="conflict-lab-co-author-the-same-lines-everyone"><span class="header-section-number">6</span> 4) Conflict Lab: co-author the same lines (everyone)</h2>
+<blockquote class="blockquote">
+<p><strong>Goal</strong>: Experience, diagnose, and resolve <strong>merge conflicts</strong> and use <strong>hunk</strong>-level staging.</p>
+</blockquote>
+<ol type="1">
+<li>Create a new Issue: <strong>“Co-author Team Values”</strong>.</li>
+<li><strong>Everyone</strong> creates a branch (e.g., <code>feature/&lt;name&gt;-values</code>) and edits the <strong>same lines</strong> under <code>## Core values</code> with <strong>slightly different wording</strong>.</li>
+<li>Push your branch and open a PR. You will see conflicts once others merge.</li>
+<li>Resolve conflicts by <strong>syncing with <code>main</code></strong> and using the merge editor to <strong>choose hunks</strong> or rewrite.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Gate: You cannot proceed</strong> until at least <strong>three conflicting PRs</strong> are successfully resolved and merged, producing a cohesive “Core values” section.</p>
+</blockquote>
+<p><strong>Reflection (whole group):</strong> - What strategies helped you combine multiple wordings into one coherent voice? - When is it better to accept both sides vs.&nbsp;rewrite from scratch? - What did you learn about <strong>hunks</strong> and selective staging?</p>
+<hr>
+</section>
+<section id="project-showcase-distributed-prs-with-review-rotation" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="project-showcase-distributed-prs-with-review-rotation"><span class="header-section-number">7</span> 5) Project showcase (distributed PRs with review rotation)</h2>
+<blockquote class="blockquote">
+<p><strong>Goal</strong>: Add a “Projects” section with consistent formatting and cross-review.</p>
+</blockquote>
+<ol type="1">
+<li>Each person drafts <strong>one hypothetical project</strong> under <code>## Projects</code>.</li>
+<li>As a group, decide the format (list, table, or mix).</li>
+<li>Open PRs and use a <strong>review rotation</strong>:
+<ul>
+<li>Person 1 reviews Person 2, Person 2 reviews Person 3, …, Person 8 reviews Person 1</li>
+</ul></li>
+<li>Reviewers must request <strong>one content change</strong> to encourage iteration.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Gate: You cannot proceed</strong> until <strong>every project PR</strong> is merged and the summary remains aligned and readable.</p>
+</blockquote>
+<p><strong>Reflection (triads):</strong> - How did the rotation change the dynamics of feedback? - What did you standardise to keep <code>portfolio.md</code> readable at scale?</p>
+<hr>
+</section>
+<section id="polish-and-consistency-team" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="polish-and-consistency-team"><span class="header-section-number">8</span> 6) Polish and consistency (team)</h2>
+<blockquote class="blockquote">
+<p><strong>Goal</strong>: Final pass on quality and cohesion.</p>
+</blockquote>
+<ul>
+<li>Add a <strong>Table of Contents</strong> or other navigational aid.</li>
+<li>Insert 2–3 <strong>badges</strong> (design them yourselves).</li>
+<li>Ensure headings follow a consistent hierarchy.</li>
+<li>Run a spell-check and ensure consistent British English.</li>
+<li>Open and close any remaining <strong>Issues</strong> with references from PRs.</li>
+</ul>
+<p><strong>Reflection (pairs):</strong> - What one convention would you add to contribution guidelines to prevent future conflicts? - How would you split this monolithic <code>portfolio.md</code> into smaller files later?</p>
+<hr>
+</section>
+<section id="release-showcase-group" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="release-showcase-group"><span class="header-section-number">9</span> 7) Release &amp; showcase (group)</h2>
+<blockquote class="blockquote">
+<p><strong>Goal</strong>: Create a semantically versioned release with notes and celebrate.</p>
+</blockquote>
+<ol type="1">
+<li>Create a <strong>release</strong> (e.g., <code>v1.0</code>) on GitHub and generate release notes from merged PRs.</li>
+<li>In the release body, include: highlights, contributors, and a link to the final <code>portfolio.md</code>.</li>
+</ol>
+<p><strong>Reflection (whole group):</strong> - Which part of the workflow most improved the final quality? - Where did collaboration slow you down productively (for learning) vs.&nbsp;unproductively?</p>
+<hr>
+</section>
+<section id="appendix-cheatsheet" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="appendix-cheatsheet"><span class="header-section-number">10</span> Appendix — Cheatsheet</h2>
+<p><strong>Common Git operations</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create &amp; switch to a feature branch</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> feature/<span class="op">&lt;</span>name<span class="op">&gt;</span>-<span class="op">&lt;</span>task<span class="op">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage + commit</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add portfolio.md</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add bio header"</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Push first time (set upstream)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin feature/<span class="op">&lt;</span>name<span class="op">&gt;</span>-<span class="op">&lt;</span>task<span class="op">&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Sync with main</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch origin</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge origin/main</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rebase origin/main</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># After resolving conflicts</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="op">&lt;</span>file<span class="op">&gt;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>PR best practices</strong> - Descriptive titles (imperative) - Link Issues - Keep diffs small; single-purpose - Request reviewers early; respond quickly</p>
+<p><strong>Conflict resolution tips</strong> - Prefer <strong>coherent rewrite</strong> over blindly accepting both - Use the editor’s <strong>hunk</strong> tools to stage only the lines you want - Re-run Markdown preview after resolving</p>
+<hr>
+<section id="final-reflection-add-to-portfolio.md-end" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="final-reflection-add-to-portfolio.md-end"><span class="header-section-number">10.1</span> Final Reflection (add to <code>portfolio.md</code> end)</h3>
+<blockquote class="blockquote">
+<p><strong>Team Retrospective</strong>: In 5–8 bullet points, summarise what you learned about collaborative version control that you could not have learned working solo.</p>
+</blockquote>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

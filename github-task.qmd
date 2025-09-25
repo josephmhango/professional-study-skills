@@ -1,0 +1,215 @@
+---
+title: "Collaborative GitHub Workshop: Team Portfolio"
+subtitle: "A self-guided, collaboration-first workflow using GitHub + Codespaces"
+author: "J.Mhango"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    theme: cosmo
+execute: 
+  echo: true
+  warning: false
+  message: false
+filters: []
+---
+
+> **Purpose**: In this workshop you will **build a single team portfolio (Markdown)** while practicing the **complete GitHub workflow**: repository setup, branching, committing, pull requests (PRs), code reviews, issues, conflict resolution (including hunks), and release notes. The activities are intentionally designed so that **you cannot progress without collaborating** with others.
+
+---
+
+## Learning outcomes
+
+By the end, your team will be able to:
+
+- Create, protect, and manage a GitHub repository collaboratively
+- Use feature branches, meaningful commits, PRs, and structured reviews
+- Open, triage, assign, and close Issues tied to PRs
+- **Resolve merge conflicts** and selectively stage **hunks**
+- Enforce contribution standards with conventions you agree as a group
+- Ship a **v1.0** of a polished team portfolio with release notes
+
+---
+
+## Ground rules for collaboration (read together)
+
+- We are **one team** (8 people). There is **one repository**. Everyone uses **branches** — **no direct pushes to `main`**.
+- Every change to `main` goes through a **PR** with at least **one peer review**. If a step below says “You cannot proceed until…”, that is a **hard gate**.
+- Each section includes **Reflection** prompts — do them. They are as important as the hands-on tasks.
+
+---
+
+## 1) Repository bootstrap (group)
+
+> **Goal**: Create the shared repo, enforce collaboration gates, and seed starter files.
+
+1. Nominate a **Repo Lead** (temporary role) who will:
+   - Create a new GitHub repository (organisation or personal, private or public as directed).
+   - Add **all 7 teammates as collaborators**.
+   - Enable **branch protection** for `main` (require pull request reviews, disallow direct pushes).
+
+2. As a group, decide what starter files you need. At a minimum, you must include:
+   - `README.md`
+   - `portfolio.md`
+   - contribution guidelines (decide format and filename)
+   - at least one Issue template and one PR template (you design them)
+
+3. Repo Lead creates a short-lived branch (e.g., `chore/bootstrap`), adds the agreed starter files, and opens a PR for review.
+
+> **Gate: You cannot proceed** until the bootstrap PR is reviewed by **two peers** and merged to `main`. Everyone fetches/pulls latest.
+
+**Reflection (whole group):**
+- What decisions did you need to make about structure before writing anything?
+- How does branch protection change behaviour compared to a free-for-all repo?
+
+---
+
+## 2) Personal branches & bios (individual → team review)
+
+> **Goal**: Each person contributes a bio via their own branch and PR. No one edits `main` directly.
+
+1. **Everyone** creates and switches to a branch:
+
+```bash
+git checkout -b feature/<your-firstname>-bio
+```
+
+2. Add **your bio** under `## People` in `portfolio.md`. Make **at least two commits** (e.g., "Add bio header" then "Add links").
+
+3. Open a **PR** to `main` and **request a reviewer** (choose someone **not** sitting immediately next to you). Respond to any requested changes.
+
+> **Gate: You cannot proceed** until your PR is approved and merged. Then **pull the latest `main`**.
+
+**Reflection (pairs):**
+- What makes a good PR description? Compare two examples and critique them.
+- What feedback style helped you improve clarity in `portfolio.md`?
+
+---
+
+## 3) Issue-driven work & small features (team)
+
+> **Goal**: Practice Issues, assignment, labels, and linking PRs.
+
+1. As a group, brainstorm **5–8 enhancements** for `portfolio.md` (e.g., Table of Contents, badges, consistent headings, project showcase table).
+2. Create Issues using your own template, apply labels, and self-assign. Aim for **one Issue per person**.
+3. For each Issue:
+   - Create a branch `feature/<name>-<issue-slug>`
+   - Commit small changes; open a PR that **links** the Issue (e.g., "Closes #7")
+   - Request a reviewer; update per feedback
+
+> **Gate: You cannot proceed** until **every Issue has a linked PR** and at least **one reviewer** approval.
+
+**Reflection (small groups):**
+- How did Issues change the way you planned your changes?
+- What labelling scheme would you adopt in a real team?
+
+---
+
+## 4) Conflict Lab: co-author the same lines (everyone)
+
+> **Goal**: Experience, diagnose, and resolve **merge conflicts** and use **hunk**-level staging.
+
+1. Create a new Issue: **"Co-author Team Values"**.
+2. **Everyone** creates a branch (e.g., `feature/<name>-values`) and edits the **same lines** under `## Core values` with **slightly different wording**.
+3. Push your branch and open a PR. You will see conflicts once others merge.
+4. Resolve conflicts by **syncing with `main`** and using the merge editor to **choose hunks** or rewrite.
+
+> **Gate: You cannot proceed** until at least **three conflicting PRs** are successfully resolved and merged, producing a cohesive "Core values" section.
+
+**Reflection (whole group):**
+- What strategies helped you combine multiple wordings into one coherent voice?
+- When is it better to accept both sides vs. rewrite from scratch?
+- What did you learn about **hunks** and selective staging?
+
+---
+
+## 5) Project showcase (distributed PRs with review rotation)
+
+> **Goal**: Add a "Projects" section with consistent formatting and cross-review.
+
+1. Each person drafts **one hypothetical project** under `## Projects`.
+2. As a group, decide the format (list, table, or mix).
+3. Open PRs and use a **review rotation**:
+   - Person 1 reviews Person 2, Person 2 reviews Person 3, …, Person 8 reviews Person 1
+4. Reviewers must request **one content change** to encourage iteration.
+
+> **Gate: You cannot proceed** until **every project PR** is merged and the summary remains aligned and readable.
+
+**Reflection (triads):**
+- How did the rotation change the dynamics of feedback?
+- What did you standardise to keep `portfolio.md` readable at scale?
+
+---
+
+## 6) Polish and consistency (team)
+
+> **Goal**: Final pass on quality and cohesion.
+
+- Add a **Table of Contents** or other navigational aid.
+- Insert 2–3 **badges** (design them yourselves).
+- Ensure headings follow a consistent hierarchy.
+- Run a spell-check and ensure consistent British English.
+- Open and close any remaining **Issues** with references from PRs.
+
+**Reflection (pairs):**
+- What one convention would you add to contribution guidelines to prevent future conflicts?
+- How would you split this monolithic `portfolio.md` into smaller files later?
+
+---
+
+## 7) Release & showcase (group)
+
+> **Goal**: Create a semantically versioned release with notes and celebrate.
+
+1. Create a **release** (e.g., `v1.0`) on GitHub and generate release notes from merged PRs.
+2. In the release body, include: highlights, contributors, and a link to the final `portfolio.md`.
+
+**Reflection (whole group):**
+- Which part of the workflow most improved the final quality?
+- Where did collaboration slow you down productively (for learning) vs. unproductively?
+
+---
+
+## Appendix — Cheatsheet
+
+**Common Git operations**
+```bash
+# Create & switch to a feature branch
+git checkout -b feature/<name>-<task>
+
+# Stage + commit
+git add portfolio.md
+git commit -m "Add bio header"
+
+# Push first time (set upstream)
+git push -u origin feature/<name>-<task>
+
+# Sync with main
+git fetch origin
+git merge origin/main
+# or
+git rebase origin/main
+
+# After resolving conflicts
+git add <file>
+git commit
+```
+
+**PR best practices**
+- Descriptive titles (imperative)
+- Link Issues
+- Keep diffs small; single-purpose
+- Request reviewers early; respond quickly
+
+**Conflict resolution tips**
+- Prefer **coherent rewrite** over blindly accepting both
+- Use the editor’s **hunk** tools to stage only the lines you want
+- Re-run Markdown preview after resolving
+
+---
+
+### Final Reflection (add to `portfolio.md` end)
+
+> **Team Retrospective**: In 5–8 bullet points, summarise what you learned about collaborative version control that you could not have learned working solo.
+
