@@ -32,7 +32,7 @@ format: revealjs
 
 This is cyclical:  
 - Negative/refuted results are still progress — they guide revisions  
-- Keeping a simple research log (date, question, guess, settings, results) helps in write-ups and troubleshooting  
+- Keeping a simple research log - helps in troubleshooting  
 
 ---
 
@@ -68,7 +68,7 @@ This is cyclical:
   * Both cause and effect measurable  
   * Backed by rationale (why you expect that effect)  
 
-- **Tip:** Consider writing two rival hypotheses explaining the same effect, then design your test so at least one could be contradicted by data  
+- **Tip:** Consider two rival hypotheses for the same effect, then design your test so one could be contradicted by data  
 
 ---
 
@@ -82,10 +82,12 @@ This is cyclical:
 
 - Types of studies:  
   * **Controlled experiment** — you manipulate the factor  
-  * **Observational study** — you measure differences that already occur (useful if manipulation is impractical/unethical) 
+  * **Observational study** — you measure differences that already occur
 
 ## Controlled experiment
+
 ![](control.png)
+
 
 ## Design tips:  
   * Define variables and their units up front  
@@ -97,9 +99,7 @@ This is cyclical:
 
 ## Analysis & Conclusions
 
-- Organise, visualise, and summarise data  
-  * For numbers: compute average, spread  
-  * For categories: frequency counts, proportions  
+- Organise, visualise, and summarise data
 - Use statistical tests to compare groups or examine relationships  
 - Interpretation caveats:  
   * Data *support* or *do not support* a hypothesis — they don’t “prove” it  
@@ -133,9 +133,7 @@ This is cyclical:
 
 ### Data Types
 
-- **Quantitative:** numeric  
-  * Discrete (counts)  
-  * Continuous (measurements)  
+- **Quantitative:** numeric, Discrete (counts), Continuous etc  
 - **Qualitative:** categorical descriptions, text, themes  
 
 Match plotting / analysis method to type  
@@ -145,15 +143,15 @@ Match plotting / analysis method to type
 
 ## Collecting Data
 
-- Use experiments, observations, surveys, sensors, existing datasets  
-- Emphasis on quality: sampling, calibration, pilot testing, clear protocols 
-![](datacol.png)
+- Experiments, observations, surveys, sensors, etc  
+- Emphasis on quality: sampling, calibration, clear protocols 
+![](datacol.png){width=50%}
 
 ## Processing & Cleaning
 
 - Standardise formats, handle missing values, detect outliers  
-- Document every transformation (cleaning steps) — “garbage in, garbage out”  
-![](outliers.jpg)
+- Document every transformation— “garbage in, garbage out”  
+![](outliers.jpg){width=50%}
 
 ## Statistical Techniques
 
