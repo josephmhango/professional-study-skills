@@ -1,0 +1,202 @@
+---
+title: "Experimentation & the Scientific Method"
+author: "Kanthu Joseph Mhango"
+format: revealjs
+---
+
+## Introduction
+
+- Research is a structured way to ask and answer questions about the the world  
+- The scientific method is a simple loop:  
+  > observe → ask → hypothesis → test → analyse → conclude → share  
+- If a hypothesis isn’t supported, refine and iterate  
+
+## Learning goals:  
+  1. Form a focused, testable question  
+  2. Write a clear hypothesis  
+  3. Design a fair test (control vs experimental)  
+  4. Analyse data (describe, test, conclude)  
+  5. Communicate clearly (writing, talking, visuals)  
+  6. Report with transparency, reproducibility, ethics  
+
+---
+
+## The Scientific Method at a Glance
+
+1. Observation → Question  
+2. Background research  
+3. Hypothesis (testable prediction)  
+4. Experiment / data collection  
+5. Analysis → Conclusion  
+6. Communicate → others verify & build  
+
+This is cyclical:  
+- Negative/refuted results are still progress — they guide revisions  
+- Keeping a simple research log (date, question, guess, settings, results) helps in write-ups and troubleshooting  
+
+---
+
+## Observation & Question
+
+- Good questions arise by noticing something and asking **why / how**  
+- The question should be:  
+  * Specific (who/what/where/when)  
+  * Testable with data  
+  * Informed by existing knowledge  
+
+**Tip:** If your question feels too vague, narrow its scope (limit to a time window, a location, a subset) until measurement becomes feasible  
+
+---
+
+## Background Research (Quick Scan)
+
+- Read just enough to ground your question and avoid reinventing the wheel  
+- Focus on: key terms, prior results, typical methods, common pitfalls  
+- From your reading, capture:  
+  * 3–5 keywords  
+  * 2 likely pitfalls  
+- Use that to refine your hypothesis and experimental controls  
+
+---
+
+## Hypothesis (Testable Prediction)
+
+- A hypothesis links a **cause** (independent variable) to an **effect** (dependent variable)  
+- Best expressed in an “If … then …” form that is checkable with data  
+- Good hypothesis traits:  
+  * One main cause → one effect  
+  * Both cause and effect measurable  
+  * Backed by rationale (why you expect that effect)  
+
+- **Tip:** Consider writing two rival hypotheses explaining the same effect, then design your test so at least one could be contradicted by data  
+
+---
+
+## Experimentation (Testing Fairly)
+
+- A **fair test** manipulates the cause while keeping other factors constant  
+- Use:  
+  * **Control** (baseline or unaltered condition)  
+  * **Experimental condition(s)** (with the manipulation)  
+  * **Replicates** to reduce random variation  
+
+- Types of studies:  
+  * **Controlled experiment** — you manipulate the factor  
+  * **Observational study** — you measure differences that already occur (useful if manipulation is impractical/unethical) 
+
+## Controlled experiment
+![](control.png)
+
+## Design tips:  
+  * Define variables and their units up front  
+  * Use a control and replicates  
+  * Keep rigorous records (dates, settings, instrumentation)  
+  * Anticipate confounders: list top 2–3 and plan how to control or measure them  
+
+---
+
+## Analysis & Conclusions
+
+- Organise, visualise, and summarise data  
+  * For numbers: compute average, spread  
+  * For categories: frequency counts, proportions  
+- Use statistical tests to compare groups or examine relationships  
+- Interpretation caveats:  
+  * Data *support* or *do not support* a hypothesis — they don’t “prove” it  
+  * Be careful not to confuse correlation with causation  
+  * Distinguish statistical significance from practical importance  
+  * Be transparent about uncertainty and study limitations  
+
+## Suggested workflow:  
+  1. Clean & plot data  
+  2. Describe (mean, median, SD, range)  
+  3. Test (t-test, ANOVA, regression, chi-square, etc.)  
+  4. Draw conclusion & propose next steps  
+
+- Always pair significance (p-values) with effect sizes and confidence intervals  
+
+---
+
+## Communication of Research
+
+- Share methods, data (where ethical), and results clearly — transparency enables verification  
+- Formats:  
+  * Written (e.g., article / report using IMRaD: Introduction, Methods, Results, Discussion)  
+  * Oral / poster / slides (narrative + visuals)  
+  * Datasets, code, and documentation  
+
+- **Tip:** Use an IMRaD “skeleton slide” (one-liner per section) to plan both presentations and papers  
+
+---
+
+## Data Analysis — The Engine of Research
+
+### Data Types
+
+- **Quantitative:** numeric  
+  * Discrete (counts)  
+  * Continuous (measurements)  
+- **Qualitative:** categorical descriptions, text, themes  
+
+Match plotting / analysis method to type  
+- Counts → bar charts, chi-square  
+- Measurements → histograms, t-tests, regression  
+- Text → coding, categorisation, thematic analysis  
+
+## Collecting Data
+
+- Use experiments, observations, surveys, sensors, existing datasets  
+- Emphasis on quality: sampling, calibration, pilot testing, clear protocols 
+![](datacol.png)
+
+## Processing & Cleaning
+
+- Standardise formats, handle missing values, detect outliers  
+- Document every transformation (cleaning steps) — “garbage in, garbage out”  
+![](outliers.jpg)
+
+## Statistical Techniques
+
+- **Descriptive:** summary statistics, tables, graphs  
+- **Inferential:** hypothesis testing, confidence intervals  
+![](lsm.png)
+---
+
+## Principles of Scientific Reporting
+
+### Transparency & Openness
+
+- Describe methods in detail, share raw data/code (when possible), report all results (including negative)  
+- Make your work understandable & reproducible  
+
+
+### Reproducibility & Replicability
+
+- **Reproducible:** same data + same analysis → same results  
+- **Replicable:** new data + same methodology → similar results  
+- Provide enough detail for others to repeat your work  
+
+## Principles continued
+### Proper Citation & Acknowledgment
+
+- Give credit to prior work, data, methods  
+- Cite consistently so readers can trace your sources  
+- Disclose funding, acknowledgments, and potential conflicts  
+
+### Ethics & Integrity
+
+- Report honestly — no fabrication, falsification, or selective reporting  
+- Adhere to ethical protocols (especially with humans/animals)  
+- Disclose conflicts of interest  
+- Correct the record if errors are discovered  
+
+---
+
+## Conclusion
+
+- The scientific method is a simple cycle: ask → guess → test → analyse → share  
+- Data analysis transforms observations into evidence  
+- Communication turns evidence into collective knowledge  
+- Good reporting practices sustain trust in research  
+- With curiosity, rigor, clarity, and honesty, personal insight becomes collective progress  
+

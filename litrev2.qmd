@@ -1,0 +1,285 @@
+---
+title: "Research Skills for a Credible Literature Review"
+subtitle: "Applied Data Science"
+author: "Dr Kanthu Joseph Mhango"
+format: revealjs
+revealjs-theme: league
+revealjs-transition: fade
+revealjs-slide-number: true
+revealjs-progress: true
+---
+
+
+## Scaffolded Learning Roadmap
+
+1. Why Literature Reviews Matter  
+2. Naïve Searching vs. Structured Searching  
+3. Core Information Literacy Concepts  
+4. Workflow: From Question to Protocol  
+5. Transferable Search Skills  
+6. Database-Specific Adaptation  
+7. Reading & Appraisal  
+8. Synthesis & Writing  
+9. Checklist & Takeaways  
+
+---
+
+## Why Literature Reviews Matter
+
+- Prevent duplication of effort  
+- Identify **what is known**, **what is contested**, **what is unknown**  
+- Justify your study and methods  
+- Build your credibility as a researcher  
+
+---
+
+## How Many People Start Searching
+Typical approach:
+![](Google-logo.png)
+
+---
+
+## Typical search approach  
+- Go to Google or Google Scholar  
+- Type in a few keywords  
+- Skim the first page of results  
+- Pick a couple of PDFs that “look relevant”  
+
+::: {.callout-important}  
+This often leads to **half-baked research**: incomplete, biased, and non-replicable.  
+:::
+
+---
+
+## How Libraries Were Organised
+
+Before databases, libraries relied on indexing systems:  
+- Index cards (author, title, subject)  
+- Labelled shelves by classification (Dewey, Library of Congress)  
+- Cross-references for related works  
+
+::: {.callout-note}  
+This system made information **discoverable** — if you knew how to navigate it.  
+:::
+
+---
+
+![](libcard.jpg)
+
+---
+
+## Modern Databases = Digital Indexes
+
+Databases like Scopus, Web of Science, PubMed, ProQuest replicate the library indexing principle:  
+- Every article tagged with **fields** (title, abstract, author, affiliation, year…)  
+- Search queries tell the system which fields to match  
+- Boolean, truncation, and proximity = precision tools  
+
+::: {.callout-tip}  
+The **power is there** — but only if you go beyond dumping keywords.  
+:::
+
+---
+
+## Information Literacy Essentials
+
+- Finding information (databases, grey lit, alerts)  
+- Understanding and questioning claims  
+- Judging credibility and bias  
+- Connecting and synthesizing evidence  
+- Referencing properly  
+
+---
+
+## Workflow: From Question to Protocol
+
+1. Define scope & research question (PICO/PECO)  
+2. Plan multi-database search  
+3. Draft mini-protocol (criteria, extraction fields)  
+4. Screen titles/abstracts → full texts  
+5. Extract into structured tables  
+6. Appraise quality → Synthesize themes → Write  
+
+---
+
+## Defining the Research Question
+
+Use frameworks to sharpen scope:  
+
+- **PICO**: Population, Intervention, Comparison, Outcome  
+- **PECO**: Population, Exposure, Comparison, Outcome  
+
+::: {.callout-tip}  
+Template: In *[population]*, how does *[intervention/exposure]* compared with *[comparison]* affect *[outcome]* within *[setting/timeframe]*?  
+:::
+
+---
+
+## Key Definitions
+
+- **Info source**: e.g., Web of Science, Scopus, Google Scholar
+- **Search string**: query with Boolean operators, wildcards, filters
+- **Evidence map**: conceptual map of studies, claims, strengths/weaknesses
+- **Information literacy**:
+- Knowing what you need
+- Finding good sources
+- Checking claims
+- Connecting ideas
+- Crediting properly
+
+
+---
+
+
+
+## Defining Scope & Question
+
+
+- Narrow by:
+- Place / context
+- Time
+- Methodology
+- [ ] Thematic synthesis (compare/contrast)
+## Transferable Search Skills
+
+Regardless of platform, the **logic** is transferable:  
+- Concept Mapping  
+- Boolean Logic  
+- Nesting  
+- Truncation & Wildcards  
+- Proximity Operators  
+
+::: {.callout-note}  
+Master these, then adapt to each database’s syntax.  
+:::
+
+---
+
+## Concept Mapping
+
+Break your research question into synonym blocks:  
+
+```text
+Concept 1: "machine learning" OR "statistical learning"
+Concept 2: bias OR confounding
+Concept 3: clinical data OR health data
+Search: (Concept 1) AND (Concept 2) AND (Concept 3)
+```
+
+---
+
+## Boolean Logic & Nesting
+
+- `AND` → must include both  
+- `OR` → includes any  
+- `NOT` → exclude terms  
+
+```text
+("machine learning" OR "AI") AND (bias OR confounding)
+```
+
+**Nesting:** Parentheses define structure.  
+
+---
+
+## Truncation & Wildcards
+
+- `*` → truncation (comput* = computer, computing…)  
+- `?` or `$` → single-character wildcard  
+
+⚠️ Symbols differ across databases → always check help pages.  
+
+---
+
+## Proximity Operators
+
+- **Scopus:** `NEAR/n`  
+- **Web of Science:** `NEAR/n`  
+- **Ovid:** `adjN`  
+- **ProQuest:** `NEAR/n`  
+
+```text
+"artificial intelligence" NEAR/3 ethics
+```
+
+::: {.callout-important}  
+Proximity = capture flexible phrasing.  
+:::
+
+---
+
+## Database Field Codes: Not Transferable
+
+Examples:  
+- **Scopus:** `TITLE-ABS-KEY()`  
+- **Web of Science:** `TS=` (topic)  
+- **PubMed:** `[tiab]` (title/abstract)  
+- **IEEE Xplore:** field tags in quotes  
+
+::: {.callout-note}  
+📌 Field codes differ → always consult the database’s **dictionary**.  
+:::
+
+---
+
+## Adapting Across Databases
+
+The transferable skill is:  
+
+1. Build a **conceptual search strategy** with mapping & Boolean logic  
+2. Check each database’s help for field codes & syntax  
+3. Translate your logic into that syntax  
+
+::: {.callout-tip}  
+This is exactly what librarians & info specialists do for systematic reviews.  
+:::
+
+---
+
+## Reading with Purpose
+
+Skim path: **Title → Abstract → Figures/Tables → Headings → Conclusion → Methods** (if needed)  
+
+- Ask: Claim? Evidence? Limits?  
+- Check: Venue, recency, transparency (code/data)  
+
+---
+
+## Appraise, Synthesize, Write
+
+- **Appraise**: method, data, transparency  
+- **Synthesize**: group by theme, compare/contrast, identify gaps  
+- **Write**: structured argument justifying your study  
+
+---
+
+## Organizing Sources
+
+| Field          | What to Capture          |
+|----------------|--------------------------|
+| Citation       | Authors, year, venue     |
+| Claim          | Main assertion           |
+| Data           | Source, size, quality    |
+| Method         | Design, models, metrics  |
+| Findings       | Key results              |
+| Limits         | Biases, threats          |
+| Reproducibility| Code/data links          |
+| Relevance      | Fit to your question     |
+
+---
+
+## Mini Checklist
+
+- [ ] Clear scoped question (PICO/PECO)  
+- [ ] Multi-database search & documented strings  
+- [ ] Transparent screening & extraction tables  
+- [ ] Critical appraisal  
+- [ ] Thematic synthesis  
+
+---
+
+## Build Information Literacy
+
+From Google-style searching → library indexing → database querying → critical synthesis.  
+
+**Not tricks, but transferable skills.**  
