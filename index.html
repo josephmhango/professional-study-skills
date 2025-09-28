@@ -157,6 +157,7 @@
 
     // --- Utility helpers ---
     const unique = (arr) => [...new Set(arr)];
+    const toHref = (f) => /^https?:\/\//i.test(f) ? f : `slides/${encodeURIComponent(f)}`;
 
     function groupByWeek(slidesArr){
       const map = new Map();
@@ -193,10 +194,10 @@
     }
 
     function groupCardTemplate(g){
-      const defHref = g.defaultFile ? `slides/${encodeURIComponent(g.defaultFile)}` : '#';
+      const defHref = g.defaultFile ? toHref(g.defaultFile) : '#';
       const thumb = g.image ? `<img class="thumb" src="${g.image}" alt="Week ${g.week} slides" />` : `<div class="thumb" aria-hidden="true"></div>`;
       const list = g.slides.map(s=>{
-        const href = `slides/${encodeURIComponent(s.file)}`;
+        const href = toHref(s.file);
         return `<li><a class="slide-link" href="${href}">${s.title}</a></li>`;
       }).join('');
       const count = g.slides.length;
