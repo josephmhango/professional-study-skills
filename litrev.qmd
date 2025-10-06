@@ -351,13 +351,13 @@ One-note template per paper
 
 ---
 
-## Scopus-based mini‑assignmen
+## Scopus-based mini‑assignment
 
 Goal: Use Scopus to discover what research on your campus looks like across three areas, then identify who to talk to at your university for each area.
 
 What you’ll produce:
 
-- A one‑page note (or 3–4 slides) with: top topics, 3 highly‑cited papers per area with a one‑sentence finding each, and 1–2 suggested contacts per area (authors at your university).
+- A one‑page note (or 3–4 slides) with: top topics, 3 highly‑cited papers per area with a one‑sentence finding each, and 1–2 suggested contacts per area (authors at Harper Adams university).
 
 Set‑up:
 
@@ -399,14 +399,16 @@ For each area capture:
 
 - Top 3 highly‑cited papers (title, year, venue, citation count) 
 - One‑sentence takeaway per paper (what was found or contributed) 
-- 1–2 local authors (from your university) who appear repeatedly in this area  
+- 1–2 local authors (from Harper) who appear repeatedly in this area  
 
 Tips (while scanning)  
 - Use “Analyze results” → “Authors”/“Affiliations” to see who publishes most.  
 - Open Author profiles to confirm affiliation and recent outputs.
 
 Step 3 — Pick contacts  
-- From your shortlists, pick 1–2 authors per area who (a) have multiple papers and (b) are current staff.  
+- From your shortlists, pick 1–2 authors per area who:
+  - (a) have multiple papers and 
+  - (b) are current staff.  
 - Record their names, department/school, and a portfolio link if available.
 
 Step 4 — Package your note  
