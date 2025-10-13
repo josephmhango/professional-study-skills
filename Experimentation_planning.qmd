@@ -35,8 +35,7 @@ You will learn to
 
 ## The scientific method at a glance
 
-::: {.columns}
-::: {.column width="55%"}
+
 1) Observation → Question
 2) Background research
 3) Hypothesis (testable prediction)
@@ -44,18 +43,11 @@ You will learn to
 5) Analysis → Conclusion (support/not support)
 6) Communicate → Others can check and build on it
 
+![](scimeth.png)
+
+
 This is a cycle. “Not supported conclusions” show progress: it tells us to improve the question, method, or hypothesis and try again.
-:::
 
-::: {.column width="45%"}
-```text
-Flow of ideas
-
-Observe → Ask
-       ↘︎  Hypothesis → Test → Analyse → Share → (Refine) → …
-```
-:::
-:::
 
 ::: {.callout-tip}
 Keep a simple research log (date, question, guess, key settings, result). It makes write‑up and troubleshooting much faster.
@@ -84,6 +76,7 @@ Checklist
 - Testable with data
 - Grounded in what is known (do a quick read)
 ```
+![](sponge.png)
 :::
 :::
 
@@ -93,7 +86,7 @@ If the question feels vague, shrink the scope (time window, location, subset) un
 
 ---
 
-## Background research (quick scan)
+## Background research
 
 ::: {.columns}
 ::: {.column width="55%"}
@@ -120,8 +113,6 @@ Capture 3–5 keywords and 2 likely pitfalls you see repeatedly. These will shap
 
 A supposition or proposed explanation made on the basis of limited evidence as a starting point for further investigation
 
-::: {.columns}
-::: {.column width="55%"}
 A hypothesis links a cause (independent variable) to an effect (dependent variable). Write it as a clear “If … then …” prediction you can check with data.
 
 In science, words matter. They are not casual clothing we can swap for comfort; they are uniforms that carry rank, history, and weight. Yet some words, stripped of their rigor, wander into everyday speech like escaped lab mice. Theory is one of the most abused.
@@ -144,17 +135,6 @@ Hypothesis Examples
 - Classroom: If the air conditioner is off (cause), then the room will be warm (effect).  
 - Toaster: If the outlet has no power, then other devices won’t work in that outlet.  
 - Plants: If plants receive fertiliser, then average height increases.
-:::
-
-::: {.column width="45%"}
-```text
-Good hypothesis
-- One main cause → one effect
-- Measurable on both sides
-- Rationale (why it might be true)
-```
-:::
-:::
 
 ::: {.callout-tip}
 Write two rival hypotheses that explain the same effect. Design your test so at least one would be contradicted by the data.
@@ -181,6 +161,7 @@ Design tips
 - Use a control and replicate
 - Keep records (dates, settings, instruments)
 ```
+![](rct.png)
 :::
 :::
 
@@ -195,7 +176,7 @@ If yes: hypothesis not supported; try a new hypothesis (toaster’s fuse/heating
 
 ---
 
-## Analysis and conclusions (making sense of data)
+## Analysis and conclusions
 
 ::: {.columns}
 ::: {.column width="55%"}
@@ -216,6 +197,8 @@ Quick workflow
 3) Test (t‑test/chi‑square/ANOVA/regression)
 4) Conclude (supported? next steps?)
 ```
+![](analysis.png)
+
 :::
 :::
 
@@ -223,7 +206,51 @@ Quick workflow
 A tiny p‑value can hide a tiny effect. Always pair significance with an effect size and, when possible, a confidence interval.  
 :::
 
----
+
+### Data types
+
+::: {.columns}
+::: {.column width="55%"}
+
+- Quantitative (numbers): counts or measurements  
+  - Discrete: counts (e.g., colonies, cars per home)  
+  - Continuous: measurements (e.g., height, temperature)  
+- Qualitative (descriptions): notes, transcripts, categories 
+
+:::
+ 
+
+::: {.column width="45%"}
+```text
+Match method to type
+- Counts → bar charts, chi‑square
+- Measurements → histograms, t‑tests, ANOVA
+- Text → coding themes, frequency tallies
+```
+:::
+:::
+
+::: {.callout-tip}
+Pick the plot that answers your question in one glance. If readers must “decode”, redesign the figure.  
+:::
+
+### Collecting data
+
+Experiments, observations, surveys, instruments/sensors, and existing datasets. Plan for quality: sampling, calibration, piloting questions, clear protocols. 
+
+Aim for high accuracy (closeness to truth) and precision (reproducibility of result/observation). There is often a trade-off between the two.
+
+![](accuracy.png)
+
+
+### Processing and cleaning (before analysis)
+
+Standardise entries, handle missing values, detect outliers, compute needed variables, and document every step. “Garbage in, garbage out.”
+
+### Statistical techniques (two families)
+
+- Descriptive: means/medians, spread, tables/graphs → show what the data look like.
+- Inferential: hypothesis tests and intervals → decide if patterns likely reflect real effects rather than chance.
 
 ## Communicate (so others can check and use it)
 
@@ -246,50 +273,6 @@ Formats
 Use an IMRaD “skeleton slide” (one-liners for Intro, Methods, Results, Discussion) to plan both papers and talks before you draft.  
 :::
 
----
-
-## Data analysis: the engine of research
-
-### Data types
-
-::: {.columns}
-::: {.column width="55%"}
-- Quantitative (numbers): counts or measurements  
-  - Discrete: counts (e.g., colonies, cars per home)  
-  - Continuous: measurements (e.g., height, temperature)  
-- Qualitative (descriptions): notes, transcripts, categories  
-:::
-
-::: {.column width="45%"}
-```text
-Match method to type
-- Counts → bar charts, chi‑square
-- Measurements → histograms, t‑tests, ANOVA
-- Text → coding themes, frequency tallies
-```
-:::
-:::
-
-::: {.callout-tip}
-Pick the plot that answers your question in one glance. If readers must “decode”, redesign the figure.  
-:::
-
-### Collecting data
-
-Experiments, observations, surveys, instruments/sensors, and existing datasets. Plan for quality: sampling, calibration, piloting questions, clear protocols.
-
-### Processing and cleaning (before analysis)
-
-Standardise entries, handle missing values, detect outliers, compute needed variables, and document every step. “Garbage in, garbage out.”
-
-### Statistical techniques (two families)
-
-- Descriptive: means/medians, spread, tables/graphs → show what the data look like.
-- Inferential: hypothesis tests and intervals → decide if patterns likely reflect real effects rather than chance.
-
----
-
-## Communicating research
 
 ### Writing (IMRaD = a paper that mirrors the method)
 
@@ -297,6 +280,8 @@ Standardise entries, handle missing values, detect outliers, compute needed vari
 - Methods: what you did (enough detail to repeat it)
 - Results: what you found (figures/tables)
 - Discussion: what it means, limits, how it fits the field
+
+[Article: Understanding IMRaD](https://pmc.ncbi.nlm.nih.gov/articles/PMC4473858/)
 
 ### Oral talks
 
@@ -328,21 +313,35 @@ Your slides should cover:
 
 ## Principles of scientific reporting
 
-### Transparency and openness
+### Transparency and openness 
 
-Explain methods, show data (when ethical), share code/settings, and report unexpected/negative results. Make it possible for others to understand and check your work.
+- Explain methods 
+- Show data (when ethical) 
+- Share code/settings 
+- Report unexpected/negative results. 
 
-### Reproducibility and replicability
+Make it possible for others to understand and check your work.
 
-Reproducible: same data + same analysis → same results. Replicable: new data + same question → consistent results. Provide data/code or detailed methods so others can verify.
+### Reproducibility and replicability 
+
+- Reproducible: same data + same analysis → same results. 
+
+- Replicable: new data + same question → consistent results. 
+
+Provide data/code or detailed methods so others can verify.
 
 ### Proper citation and acknowledgment
 
-Give credit for ideas, data, and methods. Cite consistently so readers can find sources. Avoid plagiarism; add acknowledgments and funding/conflict disclosures.
+- Give credit for ideas, data, and methods. 
+- Cite consistently so readers can find sources. 
+- Avoid plagiarism; add acknowledgments and funding/conflict disclosures.
 
 ### Ethics and integrity
 
-Report honestly; do not fabricate/falsify. Follow human/animal ethics approvals. Disclose conflicts. Correct the record when needed. Science is built on trust.
+- Report honestly; do not fabricate/falsify. 
+- Follow human/animal ethics approvals. 
+- Disclose conflicts. 
+- Correct the record when needed. Science is built on trust.
 
 ---
 
@@ -394,8 +393,8 @@ Where to find it fast
 ::: {.columns}
 ::: {.column width="52%"}
 Tips
-- Quote short phrases from the paper for key terms; paraphrase only if needed.
-- If an item isn’t stated, write “not stated” so you don’t guess.
+- Copy/Quote short phrases from the paper for key terms in your PICO; paraphrase only if needed.
+- If a PICO item isn’t stated, write “not stated”, don’t guess.
 - Keep your question and hypothesis simple:
   - Question: “Does X compared with Y change outcome O?”
   - Hypothesis: “X will lead to higher/lower/different O than Y.”
@@ -425,7 +424,7 @@ Adults given caffeine will have faster (lower) reaction times than placebo.
 Build a plain‑language plan from what’s reported:  
 - Variables: name the main variables and how they were measured (units or scales)  
 - Design: how were units selected/assigned? any groups? timing? about how many participants/samples?  
-- Primary analysis: what comparison or model answers the main question? (name the test if stated; if not, say “compar group A vs B” or “relate X to Y”)  
+- Primary analysis: what comparison or model answers the main question? (name the test if stated; if not, say “compare group A vs B” or “relate X to Y”)  
 - Figure plan: one figure that would answer the main question. State:  
   - type (bar/line/scatter/box/other)  
   - axes (x and y)  
@@ -455,8 +454,7 @@ Present to a nearby group:
 - reconstructed plan (primary analysis + your figure plan + outcome rule)  
 - one takeaway about uncertainty (what the error bars mean) + one limitation  
 - one concrete improvement you would make  
-Swap roles and repeat.  
- 
+
 #### Class debrief  
 - What was easy to reconstruct? What was usually missing?  
 - Quick show of hands: who found a paper that clearly stated what its error bars mean?  
