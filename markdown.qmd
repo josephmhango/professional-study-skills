@@ -1,332 +1,465 @@
 ---
 title: "Workshop: How Markdown Works"
-subtitle: "Student Scaffold – Build a Portfolio Tutorial"
+subtitle: "Build a Portfolio Tutorial"
 format: html
 author: "J. Mhango"
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
-# 📘 Your Mission
+# Your Mission
 
 You are going to write a compelling tutorial titled:\
 \# **How Markdown Works**
 
-By the end, you’ll have: - A clean, professional GitHub repository - A
-detailed, well-formatted tutorial - Your own authored Markdown showcase
+By the end, you’ll have: 
+- A clean, professional GitHub repository 
+- A detailed, well-formatted tutorial 
+- Your own authored Markdown showcase
 
 This document gives you **scaffolded prompts** and **examples**. Fill in
 the explanations yourself. Render often using GitHub’s preview.
 
-> ✨ Primary resources: - [Daring Fireball:
-> Markdown](https://daringfireball.net/projects/markdown/) - [GitHub
-> Flavored Markdown
-> Spec](https://github.github.com/gfm/#why-is-a-spec-needed-)
+> Primary resources:
+> - [Daring Fireball: Markdown](https://daringfireball.net/projects/markdown/)
+> - [GitHub Flavored Markdown Spec](https://github.github.com/gfm/#why-is-a-spec-needed-)
 
-------------------------------------------------------------------------
+---
 
-# 🛠️ Setup Checklist
+# Setup Checklist
 
--   [ ] Create a private GitHub repo named `how-markdown-works`
--   [ ] Add a `README.md` file
--   [ ] Edit in GitHub online (✏️ button)
--   [ ] Use **Preview** tab to view how your writing renders
+- [ ] Create a private GitHub repo named `how-markdown-works`
+- [ ] Add a `README.md` file
+- [ ] Edit in GitHub online (✏️ button)
+- [ ] Use **Preview** tab to view how your writing renders
 
-------------------------------------------------------------------------
+---
 
-# 🎯 Essential Elements
+# Essential Elements
 
 These are **required** for a professional finish:
 
-## ✅ Add a Cover Image
+## Add a Cover Image
 
 Place this right below your main heading:
 
-``` markdown
+```markdown
 ![Cover Image](images/cover.png)
 ```
 
 If you don’t have an image, you can use a free placeholder:
 
-``` markdown
+```markdown
 ![Cover](https://via.placeholder.com/800x200?text=How+Markdown+Works)
 ```
 
-## ✅ Build a Table of Contents
+Markdown uses the exclamation mark `!` followed by `[alt text]` and a URL in parentheses.  
+Alt text helps visually impaired readers or anyone viewing the raw file.  
+GitHub automatically loads online image URLs or local image files stored in your repo.
+
+## Build a Table of Contents
 
 Link to key sections within your README using anchor links or cross-file
 links.
 
 Example:
 
-``` markdown
+```markdown
 ## Table of Contents
 
 - [Introduction](#your-mission)
-- [Headings](#️-headings)
-- [Emphasis](#️-emphasis-italic-bold)
-- [Code](#️-code)
+- [Headings](#headings)
+- [Emphasis](#emphasis-italic-bold)
+- [Code](#code)
 - [Tables](tables.md)
 - [Images](images.md)
-- [Reflections](#-reflections)
+- [Reflections](#reflections)
 ```
 
-------------------------------------------------------------------------
+Anchor links begin with `#` followed by the lowercase, hyphenated version of your heading text.  
+This makes navigation smooth, especially for long tutorials.
 
-# 📚 Write Your Tutorial Sections
+---
 
-Each section must: 1. Start with a heading (e.g.,
-`## How Headings Work`) 2. Explain in your own words 3. Show example
-code using triple backticks (```` ``` ````) 4. Show the rendered result
-after the code block
+# Write Your Tutorial Sections
 
-------------------------------------------------------------------------
+Each section must:
+1. Start with a heading (e.g., `## How Headings Work`)
+2. Explain in your own words
+3. Show example code using triple backticks (```` ``` ````)
+4. Show the rendered result after the code block
 
-## ✏️ Headings
+---
 
-> 🔗 [GFM Spec — ATX
-> Headings](https://github.github.com/gfm/#atx-headings)
+## Headings
 
-**Your explanation here:**
+> [GFM Spec — ATX Headings](https://github.github.com/gfm/#atx-headings)
 
-```` markdown
-```
+Markdown uses the hash symbol `#` to create headings.  
+The number of `#` symbols corresponds to the heading level — one `#` for the largest title, up to six for the smallest.  
+This system keeps your writing structured and easy to navigate.  
+Headings also generate automatic anchors in GitHub, making them perfect for linking within a README.
+
+````markdown
 # H1
 ## H2
 ### H3
-```
 ````
 
-## ✏️ Emphasis (Italic, Bold)
+## Emphasis (Italic, Bold)
 
-> 🔗 [GFM —
-> Emphasis](https://github.github.com/gfm/#emphasis-and-strong-emphasis)
+> [GFM — Emphasis](https://github.github.com/gfm/#emphasis-and-strong-emphasis)
 
-**Your explanation here:**
+To draw attention to words, you can emphasize them using single or double asterisks or underscores.  
+Use one (`*` or `_`) for italic text and two (`**` or `__`) for bold text.  
+This makes your content visually clearer and helps highlight important terms.
 
-```` markdown
-```
+````markdown
 *italic*  **bold**  _also italic_  __also bold__
-```
 ````
 
-## ✏️ Code
+## Code
 
-> 🔗 [GFM — Code
-> Blocks](https://github.github.com/gfm/#fenced-code-blocks)
+> [GFM — Code Blocks](https://github.github.com/gfm/#fenced-code-blocks)
 
-**Your explanation here:**
+Code formatting in Markdown comes in two forms:  
+- Use single backticks for `inline code` — short snippets inside sentences.  
+- Use triple backticks for code blocks — longer examples spanning multiple lines.  
+You can also specify the language (like `python` or `r`) for syntax highlighting.
 
-```` markdown
-```
+````markdown
 `inline code`
 
-```
+```python
 def greet():
     print("Hello!")
 ```
 ````
 
-## ✏️ Blockquotes
+## Blockquotes
 
-> 🔗 [GFM — Blockquotes](https://github.github.com/gfm/#block-quoting)
+> [GFM — Blockquotes](https://github.github.com/gfm/#block-quoting)
 
-**Your explanation here:**
+Blockquotes are used to indicate quoted text, commentary, or special callouts.  
+They begin with a greater-than symbol `>` at the start of a line.  
+Nested blockquotes can be created with multiple `>` characters.
 
-```` markdown
-```
+````markdown
 > This is a quote.
-```
 ````
 
-## ✏️ Lists
+## Lists
 
-> 🔗 [GFM — Lists](https://github.github.com/gfm/#list-items)
+> [GFM — Lists](https://github.github.com/gfm/#list-items)
 
-**Your explanation here:**
+Lists help organize information.  
+Use dashes (`-`), asterisks (`*`), or plus signs (`+`) for unordered lists, and numbers for ordered ones.  
+Indent with two spaces to create nested lists.
 
-```` markdown
-```
+````markdown
 - Item A
   - Nested Item
 1. First
 2. Second
-```
 ````
 
-## ✏️ Links
+## Links
 
-> 🔗 [GFM — Links](https://github.github.com/gfm/#links)
+> [GFM — Links](https://github.github.com/gfm/#links)
 
-**Your explanation here:**
+Links use square brackets for the text and parentheses for the URL.  
+You can also add a title (hover text) in quotes after the URL.
 
-```` markdown
-```
+````markdown
 [Visit OpenAI](https://www.openai.com)
-```
 ````
 
-------------------------------------------------------------------------
+# Tables & Images
 
-# 📊 Tables & Images
+## Tables
 
-## ✏️ Tables
+> [GFM — Tables](https://github.github.com/gfm/#tables-extension)
 
-> 🔗 [GFM — Tables](https://github.github.com/gfm/#tables-extension)
+Tables allow you to organize data into rows and columns using pipes `|` and dashes `-`.  
+Align columns using colons `:` — left (`:---`), right (`---:`), or center (`:---:`).
 
-**Your explanation here:**
-
-```` markdown
-```
-| Name | Score |
-|------|-------|
-| Alice | 98 |
-| Bob   | 87 |
-```
+````markdown
+| Name  | Score |
+|-------|-------:|
+| Alice | 98    |
+| Bob   | 87    |
 ````
 
-## ✏️ Images
+## Images
 
-> 🔗 [GFM — Images](https://github.github.com/gfm/#images)
+> [GFM — Images](https://github.github.com/gfm/#images)
 
-**Your explanation here:**
+Images follow the same syntax as links, but with an exclamation mark at the start.  
+Always include descriptive alt text for accessibility.
 
-```` markdown
-```
+````markdown
 ![Example](https://via.placeholder.com/150)
-```
 ````
 
-------------------------------------------------------------------------
+# Advanced Markdown
 
-# 🚀 Advanced Markdown
+## Badges
 
-## ✏️ Badges
+> [shields.io](https://shields.io)
 
-> 🔗 [shields.io](https://shields.io)
+Badges are small status icons used to display project info — such as build status, version, or repo size.  
+They’re added as images with URLs pointing to shields.io.
 
-**Example badge code:**
-
-```` markdown
-```
+````markdown
 ![GitHub repo size](https://img.shields.io/github/repo-size/yourname/how-markdown-works)
-```
 ````
 
-## ✏️ Collapsible Sections
+## Collapsible Sections
 
-**Example:**
+Collapsible sections are great for keeping your README tidy.  
+They use HTML `<details>` and `<summary>` tags and work seamlessly within Markdown.
 
-```` markdown
-```
+````markdown
 <details>
 <summary>Click to reveal</summary>
 
 Hidden content inside.
 
 </details>
-```
 ````
 
-## ✏️ Task Lists
+## Task Lists
 
-```` markdown
-```
+Task lists are interactive checkboxes supported in GitHub READMEs.  
+They’re perfect for progress tracking or project planning.
+
+````markdown
 - [x] Done
 - [ ] To do
-```
 ````
 
-## ✏️ Tip Blocks (Callouts)
+## Tip Blocks (Callouts)
 
-> 🔗 [GitHub Callouts
-> Info](https://github.blog/changelog/2022-05-19-markdown-task-lists-tables-and-more-are-now-supported-in-comments/)
+> [GitHub Callouts Info](https://github.blog/changelog/2022-05-19-markdown-task-lists-tables-and-more-are-now-supported-in-comments/)
 
-GitHub supports **info boxes** using blockquotes and emojis:
+You can create attention-grabbing callouts using blockquotes with emojis or bold labels.  
+They’re perfect for quick tips or reminders.
 
-**Example:**
+````markdown
+> Tip: You can preview your Markdown as you write by clicking the "Preview" tab above.
+````
 
-``` markdown
-> ℹ️ **Tip:** You can preview your Markdown as you write by clicking the "Preview" tab above.
-```
+# Multipage Navigation
 
-Which renders like: \> ℹ️ **Tip:** You can preview your Markdown as you
-write by clicking the "Preview" tab above.
+Large tutorials benefit from splitting into multiple files.  
+You can link to other Markdown pages in your repo, just like web links.
 
-You can use emojis like 💡, ❗, ✅ to signal purpose.
-
-------------------------------------------------------------------------
-
-# 📂 Multipage Navigation
-
--   Create new `.md` files (e.g., `tables.md`, `images.md`)
--   Link to them from your README:
-
-```` markdown
-```
+````markdown
 [Next → Tables](tables.md)
-```
 ````
 
-------------------------------------------------------------------------
+# Reflections
 
-# 🪞 Reflections
+Write these at the end to consolidate your learning:
 
-Write these at the end:
-
-``` markdown
+````markdown
 # Reflections
 
 - What surprised you?
 - What helped you learn Markdown faster?
 - What still confuses you?
 - How will you use Markdown in the future?
-```
+````
 
-------------------------------------------------------------------------
+# Showcase Polish
 
-# 🧼 Showcase Polish
+- Make sure your cover image is working  
+- Check that your table of contents links work  
+- Use spacing and headings consistently  
+- Make your opening paragraph shine:
 
--   Make sure your **cover image** is working
--   Check that your **table of contents** links work
--   Use spacing and headings consistently
--   Make your opening paragraph shine:
-
-``` markdown
+````markdown
 > This tutorial was written by me to demonstrate my understanding of Markdown syntax on GitHub. All examples show the source code and its rendered output.
+````
+
+This statement makes your project look professional and portfolio-ready.
+
+# Stretch Yourself
+
+- Add a GIF (record your screen using Loom or OBS, then embed it as an image)
+- Try inserting math:
+  ````markdown
+  $E = mc^2$
+  ````
+- Try styling tables with HTML (advanced)
+- Create a [profile README](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/about-your-profile) at `yourusername/yourusername`
+
+
+# Practice Assignment: Recreate a Professional README like Ultralytics
+
+This is an **advanced Markdown assignment** inspired by the popular [Ultralytics GitHub repository](https://github.com/ultralytics/ultralytics). You’ll create a **professional, multi-feature README** for a fictional software library using **only raw Markdown directly in GitHub** — no Quarto, no VSCode, just GitHub’s in-browser editor.
+
+## Learning Goals
+
+By the end of this assignment, you will:
+
+- Understand how advanced GitHub READMEs are structured
+- Use badges, tables, images, collapsibles, and links
+- Create a README that looks professional and is portfolio-ready
+
+---
+
+## What You Will Create
+
+A fictional project called `MyVisionNet`, with a `README.md` that mimics the structure and style of Ultralytics' README.
+
+### 🎯 Requirements
+
+- Use **only Markdown syntax supported on GitHub**
+- Work directly in your `README.md` file on GitHub
+- Include all the features listed below
+
+---
+
+## Required README Sections
+
+> You can copy the scaffold below and adapt it. Replace all fake links and content with your own versions.
+
+### 1. Title and Badges
+
+```markdown
+# MyVisionNet
+
+![PyPI Version Badge](https://img.shields.io/pypi/v/myvisionnet)
+![Downloads Badge](https://img.shields.io/pypi/dm/myvisionnet)
+![License](https://img.shields.io/badge/license-MIT-blue)
+
+[![Docs](https://img.shields.io/badge/docs-latest-blue)](https://docs.myvisionnet.org)
+[![](https://img.shields.io/badge/discord-online-green)](https://discord.myvisionnet.org)
 ```
 
-------------------------------------------------------------------------
+### 2. Project Overview
 
-# 🔁 Stretch Yourself
+```markdown
+MyVisionNet is a state-of-the-art computer vision library for detection, segmentation, and classification.
+Built for performance and usability.
+```
 
--   Add a GIF (use screen recorder and upload as image)
+### 3. Install Instructions
 
--   Try inserting math:
+```markdown
+## Install
 
-    ``` markdown
-    $E = mc^2$
-    ```
+```bash
+pip install myvisionnet
+```
+```
 
--   Try styling tables with HTML (advanced)
+Mention alternative install methods (e.g., conda, docker).
 
--   Make a [profile
-    README](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/about-your-profile)
-    at `yourusername/yourusername`
+### 4. Example Usage
 
-------------------------------------------------------------------------
+```markdown
+## Usage
 
-# ✅ At the End...
+### CLI
+```bash
+mvnet detect --model fastest --source image.jpg
+```
 
--   You’ll have created your own interactive Markdown tutorial
--   Every concept you show is backed by code and rendered output
--   You’ll be confident using Markdown for documentation, projects, or
-    teaching
--   You can link this in your portfolio or CV as proof of technical
-    writing
+### Python
+```python
+from myvisionnet import VisionModel
+model = VisionModel("fastest.pt")
+results = model.predict("image.jpg")
+results.show()
+```
+```
 
-------------------------------------------------------------------------
+### 5. Table of Models
 
-👏 **Well done. Don’t forget to push your final version to GitHub and
-make it public when you’re ready to showcase.**
+```markdown
+## Supported Models
+
+| Model     | Task        | mAP   | Params |
+|-----------|-------------|------:|-------:|
+| NetTiny   | Detection   | 38.5  | 2.1M   |
+| NetSmall  | Detection   | 47.1  | 10.3M  |
+| NetMed    | Segmentation| 52.0  | 35.0M  |
+```
+
+### 6. Screenshots / Gallery (Collapsible)
+
+```markdown
+## Examples
+
+<details>
+<summary>Click to expand gallery</summary>
+
+![Example Output](https://via.placeholder.com/600x400)
+
+</details>
+```
+
+### 7. Community and Contribution
+
+```markdown
+## Contributing
+
+See our [CONTRIBUTING.md](.github/CONTRIBUTING.md) for how to contribute.
+Join the community on Discord.
+```
+
+### 8. Translations Section
+
+```markdown
+## Languages
+
+- [English](README.md)
+- [中文](README.zh.md)
+- [Español](README.es.md)
+```
+
+### 9. License Footer
+
+```markdown
+## License
+
+MIT © 2025 Your Name
+```
+
+---
+
+## ✅ Submission Checklist
+
+- [ ] Repository named `myvisionnet`
+- [ ] `README.md` includes all sections above
+- [ ] Uses real or placeholder images, badges, links
+- [ ] Written directly in GitHub’s Markdown editor
+- [ ] Bonus: add your own touch (FAQ, API section, etc.)
+
+---
+
+## 📓 Reflection (Add to end of README)
+
+```markdown
+## Reflections
+
+- What was easy vs difficult about this style?
+- What GitHub-specific Markdown features did you use?
+- How can you apply this in real-world projects?
+```
+
+---
+
+
+# At the End...
+
+- You’ll have created your own interactive Markdown tutorial  
+- Every concept you show is backed by code and rendered output  
+- You’ll be confident using Markdown for documentation, projects, or teaching  
+- You can link this in your portfolio or CV as proof of technical writing
+
+Well done. Don’t forget to push your final version to GitHub and make it public when you’re ready to showcase.
+
+
+
+
