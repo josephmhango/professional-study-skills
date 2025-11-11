@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="clis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="clis_files/libs/quarto-html/tabby.min.js"></script>
+<script src="clis_files/libs/quarto-html/popper.min.js"></script>
+<script src="clis_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="clis_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="clis_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="clis_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="clis_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.57">
+
+  <meta name="author" content="Harper Adams University">
+  <title>Command-Line Interfaces: PowerShell and Bash</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="clis_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="clis_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="clis_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="scroll.css">
+  <link href="clis_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="clis_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="clis_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="clis_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="clis_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="clis_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Command-Line Interfaces: PowerShell and Bash</h1>
+  <p class="subtitle">Professional and study skills</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Harper Adams University 
+</div>
+</div>
+</div>
+
+</section><section id="TOC">
+<nav role="doc-toc"> 
+<h2 id="toc-title">Table of contents</h2>
+<ul>
+<li><a href="#/welcome" id="/toc-welcome">Welcome</a></li>
+<li><a href="#/how-to-use-this-deck" id="/toc-how-to-use-this-deck">How to use this deck</a></li>
+<li><a href="#/why-cli" id="/toc-why-cli">1. Why CLI?</a></li>
+<li><a href="#/core-concepts" id="/toc-core-concepts">2. Core Concepts</a></li>
+<li><a href="#/which-shell-am-i-running-bash-side" id="/toc-which-shell-am-i-running-bash-side">2.1 Which shell am I running? (bash side)</a></li>
+<li><a href="#/which-shell-am-i-running-windows-side" id="/toc-which-shell-am-i-running-windows-side">2.2 Which shell am I running? (Windows side)</a></li>
+<li><a href="#/opening-the-terminal" id="/toc-opening-the-terminal">3. Opening the terminal</a>
+<ul>
+<li><a href="#/opening-the-terminal" id="/toc-windows-powershell">Windows PowerShell</a></li>
+<li><a href="#/opening-the-terminal" id="/toc-bash-codespaces-vs-code-linux-macos">Bash (Codespaces / VS Code / Linux / macOS)</a></li>
+</ul></li>
+<li><a href="#/first-command-list-current-files" id="/toc-first-command-list-current-files">4. First command: list current files</a></li>
+<li><a href="#/how-the-shell-runs-a-command-bash-view" id="/toc-how-the-shell-runs-a-command-bash-view">5. How the shell runs a command (bash view)</a></li>
+<li><a href="#/current-working-directory-cwd" id="/toc-current-working-directory-cwd">6. Current working directory (CWD)</a></li>
+<li><a href="#/moving-between-folders" id="/toc-moving-between-folders">7. Moving between folders</a></li>
+<li><a href="#/going-home" id="/toc-going-home">8. Going home</a></li>
+<li><a href="#/paths-explained" id="/toc-paths-explained">9. Paths explained</a></li>
+<li><a href="#/absolute-vs-relative-paths" id="/toc-absolute-vs-relative-paths">10. Absolute vs relative paths</a></li>
+<li><a href="#/making-folders" id="/toc-making-folders">11. Making folders</a></li>
+<li><a href="#/creating-files" id="/toc-creating-files">12. Creating files</a></li>
+<li><a href="#/anatomy-of-a-command" id="/toc-anatomy-of-a-command">13. Anatomy of a command</a></li>
+<li><a href="#/practice-build-a-small-workspace" id="/toc-practice-build-a-small-workspace">14. Practice: build a small workspace</a></li>
+<li><a href="#/listing-with-options" id="/toc-listing-with-options">15. Listing with options</a></li>
+<li><a href="#/getting-help-from-the-shell" id="/toc-getting-help-from-the-shell">16. Getting help from the shell</a></li>
+<li><a href="#/show-hidden-files-task" id="/toc-show-hidden-files-task">17. Show hidden files (task)</a></li>
+<li><a href="#/redirection-save-output-to-a-file" id="/toc-redirection-save-output-to-a-file">18. Redirection: save output to a file</a></li>
+<li><a href="#/append-instead-of-overwrite" id="/toc-append-instead-of-overwrite">19. Append instead of overwrite</a></li>
+<li><a href="#/powershell-and-bash-deep-dive" id="/toc-powershell-and-bash-deep-dive">PowerShell and Bash — Deep Dive</a></li>
+<li><a href="#/what-you-will-learn-deep-dive" id="/toc-what-you-will-learn-deep-dive">What you will learn (deep dive)</a></li>
+<li><a href="#/core-concepts-recap-quick-checks" id="/toc-core-concepts-recap-quick-checks">Core concepts (recap + quick checks)</a></li>
+<li><a href="#/how-commands-are-found-and-run-resolution-and-launch" id="/toc-how-commands-are-found-and-run-resolution-and-launch">How commands are found and run (resolution and launch)</a></li>
+<li><a href="#/current-directory-and-paths" id="/toc-current-directory-and-paths">Current directory and paths</a></li>
+<li><a href="#/anatomy-of-a-command-and-passing-arguments" id="/toc-anatomy-of-a-command-and-passing-arguments">Anatomy of a command and passing arguments</a>
+<ul>
+<li><a href="#/anatomy-of-a-command-and-passing-arguments" id="/toc-scripts-that-accept-arguments">Scripts that accept arguments</a></li>
+</ul></li>
+<li><a href="#/powershell-productivity-setup-and-shell-basics" id="/toc-powershell-productivity-setup-and-shell-basics">PowerShell productivity: setup and shell basics</a></li>
+<li><a href="#/find-files-by-pattern-powershell" id="/toc-find-files-by-pattern-powershell">Find files by pattern (PowerShell)</a></li>
+<li><a href="#/which-program-will-run-powershell" id="/toc-which-program-will-run-powershell">Which program will run (PowerShell)</a></li>
+<li><a href="#/filter-names-and-save-powershell" id="/toc-filter-names-and-save-powershell">Filter names and save (PowerShell)</a></li>
+<li><a href="#/find-files-by-pattern-bash" id="/toc-find-files-by-pattern-bash">Find files by pattern (Bash)</a></li>
+<li><a href="#/which-program-will-run-bash" id="/toc-which-program-will-run-bash">Which program will run (Bash)</a></li>
+<li><a href="#/filter-names-and-save-bash" id="/toc-filter-names-and-save-bash">Filter names and save (Bash)</a></li>
+<li><a href="#/filter-sort-and-compose" id="/toc-filter-sort-and-compose">Filter, sort, and compose</a></li>
+<li><a href="#/make-copy-move-rename-delete" id="/toc-make-copy-move-rename-delete">Make, copy, move, rename, delete</a></li>
+<li><a href="#/viewing-and-slicing-files" id="/toc-viewing-and-slicing-files">Viewing and slicing files</a></li>
+<li><a href="#/save-a-list-to-a-file-overwrite-powershell" id="/toc-save-a-list-to-a-file-overwrite-powershell">Save a list to a file (overwrite) — PowerShell</a></li>
+<li><a href="#/append-to-an-existing-file-powershell" id="/toc-append-to-an-existing-file-powershell">Append to an existing file — PowerShell</a></li>
+<li><a href="#/save-a-list-to-a-file-overwrite-bash" id="/toc-save-a-list-to-a-file-overwrite-bash">Save a list to a file (overwrite) — Bash</a></li>
+<li><a href="#/append-to-an-existing-file-bash" id="/toc-append-to-an-existing-file-bash">Append to an existing file — Bash</a></li>
+<li><a href="#/run-next-step-only-on-success-powershell" id="/toc-run-next-step-only-on-success-powershell">Run next step only on success — PowerShell</a></li>
+<li><a href="#/run-next-step-only-on-success-bash" id="/toc-run-next-step-only-on-success-bash">Run next step only on success — Bash</a></li>
+<li><a href="#/loop-basics-powershell" id="/toc-loop-basics-powershell">Loop basics (PowerShell)</a></li>
+<li><a href="#/loop-basics-bash" id="/toc-loop-basics-bash">Loop basics (Bash)</a></li>
+<li><a href="#/guard-rails-basic-if-file-exists-powershell" id="/toc-guard-rails-basic-if-file-exists-powershell">Guard rails: basic if (file exists) — PowerShell</a></li>
+<li><a href="#/guard-rails-basic-if-file-exists-bash" id="/toc-guard-rails-basic-if-file-exists-bash">Guard rails: basic if (file exists) — Bash</a></li>
+<li><a href="#/conditions-compare-values-powershell" id="/toc-conditions-compare-values-powershell">Conditions: compare values — PowerShell</a></li>
+<li><a href="#/conditions-compare-values-bash" id="/toc-conditions-compare-values-bash">Conditions: compare values — Bash</a></li>
+<li><a href="#/environment-variables-and-path" id="/toc-environment-variables-and-path">Environment variables and PATH</a></li>
+<li><a href="#/networking-odds-and-ends" id="/toc-networking-odds-and-ends">Networking odds and ends</a></li>
+<li><a href="#/how-tools-run-transferable-model" id="/toc-how-tools-run-transferable-model">How tools run: transferable model</a></li>
+<li><a href="#/python-why-use-the-launcher-and--m" id="/toc-python-why-use-the-launcher-and--m">Python: why use the launcher and -m</a></li>
+<li><a href="#/activation-what-it-changes" id="/toc-activation-what-it-changes">Activation: what it changes</a></li>
+<li><a href="#/install-and-run-with-the-pinned-interpreter" id="/toc-install-and-run-with-the-pinned-interpreter">Install and run with the pinned interpreter</a></li>
+<li><a href="#/other-tools-follow-the-same-idea" id="/toc-other-tools-follow-the-same-idea">Other tools follow the same idea</a></li>
+<li><a href="#/troubleshooting-pip-is-not-recognized" id="/toc-troubleshooting-pip-is-not-recognized">Troubleshooting: “‘pip’ is not recognized”</a></li>
+<li><a href="#/troubleshooting-quick-hits-powershell-and-bash" id="/toc-troubleshooting-quick-hits-powershell-and-bash">Troubleshooting quick hits (PowerShell and Bash)</a></li>
+<li><a href="#/headless-use-curl-with-web-services-powershell" id="/toc-headless-use-curl-with-web-services-powershell">Headless: use curl with web services (PowerShell)</a></li>
+<li><a href="#/headless-use-curl-with-web-services-bash" id="/toc-headless-use-curl-with-web-services-bash">Headless: use curl with web services (Bash)</a></li>
+<li><a href="#/headless-youtube-title-and-thumbnail-powershell" id="/toc-headless-youtube-title-and-thumbnail-powershell">Headless: YouTube title and thumbnail (PowerShell)</a></li>
+<li><a href="#/headless-youtube-title-and-thumbnail-bash" id="/toc-headless-youtube-title-and-thumbnail-bash">Headless: YouTube title and thumbnail (Bash)</a></li>
+<li><a href="#/mini-project-ml-dataset-scaffolding-create-folders" id="/toc-mini-project-ml-dataset-scaffolding-create-folders">Mini project: ML dataset scaffolding (create folders)</a></li>
+<li><a href="#/mini-project-ml-dataset-scaffolding-download-tiny-images" id="/toc-mini-project-ml-dataset-scaffolding-download-tiny-images">Mini project: ML dataset scaffolding (download tiny images)</a></li>
+<li><a href="#/mini-project-ml-dataset-scaffolding-split-into-traintest" id="/toc-mini-project-ml-dataset-scaffolding-split-into-traintest">Mini project: ML dataset scaffolding (split into train/test)</a></li>
+<li><a href="#/mini-project-ml-dataset-scaffolding-labels-csv" id="/toc-mini-project-ml-dataset-scaffolding-labels-csv">Mini project: ML dataset scaffolding (labels CSV)</a></li>
+<li><a href="#/wrap-up-and-glossary-windows" id="/toc-wrap-up-and-glossary-windows">Wrap-up and glossary (Windows)</a></li>
+<li><a href="#/reference" id="/toc-reference">Reference</a></li>
+</ul>
+</nav>
+</section>
+<section id="welcome" class="slide level2">
+<h2>Welcome</h2>
+<p>This presentation teaches how to use a command-line interface (CLI) in two environments:</p>
+<ul>
+<li><strong>Windows PowerShell</strong></li>
+<li><strong>Bash</strong> (as in Codespaces, Linux, or macOS)</li>
+</ul>
+<p>You will see the same task shown in both shells so you can match it to your own computer. All explanations are student-facing — read along, try the code, and compare the two versions.</p>
+<p>By the end you should be able to:</p>
+<ol type="1">
+<li>Open a terminal/shell on your system.</li>
+<li>Understand the basic OS/shell vocabulary (program, process, shell, terminal, PATH).</li>
+<li>Navigate folders and work with files.</li>
+<li>Use built-in help.</li>
+<li>Save output to a file and understand redirection.</li>
+<li>Write a very small script (<code>.bat</code> or <code>.sh</code>).</li>
+<li>Read longer commands by breaking them into parts.</li>
+</ol>
+</section>
+<section id="how-to-use-this-deck" class="slide level2">
+<h2>How to use this deck</h2>
+<ul>
+<li>Learn a concept, see a short demo, then try it yourself.</li>
+<li>“Try it” activities are sprinkled throughout for hands-on practice.</li>
+<li>“Gotchas” callouts highlight common mistakes and quick fixes.</li>
+<li>You can follow along in PowerShell or Bash; both are shown side-by-side.</li>
+<li>This deck is beginner-friendly and builds concepts progressively.</li>
+</ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>If your terminal isn’t where the slides expect, use <code>Get-Location</code> (PowerShell) or <code>pwd</code> (Bash) to confirm, then <code>cd</code> to move.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="why-cli" class="slide level2">
+<h2>1. Why CLI?</h2>
+<ul>
+<li>Sometimes GUIs (File Explorer, Finder) are slower or hard to document.</li>
+<li>Many data, dev, and cloud tools assume you know <em>some</em> CLI.</li>
+<li>CLI is easy to copy/paste and share with teammates.</li>
+<li>Scripts let you repeat work exactly the same way.</li>
+</ul>
+<p>We will use two shells, but focus on <strong>concepts that stay the same</strong>.</p>
+</section>
+<section id="core-concepts" class="slide level2">
+<h2>2. Core Concepts</h2>
+<p>Before typing commands, it helps to know what is actually running.</p>
+<ul>
+<li><strong>Program</strong>: Code on disk. Example: <code>/bin/bash</code>, <code>/usr/bin/python3</code>, <code>C:\Windows\System32\cmd.exe</code>, <code>hello.sh</code>. A program by itself is <strong>not</strong> running.</li>
+<li><strong>Process</strong>: A running instance of a program. It has its own memory, open files, and environment variables.</li>
+<li><strong>Operating System (OS)</strong>: Software that manages hardware, files, networking, memory, scheduling. Windows, Linux, macOS.</li>
+<li><strong>Kernel</strong>: The privileged core of the OS that schedules processes and mediates access to hardware. You don’t “run” the kernel directly; programs call it.</li>
+<li><strong>Shell</strong>: A program that you interact with that parses what you type and starts other programs. Examples: <code>bash</code>, <code>zsh</code>, <code>cmd</code>, <code>powershell</code>.</li>
+<li><strong>Terminal</strong>: The window/host that displays the shell (VS Code Terminal, GNOME Terminal, iTerm2, Windows Terminal). Think of it as the container; the shell is the interpreter inside it.</li>
+<li><strong>Console</strong>: The text-based input/output surface where you type and see results. Historically a physical screen/keyboard; today the console surface is provided by a terminal app (e.g., Windows Terminal) hosting a shell.</li>
+</ul>
+<p><strong>Why this matters:</strong> the shell (a program) creates other processes to run your commands, and the OS makes that safe and efficient. Keep this model in mind.</p>
+<p>Note on the word “kernel”: In this deck, “kernel” means the OS core (privileged part of Windows/Linux/macOS). In Jupyter, a “kernel” is a normal user-space process (e.g., the IPython kernel) that runs your notebook code and talks to Jupyter over a protocol. Jupyter kernels are not the operating system kernel.</p>
+</section>
+<section id="which-shell-am-i-running-bash-side" class="slide level2">
+<h2>2.1 Which shell am I running? (bash side)</h2>
+<p>In bash (Codespaces, Linux, macOS):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$0</span><span class="st">"</span>            <span class="co"># often -bash or bash</span></span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">"SHELL=%s\n"</span> <span class="st">"</span><span class="va">$SHELL</span><span class="st">"</span></span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-p</span> <span class="va">$$</span> <span class="at">-o</span> comm=      <span class="co"># show the current shell process</span></span>
+<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> bash             <span class="co"># where is bash located?</span></span>
+<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">command</span> <span class="at">-v</span> bash        <span class="co"># also shows location</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This tells you what program is acting as your shell.</p>
+</section>
+<section id="which-shell-am-i-running-windows-side" class="slide level2">
+<h2>2.2 Which shell am I running? (Windows side)</h2>
+<p>In Windows you might see different prompts:</p>
+<ul>
+<li><code>PS C:\Users\you&gt;</code> → this is <strong>PowerShell</strong></li>
+</ul>
+<p>In this presentation we use <strong>PowerShell aliases</strong> (<code>ls</code>, <code>cd</code>, <code>mkdir</code>, <code>pwd</code>, <code>cat</code>, <code>rm</code>, <code>mv</code>, <code>cp</code>) to stay close to Bash. We’ll introduce longer cmdlets later as needed.</p>
+</section>
+<section id="opening-the-terminal" class="slide level2">
+<h2>3. Opening the terminal</h2>
+<h3 id="windows-powershell">Windows PowerShell</h3>
+<ol type="1">
+<li>Press <strong>Win + X</strong> and choose <strong>Windows Terminal</strong> (PowerShell), or press Start and type “PowerShell” and open it.</li>
+<li>You should see something like:</li>
+</ol>
+<pre class="text"><code>PS C:\Users\student&gt;</code></pre>
+<h3 id="bash-codespaces-vs-code-linux-macos">Bash (Codespaces / VS Code / Linux / macOS)</h3>
+<ol type="1">
+<li>Open <strong>VS Code</strong>.</li>
+<li>View → Terminal.</li>
+<li>Make sure it says <code>bash</code> in the terminal tab.</li>
+<li>You should see something like:</li>
+</ol>
+<pre class="text"><code>student@machine:/workspaces/project$</code></pre>
+<p>If your prompt looks slightly different, that is okay.</p>
+</section>
+<section id="first-command-list-current-files" class="slide level2">
+<h2>4. First command: list current files</h2>
+<p><strong>Windows PowerShell</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What this does:</p>
+<ul>
+<li>Lists files and folders in your current working directory.</li>
+<li>In PowerShell, <code>ls</code> is an alias for listing items; in Bash, it is the native list command.</li>
+</ul>
+<p><strong>Bash</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Both show files and folders in the current directory.</p>
+<p>If you get an error, check spelling — CLI is strict.</p>
+</section>
+<section id="how-the-shell-runs-a-command-bash-view" class="slide level2">
+<h2>5. How the shell runs a command (bash view)</h2>
+<p>When you press Enter:</p>
+<ol type="1">
+<li>The shell parses your input into a command and arguments.</li>
+<li>It resolves the command to a path by searching:
+<ul>
+<li>a path you typed explicitly (<code>./myscript.sh</code>, <code>/usr/bin/python3</code>), or</li>
+<li>each directory in the <code>PATH</code> environment variable, in order.</li>
+</ul></li>
+<li>It asks the OS to start a <strong>new process</strong> for that program, passing environment variables.</li>
+</ol>
+<p>This means <strong>PATH order</strong> decides which copy of a tool you actually run.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># show PATH entries, one per line</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">"%s\n"</span> <span class="va">${PATH</span><span class="op">//</span><span class="ss">:</span><span class="op">/</span><span class="st">$'</span><span class="dt">\n</span><span class="st">'</span><span class="va">}</span> <span class="kw">|</span> <span class="fu">head</span></span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># which program will run when I type 'git'?</span></span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> <span class="at">-a</span> git</span>
+<span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">command</span> <span class="at">-v</span> git</span>
+<span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$PATH</span><span class="st">"</span>    <span class="co"># raw PATH</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="current-working-directory-cwd" class="slide level2">
+<h2>6. Current working directory (CWD)</h2>
+<p>Your shell always has a <strong>current working directory</strong>. Relative paths are interpreted from here.</p>
+<ul>
+<li><p>Bash:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span>      <span class="co"># print working directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>PowerShell:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">pwd</span>   <span class="co"># print working directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<p>Why this matters:</p>
+<ul>
+<li>Your current directory is the reference point for relative paths.</li>
+<li>Many “file not found” errors happen because you’re in the wrong folder.</li>
+</ul>
+<p>If a command fails, first check where you are.</p>
+</section>
+<section id="moving-between-folders" class="slide level2">
+<h2>7. Moving between folders</h2>
+<p>To go <strong>into</strong> a folder:</p>
+<ul>
+<li><p>PowerShell:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> Documents</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Bash:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Documents</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<p>To go <strong>up</strong> one level (parent folder):</p>
+<ul>
+<li><p>PowerShell:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> <span class="op">..</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Bash:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<p><code>..</code> means “the folder above this one” in both.</p>
+</section>
+<section id="going-home" class="slide level2">
+<h2>8. Going home</h2>
+<p>Sometimes you just want to go to your user home.</p>
+<ul>
+<li><p>PowerShell:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> <span class="op">~</span>   <span class="co"># or: Set-Location ~</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Bash:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<p>After that you can run <code>ls</code> to check what is there.</p>
+<p>Notes:</p>
+<ul>
+<li><code>~</code> is a shortcut for your home folder on both shells.</li>
+<li>Use absolute paths for clarity; use relative paths for convenience inside a project.</li>
+</ul>
+</section>
+<section id="paths-explained" class="slide level2">
+<h2>9. Paths explained</h2>
+<p>A <strong>path</strong> is how you tell the shell where something lives.</p>
+<ul>
+<li><p>Windows uses <strong>backslashes</strong>:</p>
+<pre class="text"><code>C:\Users\student\cli_lab</code></pre></li>
+<li><p>Bash uses <strong>forward slashes</strong>:</p>
+<pre class="text"><code>/home/student/cli_lab</code></pre></li>
+</ul>
+<p>Special names:</p>
+<ul>
+<li><code>.</code> → current directory</li>
+<li><code>..</code> → parent directory</li>
+<li><code>~</code> → home directory (bash, PowerShell)</li>
+</ul>
+<p>If you copy a Bash path into PowerShell, it will fail, and vice versa. Use the right slash for your shell.</p>
+</section>
+<section id="absolute-vs-relative-paths" class="slide level2">
+<h2>10. Absolute vs relative paths</h2>
+<ul>
+<li><strong>Absolute path</strong>: starts from the root of the file system.
+<ul>
+<li>PowerShell (Windows): <code>C:\Users\student\Documents</code></li>
+<li>Bash: <code>/home/student/Documents</code></li>
+</ul></li>
+<li><strong>Relative path</strong>: starts from where you are right now.
+<ul>
+<li>If you are in <code>C:\Users\student</code>, then <code>cd Documents</code> is enough.</li>
+</ul></li>
+</ul>
+<p>Use absolute paths when you need to be clear. Use relative paths when working inside a project.</p>
+</section>
+<section id="making-folders" class="slide level2">
+<h2>11. Making folders</h2>
+<p>We often create a lab/work folder.</p>
+<ul>
+<li><p>PowerShell:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a>mkdir cli_lab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Bash:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> cli_lab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<p>Then go into it:</p>
+<pre class="text"><code>cd cli_lab</code></pre>
+<p>Now <code>ls</code> should show it is (probably) empty.</p>
+</section>
+<section id="creating-files" class="slide level2">
+<h2>12. Creating files</h2>
+<p>This is different for PowerShell and Bash.</p>
+<p><strong>PowerShell:</strong></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ni</span> notes<span class="op">.</span><span class="fu">txt</span> <span class="op">|</span> <span class="fu">Out-Null</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Creates an empty file.</p>
+<p>Why this pattern:</p>
+<ul>
+<li><code>ni</code> is a short alias for creating files/folders.</li>
+<li><code>Out-Null</code> hides extra output to keep the screen clean.</li>
+</ul>
+<p><strong>Bash:</strong></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> notes.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After creating, list files to confirm.</p>
+<p>Common mistake: trying <code>touch</code> in PowerShell → use <code>New-Item</code> (or <code>ni</code> alias) instead.</p>
+</section>
+<section id="anatomy-of-a-command" class="slide level2">
+<h2>13. Anatomy of a command</h2>
+<p>Most commands can be read like this:</p>
+<pre class="text"><code>command  [subcommand]  [options/flags]  [arguments]</code></pre>
+<p>Examples:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-1R</span> <span class="st">"./Data Files"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>ls</code> = command</li>
+<li><code>-1R</code> = flags/options (one per line, recursive)</li>
+<li><code>"./Data Files"</code> = argument (a path with spaces → must be quoted)</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--graph</span> <span class="at">--decorate</span> <span class="at">--all</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>git</code> = command</li>
+<li><code>log</code> = subcommand</li>
+<li><code>--oneline --graph --decorate --all</code> = options that refine the output</li>
+</ul>
+<p>Once you can label these parts, long commands become readable.</p>
+</section>
+<section id="practice-build-a-small-workspace" class="slide level2">
+<h2>14. Practice: build a small workspace</h2>
+<p>Try to do this in <strong>your</strong> shell.</p>
+<ol type="1">
+<li>Go to your home directory.</li>
+<li>Make a folder <code>project</code>.</li>
+<li>Go into <code>project</code>.</li>
+<li>Make a folder <code>data</code>.</li>
+<li>Go into <code>data</code>.</li>
+<li>Create an empty file <code>readme.txt</code>.</li>
+<li>Go back to <code>project</code> and list files.</li>
+</ol>
+<p><strong>Possible PowerShell solution</strong></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> <span class="op">~</span></span>
+<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a>mkdir project</span>
+<span id="cb25-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> project</span>
+<span id="cb25-4"><a href="" aria-hidden="true" tabindex="-1"></a>mkdir <span class="kw">data</span></span>
+<span id="cb25-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> <span class="kw">data</span></span>
+<span id="cb25-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ni</span> readme<span class="op">.</span><span class="fu">txt</span> <span class="op">|</span> <span class="fu">Out-Null</span></span>
+<span id="cb25-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> <span class="op">..</span></span>
+<span id="cb25-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Possible bash solution</strong></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
+<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> project</span>
+<span id="cb26-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> project</span>
+<span id="cb26-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> data</span>
+<span id="cb26-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> data</span>
+<span id="cb26-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> readme.txt</span>
+<span id="cb26-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb26-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="listing-with-options" class="slide level2">
+<h2>15. Listing with options</h2>
+<p>Sometimes you want to see more detail.</p>
+<p><strong>PowerShell:</strong></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">-</span>Force                 <span class="co"># include hidden files</span></span>
+<span id="cb27-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">|</span> <span class="fu">fl</span>                   <span class="co"># detailed properties (Format-List)</span></span>
+<span id="cb27-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">|</span> <span class="fu">select</span> Name<span class="op">,</span>Length<span class="op">,</span>LastWriteTime</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What this does:</p>
+<ul>
+<li><code>-Force</code> shows hidden/system items.</li>
+<li><code>fl</code> (Format-List) displays all properties clearly for the output.</li>
+<li><code>select</code> picks the most useful columns.</li>
+</ul>
+<p><strong>Bash:</strong></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-a</span>      <span class="co"># all files, including hidden</span></span>
+<span id="cb28-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span>      <span class="co"># long format</span></span>
+<span id="cb28-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-al</span>     <span class="co"># all + long format</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice: In Bash options use <code>-</code> or <code>--</code>; in PowerShell options are typically named parameters (e.g., <code>-Force</code>).</p>
+</section>
+<section id="getting-help-from-the-shell" class="slide level2">
+<h2>16. Getting help from the shell</h2>
+<p>You do not have to memorise every option.</p>
+<p><strong>PowerShell:</strong></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a>help <span class="fu">ls</span> <span class="op">-</span>Full</span>
+<span id="cb29-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Help</span> <span class="fu">ls</span> <span class="op">-</span>Online</span>
+<span id="cb29-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Command</span> <span class="fu">ls</span>       <span class="co"># see which command will run</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Tips:</p>
+<ul>
+<li><code>help</code> shows usage and parameters with examples.</li>
+<li><code>Get-Command</code> reveals exactly which command/alias/function will run for a name.</li>
+</ul>
+<p><strong>Bash:</strong></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">man</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>man</code> opens the manual page; press <code>q</code> to quit.</p>
+<p>If you get stuck, ask the command for help first.</p>
+</section>
+<section id="show-hidden-files-task" class="slide level2">
+<h2>17. Show hidden files (task)</h2>
+<p>Goal: show all files, including hidden ones, in the current directory.</p>
+<ul>
+<li><p>In PowerShell, the <code>-Force</code> parameter includes hidden files:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">-</span>Force</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>In Bash, <code>-a</code> includes hidden files:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-a</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<p>Why hidden files exist:</p>
+<ul>
+<li>Bash uses leading dots (e.g., <code>.env</code>), while Windows uses attributes.</li>
+<li>Hidden files are common for configuration and caches.</li>
+</ul>
+<p>If nothing new appears, you may not have hidden files yet.</p>
+</section>
+<section id="redirection-save-output-to-a-file" class="slide level2">
+<h2>18. Redirection: save output to a file</h2>
+<p>We can send the output of a command into a file using <code>&gt;</code> (or use <code>Out-File</code> in PowerShell).</p>
+<p><strong>PowerShell:</strong></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">&gt;</span> listing<span class="op">.</span><span class="fu">txt</span></span>
+<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># or explicitly:</span></span>
+<span id="cb34-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">|</span> <span class="fu">Out-File</span> <span class="op">-</span>FilePath listing<span class="op">.</span><span class="fu">txt</span> <span class="op">-</span>Encoding utf8</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What this does:</p>
+<ul>
+<li><code>&gt;</code> overwrites (creates if missing). <code>&gt;&gt;</code> appends.</li>
+<li><code>Out-File</code> lets you control encoding (UTF‑8 recommended).</li>
+</ul>
+<p><strong>Bash:</strong></p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">&gt;</span> listing.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then view the file:</p>
+<ul>
+<li><p>PowerShell:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> listing<span class="op">.</span><span class="fu">txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Bash:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> listing.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<p>If you run the command again with <code>&gt;</code>, it overwrites the file.</p>
+</section>
+<section id="append-instead-of-overwrite" class="slide level2">
+<h2>19. Append instead of overwrite</h2>
+<p>Use <code>&gt;&gt;</code> to add to the end of a file.</p>
+<p><strong>PowerShell:</strong></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">&gt;&gt;</span> listing<span class="op">.</span><span class="fu">txt</span></span>
+<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># or:</span></span>
+<span id="cb38-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">|</span> <span class="fu">Out-File</span> <span class="op">-</span>FilePath listing<span class="op">.</span><span class="fu">txt</span> <span class="op">-</span>Append</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Append vs overwrite:</p>
+<ul>
+<li>Use <code>&gt;&gt;</code> when you want to keep previous results and add new ones to the end.</li>
+</ul>
+<p><strong>Bash:</strong></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">&gt;&gt;</span> listing.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now <code>listing.txt</code> will have two sections.</p>
+</section>
+<section id="powershell-and-bash-deep-dive" class="slide level2">
+<h2>PowerShell and Bash — Deep Dive</h2>
+<p>This section is a practical reference that teaches PowerShell (Windows) and Bash (Codespaces/Linux/macOS) side-by-side. It explains command resolution, <code>PATH</code>, pipelines, file operations, scripting, and troubleshooting, with instructor-ready exercises and gotchas called out.</p>
+</section>
+<section id="what-you-will-learn-deep-dive" class="slide level2">
+<h2>What you will learn (deep dive)</h2>
+<p>By the end of this deep dive you will be able to:</p>
+<ul>
+<li>Explain how Windows resolves and runs commands (current directory, system folders, <code>PATH</code>, and <code>PATHEXT</code>).</li>
+<li>Inspect and manage your <code>PATH</code> safely; confirm which program will run.</li>
+<li>Navigate with absolute vs relative paths; switch drives correctly.</li>
+<li>Understand the anatomy of commands and pass arguments to scripts.</li>
+<li>Use productive PowerShell and Bash patterns for searching, filtering, composing, and file operations.</li>
+<li>Use redirection, piping, chaining, loops, and guard rails.</li>
+<li>Manage environment variables, create virtual environments, and call tools deterministically.</li>
+<li>Verify file integrity, compress/expand archives, and handle large files.</li>
+<li>Run quick networking diagnostics and downloads.</li>
+<li>Apply real-world recipes and troubleshoot common issues (including “pip is not recognized”).</li>
+</ul>
+</section>
+<section id="core-concepts-recap-quick-checks" class="slide level2">
+<h2>Core concepts (recap + quick checks)</h2>
+<ul>
+<li>Program vs Process vs OS vs Kernel vs Shell vs Terminal (see earlier).</li>
+<li>Quick checks in PowerShell:</li>
+</ul>
+<div class="sourceCode" id="cb40"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">$PSVersionTable</span></span>
+<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">Get-Process</span> <span class="op">-</span>Id <span class="va">$PID</span><span class="op">).</span><span class="fu">Path</span>  <span class="co"># which executable is this shell?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In Bash:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$SHELL</span><span class="st">"</span></span>
+<span id="cb41-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-p</span> <span class="va">$$</span> <span class="at">-o</span> comm=</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="how-commands-are-found-and-run-resolution-and-launch" class="slide level2">
+<h2>How commands are found and run (resolution and launch)</h2>
+<p>When you press Enter in a shell:</p>
+<ol type="1">
+<li>Parses your input (program + arguments).</li>
+<li>Resolves the program to a file path.
+<ul>
+<li>PowerShell on Windows: checks current directory, system folders, then the directories in <code>PATH</code> (first match wins). <code>PATHEXT</code> helps resolve extensions like <code>.EXE;.BAT;.CMD;.PS1</code>.</li>
+<li>Bash: checks explicit/relative paths (e.g., <code>./tool</code>) first; otherwise searches each directory in <code>$PATH</code> (first match wins). Executable bit must be set for scripts.</li>
+</ul></li>
+<li>Starts a new process for that program, passing environment variables.</li>
+</ol>
+<p>Notes:</p>
+<ul>
+<li>On Windows, <code>PATHEXT</code> controls which extensions are considered executable; <code>PATH</code> order is decisive.</li>
+<li>On Linux/macOS, scripts need execute permissions (<code>chmod +x script.sh</code>) or run via interpreter (<code>bash script.sh</code>, <code>python script.py</code>).</li>
+</ul>
+<p>PowerShell checks:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">PATH</span> <span class="op">-split</span> <span class="st">';'</span> <span class="op">|</span> <span class="fu">Select-Object</span> <span class="op">-</span>First <span class="dv">10</span></span>
+<span id="cb42-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dt">where</span><span class="op">.</span><span class="fu">exe</span> git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Bash checks:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$PATH</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">':'</span> <span class="st">'\n'</span> <span class="kw">|</span> <span class="fu">head</span></span>
+<span id="cb43-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> <span class="at">-a</span> git</span>
+<span id="cb43-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">command</span> <span class="at">-v</span> git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Tip: Use <code>where.exe toolname</code> (or <code>Get-Command</code> in PowerShell) to confirm what will run.</p>
+</section>
+<section id="current-directory-and-paths" class="slide level2">
+<h2>Current directory and paths</h2>
+<ul>
+<li>The current working directory (CWD) anchors relative paths in both shells.</li>
+<li>PowerShell on Windows considers the CWD before <code>PATH</code>; a tool in the current folder can mask another on <code>PATH</code>.</li>
+<li>Prefer explicit paths in scripts.</li>
+</ul>
+<div class="sourceCode" id="cb44"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb44-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-Location</span> C<span class="op">:</span>\Projects\demo</span>
+<span id="cb44-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\script<span class="op">.</span><span class="fu">ps1</span> <span class="op">-</span>Name Alice</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In Bash, run scripts explicitly:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/demo</span>
+<span id="cb45-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">./script.sh</span> Alice</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="anatomy-of-a-command-and-passing-arguments" class="slide level2">
+<h2>Anatomy of a command and passing arguments</h2>
+<p>Structure:</p>
+<pre class="text"><code>program [optional-subcommand] [options/flags] [arguments]</code></pre>
+<p>Examples:</p>
+<p>PowerShell:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">-</span>Recurse <span class="op">-</span>Filter <span class="op">*.</span><span class="fu">csv</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Bash:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-1R</span> <span class="st">"./Data Files"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h3 id="scripts-that-accept-arguments">Scripts that accept arguments</h3>
+<p><code>hello.ps1</code>:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">param</span><span class="op">([</span><span class="dt">string</span><span class="op">]</span><span class="va">$Name</span> <span class="op">=</span> <span class="st">"World"</span><span class="op">)</span></span>
+<span id="cb49-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Write-Host</span> <span class="st">"Hello, </span><span class="va">$Name</span><span class="st">!"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>hello.sh</code>:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb50-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">name</span><span class="op">=</span><span class="st">"</span><span class="va">${1</span><span class="op">:-</span>World<span class="va">}</span><span class="st">"</span></span>
+<span id="cb50-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Hello, </span><span class="va">${name}</span><span class="st">!"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="powershell-productivity-setup-and-shell-basics" class="slide level2">
+<h2>PowerShell productivity: setup and shell basics</h2>
+<ul>
+<li>Think of the prompt (e.g., <code>PS C:\Users\you&gt;</code>) as your “camera position.”</li>
+<li>Absolute paths include the drive (<code>C:\data\projects</code>); relative paths depend on CWD.</li>
+<li>Useful variables: <code>$HOME</code>, <code>$env:USERPROFILE</code>, <code>$env:TEMP</code>, <code>$PWD</code>.</li>
+<li>Quote paths with spaces: <code>"C:\My Data\file.csv"</code>.</li>
+<li>Change drives by typing <code>D:</code>; <code>Set-Location</code> works across PSDrives.</li>
+</ul>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>PowerShell pipelines pass objects, not plain text. Use <code>Select-Object</code>, <code>Where-Object</code>, <code>Sort-Object</code> to transform data; convert to text late (e.g., <code>Format-Table</code> for display only).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="find-files-by-pattern-powershell" class="slide level2">
+<h2>Find files by pattern (PowerShell)</h2>
+<p>Use recursive search to list matching files anywhere under the current folder.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">-</span>Recurse <span class="op">-</span>Filter <span class="op">*.</span><span class="fu">csv</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="which-program-will-run-powershell" class="slide level2">
+<h2>Which program will run (PowerShell)</h2>
+<p>Check the exact command that will execute when you type a name.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb52-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Command</span> python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="filter-names-and-save-powershell" class="slide level2">
+<h2>Filter names and save (PowerShell)</h2>
+<p>Select only names containing <code>_final</code>, sort them, and save to a text file.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">-</span>Recurse <span class="op">-</span>Filter <span class="op">*.</span><span class="fu">csv</span> <span class="op">|</span> <span class="fu">where</span> Name <span class="op">-match</span> <span class="st">'_final'</span> <span class="op">|</span> <span class="fu">sort</span> Name <span class="op">&gt;</span> finals<span class="op">.</span><span class="fu">txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="find-files-by-pattern-bash" class="slide level2">
+<h2>Find files by pattern (Bash)</h2>
+<p>Use recursive search to list matching files anywhere under the current folder.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-type</span> f <span class="at">-name</span> <span class="st">"*.csv"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="which-program-will-run-bash" class="slide level2">
+<h2>Which program will run (Bash)</h2>
+<p>Check the exact command that will execute when you type a name.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="filter-names-and-save-bash" class="slide level2">
+<h2>Filter names and save (Bash)</h2>
+<p>Select only names containing <code>_final</code>, sort them, and save to a text file.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-type</span> f <span class="at">-name</span> <span class="st">"*.csv"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-i</span> <span class="st">"_final"</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="op">&gt;</span> finals.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="filter-sort-and-compose" class="slide level2">
+<h2>Filter, sort, and compose</h2>
+<p>PowerShell:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb57-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> server<span class="op">.</span><span class="fu">log</span> <span class="op">|</span> <span class="fu">sls</span> <span class="st">'timeout|error'</span> <span class="op">|</span> <span class="fu">sort</span> <span class="op">&gt;</span> errors_timeout<span class="op">.</span><span class="fu">txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Explanation:</p>
+<ul>
+<li><code>sls</code> (Select-String) searches for lines matching patterns.</li>
+<li><code>sort</code> sorts lines alphabetically.</li>
+<li>Output is saved to <code>errors_timeout.txt</code>.</li>
+</ul>
+<p>Bash:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb58-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> server.log <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-Ei</span> <span class="st">"timeout|error"</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="op">&gt;</span> errors_timeout.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Explanation:</p>
+<ul>
+<li><code>grep -E</code> enables extended regex; <code>-i</code> ignores case.</li>
+<li><code>sort</code> sorts lines alphabetically.</li>
+<li>Output is saved to <code>errors_timeout.txt</code>.</li>
+</ul>
+</section>
+<section id="make-copy-move-rename-delete" class="slide level2">
+<h2>Make, copy, move, rename, delete</h2>
+<p>PowerShell:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb59-1"><a href="" aria-hidden="true" tabindex="-1"></a>mkdir <span class="st">"C:\data\archive"</span> <span class="op">|</span> <span class="fu">Out-Null</span></span>
+<span id="cb59-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> source<span class="op">.</span><span class="fu">csv</span> <span class="st">"C:\data\backup\source.csv"</span> <span class="op">-</span>Force</span>
+<span id="cb59-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> results<span class="op">.</span><span class="fu">txt</span> results\results<span class="op">.</span><span class="fu">txt</span> <span class="op">-</span>Force</span>
+<span id="cb59-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ren</span> old_name<span class="op">.</span><span class="fu">txt</span> new_name<span class="op">.</span><span class="fu">txt</span></span>
+<span id="cb59-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="op">*.</span><span class="fu">tmp</span> <span class="op">-</span>Force</span>
+<span id="cb59-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="st">"C:\data\old_project"</span> <span class="op">-</span>Recurse <span class="op">-</span>Force</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Explanation:</p>
+<ul>
+<li><code>mkdir</code> creates a folder if missing.</li>
+<li><code>cp</code>, <code>mv</code>, <code>ren</code>, <code>rm</code> mirror Bash names for copy/move/rename/remove.</li>
+<li><code>-Force</code> overwrites without prompts; use carefully.</li>
+</ul>
+<p>Bash:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb60-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/data/archive</span>
+<span id="cb60-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-f</span> source.csv ~/data/backup/source.csv</span>
+<span id="cb60-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> <span class="at">-f</span> results.txt results/results.txt</span>
+<span id="cb60-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> old_name.txt new_name.txt</span>
+<span id="cb60-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-f</span> <span class="pp">*</span>.tmp</span>
+<span id="cb60-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> ~/data/old_project</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Explanation:</p>
+<ul>
+<li><code>-p</code> ensures parent folders exist.</li>
+<li><code>-f</code> forces overwrite; <code>-r</code> is recursive for folders.</li>
+</ul>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>These deletes are permanent. Test on a sandbox folder first.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="viewing-and-slicing-files" class="slide level2">
+<h2>Viewing and slicing files</h2>
+<p>PowerShell:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb61-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="kw">data</span><span class="op">.</span><span class="fu">csv</span> <span class="op">-</span>TotalCount <span class="dv">20</span>   <span class="co"># head</span></span>
+<span id="cb61-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="kw">data</span><span class="op">.</span><span class="fu">csv</span> <span class="op">-</span>Tail <span class="dv">20</span>         <span class="co"># tail</span></span>
+<span id="cb61-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="kw">data</span><span class="op">.</span><span class="fu">csv</span> <span class="op">|</span> <span class="fu">measure</span> <span class="op">-</span>Line  <span class="co"># line count</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Why:</p>
+<ul>
+<li>Skim the first or last lines before processing a large file.</li>
+<li>Quick line counts can help estimate data size and chunking.</li>
+</ul>
+<p>Bash:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb62-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 20 data.csv</span>
+<span id="cb62-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 20 data.csv</span>
+<span id="cb62-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> data.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Why:</p>
+<ul>
+<li>Same idea in Bash using <code>head</code>, <code>tail</code>, and <code>wc</code>.</li>
+</ul>
+</section>
+<section id="save-a-list-to-a-file-overwrite-powershell" class="slide level2">
+<h2>Save a list to a file (overwrite) — PowerShell</h2>
+<p>Write the list of parquet files to a new file (replace if it exists).</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb63-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">-</span>Recurse <span class="op">-</span>Filter <span class="op">*.</span><span class="fu">parquet</span> <span class="op">&gt;</span> all_parquet<span class="op">.</span><span class="fu">txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="append-to-an-existing-file-powershell" class="slide level2">
+<h2>Append to an existing file — PowerShell</h2>
+<p>Add CSV filenames to the end of an existing file.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb64-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="op">-</span>Recurse <span class="op">-</span>Filter <span class="op">*.</span><span class="fu">csv</span> <span class="op">&gt;&gt;</span> all_csv<span class="op">.</span><span class="fu">txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="save-a-list-to-a-file-overwrite-bash" class="slide level2">
+<h2>Save a list to a file (overwrite) — Bash</h2>
+<p>Write the list of parquet files to a new file (replace if it exists).</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb65-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-type</span> f <span class="at">-name</span> <span class="st">"*.parquet"</span> <span class="op">&gt;</span> all_parquet.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="append-to-an-existing-file-bash" class="slide level2">
+<h2>Append to an existing file — Bash</h2>
+<p>Add CSV filenames to the end of an existing file.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb66-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-type</span> f <span class="at">-name</span> <span class="st">"*.csv"</span> <span class="op">&gt;&gt;</span> all_csv.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="run-next-step-only-on-success-powershell" class="slide level2">
+<h2>Run next step only on success — PowerShell</h2>
+<p>Log all output from the first script; run the second only if it succeeded.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb67-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\etl_step<span class="op">.</span><span class="fu">ps1</span> <span class="op">*&gt;</span> etl<span class="op">.</span><span class="fu">log</span><span class="op">;</span> <span class="cf">if</span> <span class="op">(</span><span class="va">$?</span><span class="op">)</span> <span class="op">{</span> <span class="op">.</span>\train_model<span class="op">.</span><span class="fu">ps1</span> <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="run-next-step-only-on-success-bash" class="slide level2">
+<h2>Run next step only on success — Bash</h2>
+<p>Merge stderr into the log and only run the next command if the first succeeded.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb68-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">./etl_step.sh</span> <span class="op">&gt;</span> etl.log <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">&amp;&amp;</span> <span class="ex">./train_model.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>PowerShell passes objects in pipelines; Bash passes text. Convert to text in PowerShell only when needed for display or file output.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="loop-basics-powershell" class="slide level2">
+<h2>Loop basics (PowerShell)</h2>
+<p>Count from 1 to 10 and print each number.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb69-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span> <span class="op">(</span><span class="va">$i</span> <span class="kw">in</span> <span class="dv">1</span><span class="op">..</span><span class="dv">10</span><span class="op">)</span> <span class="op">{</span> <span class="va">$i</span> <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What this means:</p>
+<ul>
+<li><code>1..10</code> makes the sequence 1,2,…,10.</li>
+<li><code>foreach</code> runs the block once per number; <code>$i</code> is the current number.</li>
+</ul>
+</section>
+<section id="loop-basics-bash" class="slide level2">
+<h2>Loop basics (Bash)</h2>
+<p>Count from 1 to 10 and print each number.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb70-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">10</span><span class="dt">}</span><span class="kw">;</span> <span class="cf">do</span> <span class="bu">echo</span> <span class="st">"</span><span class="va">$i</span><span class="st">"</span><span class="kw">;</span> <span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What this means:</p>
+<ul>
+<li><code>{1..10}</code> expands to 1 2 … 10.</li>
+<li><code>for i in ...</code> iterates the list; <code>echo "$i"</code> prints the current value.</li>
+</ul>
+</section>
+<section id="guard-rails-basic-if-file-exists-powershell" class="slide level2">
+<h2>Guard rails: basic if (file exists) — PowerShell</h2>
+<p>Check for a file and print a simple message.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb71-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span><span class="fu">Test-Path</span> <span class="st">'notes.txt'</span><span class="op">)</span> <span class="op">{</span> <span class="st">'Found notes.txt'</span> <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span> <span class="st">'Not found'</span> <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="guard-rails-basic-if-file-exists-bash" class="slide level2">
+<h2>Guard rails: basic if (file exists) — Bash</h2>
+<p>Check for a file and print a simple message.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb72-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-f</span> <span class="st">"notes.txt"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span> <span class="bu">echo</span> <span class="st">"Found notes.txt"</span><span class="kw">;</span> <span class="cf">else</span> <span class="bu">echo</span> <span class="st">"Not found"</span><span class="kw">;</span> <span class="cf">fi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="conditions-compare-values-powershell" class="slide level2">
+<h2>Conditions: compare values — PowerShell</h2>
+<p>Test a variable value and act.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb73-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">$x</span> <span class="op">=</span> <span class="dv">10</span><span class="op">;</span> <span class="cf">if</span> <span class="op">(</span><span class="va">$x</span> <span class="op">-eq</span> <span class="dv">10</span><span class="op">)</span> <span class="op">{</span> <span class="st">'x is ten'</span> <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span> <span class="st">'x is not ten'</span> <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="conditions-compare-values-bash" class="slide level2">
+<h2>Conditions: compare values — Bash</h2>
+<p>Test a variable value and act.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb74-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">x</span><span class="op">=</span>10<span class="kw">;</span> <span class="cf">if</span> <span class="bu">[</span> <span class="st">"</span><span class="va">$x</span><span class="st">"</span> <span class="ot">=</span> <span class="st">"10"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span> <span class="bu">echo</span> <span class="st">"x is ten"</span><span class="kw">;</span> <span class="cf">else</span> <span class="bu">echo</span> <span class="st">"x is not ten"</span><span class="kw">;</span> <span class="cf">fi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="environment-variables-and-path" class="slide level2">
+<h2>Environment variables and PATH</h2>
+<p>PowerShell (session):</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb75-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">MYVAR</span> <span class="op">=</span> <span class="st">"hello"</span></span>
+<span id="cb75-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Write-Output</span> <span class="va">$env</span><span class="op">:</span><span class="va">MYVAR</span></span>
+<span id="cb75-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">PATH</span> <span class="op">-split</span> <span class="st">';'</span> <span class="op">|</span> <span class="fu">Select-Object</span> <span class="op">-</span>First <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notes:</p>
+<ul>
+<li>Assigning <code>$env:NAME</code> affects only the current terminal.</li>
+<li>Splitting <code>PATH</code> shows the first few directories that will be searched.</li>
+</ul>
+<p>PowerShell (persist for user):</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb76-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">[</span>System<span class="op">.</span><span class="fu">Environment</span><span class="op">]::</span>SetEnvironmentVariable<span class="op">(</span><span class="st">'MYVAR'</span><span class="op">,</span><span class="st">'hello'</span><span class="op">,</span><span class="st">'User'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note:</p>
+<ul>
+<li>Reopen your terminal to see persisted changes.</li>
+</ul>
+<p>Bash:</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb77-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">MYVAR</span><span class="op">=</span>hello</span>
+<span id="cb77-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$MYVAR</span><span class="st">"</span></span>
+<span id="cb77-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$PATH</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">':'</span> <span class="st">'\n'</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notes:</p>
+<ul>
+<li><code>export</code> sets an environment variable for the current shell (and children).</li>
+<li><code>PATH</code> order determines which program runs when names collide.</li>
+</ul>
+<p>Interpreter selection (both):</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb78-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># PowerShell</span></span>
+<span id="cb78-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Command</span> python</span>
+<span id="cb78-3"><a href="" aria-hidden="true" tabindex="-1"></a>python <span class="op">--</span>version</span>
+<span id="cb78-4"><a href="" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m pip <span class="op">--</span>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb79-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Bash</span></span>
+<span id="cb79-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> python</span>
+<span id="cb79-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span>
+<span id="cb79-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="networking-odds-and-ends" class="slide level2">
+<h2>Networking odds and ends</h2>
+<p>PowerShell:</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb80-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Prefer the real curl binary and quote URLs in PowerShell</span></span>
+<span id="cb80-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">curl</span><span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>L <span class="op">-</span>o <span class="kw">data</span><span class="op">.</span><span class="fu">zip</span> <span class="st">"https://example.com/data.zip"</span></span>
+<span id="cb80-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Or use Invoke-WebRequest</span></span>
+<span id="cb80-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Invoke-WebRequest</span> <span class="op">-</span>Uri <span class="st">"https://example.com/data.zip"</span> <span class="op">-</span>OutFile <span class="kw">data</span><span class="op">.</span><span class="fu">zip</span></span>
+<span id="cb80-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Test-Connection</span> <span class="dv">8.8</span><span class="op">.</span><span class="dv">8.8</span> <span class="op">-</span>Count <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Why:</p>
+<ul>
+<li><code>curl</code> downloads, <code>Test-Connection</code> pings — quick network checks.</li>
+</ul>
+<p>Bash:</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb81-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="st">'wttr.in/London?format=3'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Why:</p>
+<ul>
+<li>Same flow in Bash: download and basic connectivity test.</li>
+</ul>
+</section>
+<section id="how-tools-run-transferable-model" class="slide level2">
+<h2>How tools run: transferable model</h2>
+<p>Two patterns:</p>
+<ul>
+<li>Run a standalone program on PATH (e.g., <code>git</code>, <code>Rscript</code>).</li>
+<li>Run an interpreter with a module/script (e.g., <code>python -m pip</code>, <code>node script.js</code>).</li>
+</ul>
+<p>Check what will run:</p>
+<p>PowerShell: <code>Get-Command toolname</code> · Bash: <code>which toolname</code></p>
+</section>
+<section id="python-why-use-the-launcher-and--m" class="slide level2">
+<h2>Python: why use the launcher and -m</h2>
+<ul>
+<li><code>py -3.11</code> (Windows) chooses a specific Python.</li>
+<li><code>-m pip</code> uses pip tied to that interpreter (no ambiguity).</li>
+</ul>
+<p>PowerShell:</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb82-1"><a href="" aria-hidden="true" tabindex="-1"></a>py <span class="op">-</span><span class="dv">3.11</span> <span class="op">-</span>m venv <span class="op">.</span><span class="fu">venv</span></span>
+<span id="cb82-2"><a href="" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m pip <span class="op">--</span>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Bash:</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb83-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv .venv</span>
+<span id="cb83-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="activation-what-it-changes" class="slide level2">
+<h2>Activation: what it changes</h2>
+<p>Activation prepends the venv’s <code>bin/Scripts</code> folder to PATH so <code>python</code>/<code>pip</code> resolve to the venv.</p>
+<p>PowerShell:</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb84-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\<span class="op">.</span><span class="fu">venv</span>\Scripts\Activate<span class="op">.</span><span class="fu">ps1</span><span class="op">;</span> <span class="fu">Get-Command</span> python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Bash:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb85-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate<span class="kw">;</span> <span class="fu">which</span> python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="install-and-run-with-the-pinned-interpreter" class="slide level2">
+<h2>Install and run with the pinned interpreter</h2>
+<p>Call pip via the interpreter, then verify.</p>
+<p>PowerShell:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb86-1"><a href="" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m pip install <span class="op">-</span>U pip<span class="op">;</span> python <span class="op">-</span>c <span class="st">"import sys; print(sys.executable)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Bash:</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb87-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-U</span> pip<span class="kw">;</span> <span class="ex">python</span> <span class="at">-c</span> <span class="st">"import sys; print(sys.executable)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="other-tools-follow-the-same-idea" class="slide level2">
+<h2>Other tools follow the same idea</h2>
+<p>Examples of CLI entry points:</p>
+<ul>
+<li>R: <code>Rscript script.R</code></li>
+<li>Node: <code>node script.js</code></li>
+<li>Java: <code>java -jar app.jar</code></li>
+</ul>
+<p>PowerShell and Bash (same):</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb88-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> my_analysis.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>If PowerShell blocks script activation scripts, run: <code>Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned</code> and restart the terminal. For one file: <code>Unblock-File .\\.venv\\Scripts\\Activate.ps1</code>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="troubleshooting-pip-is-not-recognized" class="slide level2">
+<h2>Troubleshooting: “‘pip’ is not recognized”</h2>
+<p>Checklist:</p>
+<ol type="1">
+<li>Verify <code>pip</code> and <code>python</code> are on PATH for this session.</li>
+<li>Confirm which copies will run (there may be multiple installations).</li>
+<li>If using Conda/venv, activate the intended environment so PATH updates.</li>
+<li>Prefer <code>python -m pip ...</code> to remove ambiguity.</li>
+</ol>
+<p>PowerShell:</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb89-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">where</span><span class="op">.</span><span class="fu">exe</span> pip</span>
+<span id="cb89-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">where</span><span class="op">.</span><span class="fu">exe</span> python</span>
+<span id="cb89-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">PATH</span> <span class="op">-split</span> <span class="st">';'</span> <span class="op">|</span> <span class="fu">Select-Object</span> <span class="op">-</span>First <span class="dv">10</span></span>
+<span id="cb89-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dt">python</span> <span class="op">-</span>m pip <span class="op">--</span>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Bash:</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb90-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> pip</span>
+<span id="cb90-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> python</span>
+<span id="cb90-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$PATH</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">':'</span> <span class="st">'\n'</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-10</span></span>
+<span id="cb90-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="troubleshooting-quick-hits-powershell-and-bash" class="slide level2">
+<h2>Troubleshooting quick hits (PowerShell and Bash)</h2>
+<ul>
+<li>Command not found: verify install and PATH (<code>Get-Command tool</code> in PowerShell, <code>which tool</code> in Bash).</li>
+<li>Access denied: try a location you own; on PowerShell consider running as Administrator only when required.</li>
+<li>PowerShell execution policy blocking scripts: <code>Get-ExecutionPolicy</code>; <code>Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned</code>.</li>
+<li>Wrong program due to PATH order: check with <code>Get-Command</code> (PowerShell) or <code>which -a</code> (Bash).</li>
+<li>Quoting paths with spaces: always wrap in quotes. PowerShell supports <code>-LiteralPath</code> for exact paths.</li>
+<li>Windows vs Linux line endings: use UTF-8; convert with <code>Set-Content -Encoding utf8</code> (PowerShell) or <code>dos2unix</code> (Bash).</li>
+</ul>
+<div class="sourceCode" id="cb91"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb91-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Get-Command</span> toolname</span>
+<span id="cb91-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">PATH</span> <span class="op">-split</span> <span class="st">';'</span> <span class="op">|</span> <span class="fu">Select-Object</span> <span class="op">-</span>First <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb92-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> toolname</span>
+<span id="cb92-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$PATH</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">':'</span> <span class="st">'\n'</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="headless-use-curl-with-web-services-powershell" class="slide level2">
+<h2>Headless: use curl with web services (PowerShell)</h2>
+<p>Use the real curl binary and quote URLs (PowerShell aliases <code>curl</code> to Invoke-WebRequest).</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb93-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">curl</span><span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>s <span class="st">"wttr.in/London?format=3"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="headless-use-curl-with-web-services-bash" class="slide level2">
+<h2>Headless: use curl with web services (Bash)</h2>
+<div class="sourceCode" id="cb94"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb94-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="st">'wttr.in/London?format=3'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="headless-youtube-title-and-thumbnail-powershell" class="slide level2">
+<h2>Headless: YouTube title and thumbnail (PowerShell)</h2>
+<p>Get a video title (no playback), then fetch a thumbnail image.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb95-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Force real curl and quote URL because of &amp; in the query</span></span>
+<span id="cb95-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">curl</span><span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>s <span class="st">"https://www.youtube.com/watch?v=dQw4w9WgXcQ"</span> <span class="op">|</span></span>
+<span id="cb95-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sls</span> <span class="st">'&lt;title&gt;.*&lt;/title&gt;'</span> <span class="op">|</span> <span class="op">%</span> <span class="op">{</span> <span class="va">$_</span><span class="op">.</span><span class="fu">Matches</span><span class="op">.</span><span class="fu">Value</span> <span class="op">}</span></span>
+<span id="cb95-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Or use Invoke-WebRequest directly</span></span>
+<span id="cb95-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="op">(</span><span class="fu">iwr</span> <span class="op">-</span>UseBasicParsing <span class="op">-</span>Headers @<span class="op">{</span> <span class="st">'User-Agent'</span> <span class="op">=</span> <span class="st">'curl'</span> <span class="op">}</span> <span class="op">-</span>Uri <span class="st">'https://www.youtube.com/watch?v=dQw4w9WgXcQ'</span><span class="op">).</span><span class="fu">Content</span> <span class="op">|</span></span>
+<span id="cb95-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sls</span> <span class="st">'&lt;title&gt;.*&lt;/title&gt;'</span> <span class="op">|</span> <span class="op">%</span> <span class="op">{</span> <span class="va">$_</span><span class="op">.</span><span class="fu">Matches</span><span class="op">.</span><span class="fu">Value</span> <span class="op">}</span></span>
+<span id="cb95-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">curl</span><span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>L <span class="op">-</span>o yt<span class="op">.</span><span class="fu">jpg</span> https<span class="op">://</span>img<span class="op">.</span><span class="fu">youtube</span><span class="op">.</span><span class="fu">com</span><span class="op">/</span>vi<span class="op">/</span>dQw4w9WgXcQ<span class="op">/</span>hqdefault<span class="op">.</span><span class="fu">jpg</span></span>
+<span id="cb95-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ii</span> yt<span class="op">.</span><span class="fu">jpg</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="headless-youtube-title-and-thumbnail-bash" class="slide level2">
+<h2>Headless: YouTube title and thumbnail (Bash)</h2>
+<div class="sourceCode" id="cb96"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb96-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="st">"https://www.youtube.com/watch?v=dQw4w9WgXcQ"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-o</span> <span class="st">'&lt;title&gt;.*&lt;/title&gt;'</span></span>
+<span id="cb96-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> <span class="at">-o</span> yt.jpg https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg</span>
+<span id="cb96-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional (Linux/macOS): open the image</span></span>
+<span id="cb96-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">xdg-open</span> yt.jpg <span class="dv">2</span><span class="op">&gt;</span>/dev/null <span class="kw">||</span> <span class="ex">open</span> yt.jpg <span class="dv">2</span><span class="op">&gt;</span>/dev/null <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"Open yt.jpg manually"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Gotchas:</p>
+<ul>
+<li>Campus proxies or firewalls can block curl; add <code>-L</code> to follow redirects.</li>
+<li>HTML can change; this demo is best-effort parsing just the <code>&lt;title&gt;</code> tag.</li>
+</ul>
+</section>
+<section id="mini-project-ml-dataset-scaffolding-create-folders" class="slide level2">
+<h2>Mini project: ML dataset scaffolding (create folders)</h2>
+<p>Goal: build <code>ml-demo</code> with <code>data/raw</code>, <code>data/train/{cat,dog}</code>, <code>data/test/{cat,dog}</code> using aliases.</p>
+<p>PowerShell:</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb97-1"><a href="" aria-hidden="true" tabindex="-1"></a>mkdir ml-demo<span class="op">/</span><span class="kw">data</span><span class="op">/</span>raw <span class="op">-</span>Force<span class="op">;</span> mkdir ml-demo<span class="op">/</span><span class="kw">data</span><span class="op">/</span>train<span class="op">/</span><span class="fu">cat</span> <span class="op">-</span>Force<span class="op">;</span> mkdir ml-demo<span class="op">/</span><span class="kw">data</span><span class="op">/</span>train<span class="op">/</span>dog <span class="op">-</span>Force<span class="op">;</span> mkdir ml-demo<span class="op">/</span><span class="kw">data</span><span class="op">/</span>test<span class="op">/</span><span class="fu">cat</span> <span class="op">-</span>Force<span class="op">;</span> mkdir ml-demo<span class="op">/</span><span class="kw">data</span><span class="op">/</span>test<span class="op">/</span>dog <span class="op">-</span>Force</span>
+<span id="cb97-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> ml-demo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Bash:</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb98-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ml-demo/data/raw ml-demo/data/train/cat ml-demo/data/train/dog ml-demo/data/test/cat ml-demo/data/test/dog</span>
+<span id="cb98-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ml-demo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="mini-project-ml-dataset-scaffolding-download-tiny-images" class="slide level2">
+<h2>Mini project: ML dataset scaffolding (download tiny images)</h2>
+<p>Download a few small images and save with names that include <code>cat</code> or <code>dog</code>.</p>
+<p>PowerShell and Bash:</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb99-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> data/raw</span>
+<span id="cb99-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> <span class="at">-o</span> cat1.jpg https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg</span>
+<span id="cb99-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> <span class="at">-o</span> cat2.jpg https://upload.wikimedia.org/wikipedia/commons/4/4c/Push_van_cat.jpg</span>
+<span id="cb99-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> <span class="at">-o</span> dog1.jpg https://upload.wikimedia.org/wikipedia/commons/5/52/Beagle1.jpg</span>
+<span id="cb99-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> <span class="at">-o</span> dog2.jpg https://upload.wikimedia.org/wikipedia/commons/3/3a/Chocolatebrown_Labrador_Retriever.jpg</span>
+<span id="cb99-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notes:</p>
+<ul>
+<li>URLs are public Wikimedia images; names include <code>cat</code> or <code>dog</code> for easy patterning.</li>
+</ul>
+</section>
+<section id="mini-project-ml-dataset-scaffolding-split-into-traintest" class="slide level2">
+<h2>Mini project: ML dataset scaffolding (split into train/test)</h2>
+<p>Copy by pattern into class folders using one-liners (no loops).</p>
+<p>PowerShell:</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb100-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="kw">data</span><span class="op">/</span>raw<span class="op">/</span><span class="fu">cat</span><span class="op">*.</span><span class="fu">jpg</span> <span class="kw">data</span><span class="op">/</span>train<span class="op">/</span><span class="fu">cat</span><span class="op">/</span></span>
+<span id="cb100-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="kw">data</span><span class="op">/</span>raw<span class="op">/</span>dog<span class="op">*.</span><span class="fu">jpg</span> <span class="kw">data</span><span class="op">/</span>train<span class="op">/</span>dog<span class="op">/</span></span>
+<span id="cb100-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> <span class="kw">data</span><span class="op">/</span>train<span class="op">/</span><span class="fu">cat</span><span class="op">/</span>cat2<span class="op">.</span><span class="fu">jpg</span> <span class="kw">data</span><span class="op">/</span>test<span class="op">/</span><span class="fu">cat</span><span class="op">/</span></span>
+<span id="cb100-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> <span class="kw">data</span><span class="op">/</span>train<span class="op">/</span>dog<span class="op">/</span>dog2<span class="op">.</span><span class="fu">jpg</span> <span class="kw">data</span><span class="op">/</span>test<span class="op">/</span>dog<span class="op">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Bash:</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb101-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> data/raw/cat<span class="pp">*</span>.jpg data/train/cat/</span>
+<span id="cb101-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> data/raw/dog<span class="pp">*</span>.jpg data/train/dog/</span>
+<span id="cb101-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> data/train/cat/cat2.jpg data/test/cat/</span>
+<span id="cb101-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> data/train/dog/dog2.jpg data/test/dog/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Explanation:</p>
+<ul>
+<li>Use globs (<code>cat*.jpg</code>, <code>dog*.jpg</code>) instead of loops to move sets of files.</li>
+</ul>
+</section>
+<section id="mini-project-ml-dataset-scaffolding-labels-csv" class="slide level2">
+<h2>Mini project: ML dataset scaffolding (labels CSV)</h2>
+<p>Create simple label CSVs: <code>filename,label</code>.</p>
+<p>PowerShell:</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb102-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="kw">data</span><span class="op">/</span>train<span class="op">/</span><span class="fu">cat</span> <span class="op">|</span> <span class="fu">select</span> <span class="op">-</span>Expand Name <span class="op">|</span> <span class="op">%</span> <span class="op">{</span> <span class="va">$_</span> <span class="op">+</span> <span class="st">',cat'</span> <span class="op">}</span> <span class="op">&gt;</span> <span class="kw">data</span><span class="op">/</span>train_labels<span class="op">.</span><span class="fu">csv</span></span>
+<span id="cb102-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="kw">data</span><span class="op">/</span>train<span class="op">/</span>dog <span class="op">|</span> <span class="fu">select</span> <span class="op">-</span>Expand Name <span class="op">|</span> <span class="op">%</span> <span class="op">{</span> <span class="va">$_</span> <span class="op">+</span> <span class="st">',dog'</span> <span class="op">}</span> <span class="op">&gt;&gt;</span> <span class="kw">data</span><span class="op">/</span>train_labels<span class="op">.</span><span class="fu">csv</span></span>
+<span id="cb102-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="kw">data</span><span class="op">/</span>test<span class="op">/</span><span class="fu">cat</span>  <span class="op">|</span> <span class="fu">select</span> <span class="op">-</span>Expand Name <span class="op">|</span> <span class="op">%</span> <span class="op">{</span> <span class="va">$_</span> <span class="op">+</span> <span class="st">',cat'</span> <span class="op">}</span> <span class="op">&gt;</span> <span class="kw">data</span><span class="op">/</span>test_labels<span class="op">.</span><span class="fu">csv</span></span>
+<span id="cb102-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="kw">data</span><span class="op">/</span>test<span class="op">/</span>dog  <span class="op">|</span> <span class="fu">select</span> <span class="op">-</span>Expand Name <span class="op">|</span> <span class="op">%</span> <span class="op">{</span> <span class="va">$_</span> <span class="op">+</span> <span class="st">',dog'</span> <span class="op">}</span> <span class="op">&gt;&gt;</span> <span class="kw">data</span><span class="op">/</span>test_labels<span class="op">.</span><span class="fu">csv</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Bash:</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb103-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> data/train/cat <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/$/,cat/'</span> <span class="op">&gt;</span> data/train_labels.csv</span>
+<span id="cb103-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> data/train/dog <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/$/,dog/'</span> <span class="op">&gt;&gt;</span> data/train_labels.csv</span>
+<span id="cb103-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> data/test/cat  <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/$/,cat/'</span> <span class="op">&gt;</span> data/test_labels.csv</span>
+<span id="cb103-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> data/test/dog  <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/$/,dog/'</span> <span class="op">&gt;&gt;</span> data/test_labels.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notes:</p>
+<ul>
+<li>These are starter labels; many ML tools accept CSV with filename and class.</li>
+<li>Keep paths relative to the dataset root for portability.</li>
+</ul>
+</section>
+<section id="wrap-up-and-glossary-windows" class="slide level2">
+<h2>Wrap-up and glossary (Windows)</h2>
+<ul>
+<li>Terminal vs Shell vs Program vs Process vs OS vs Kernel.</li>
+<li>Command resolution: current directory → system folders → <code>PATH</code>; <code>PATHEXT</code> helps, but <code>PATH</code> order decides.</li>
+<li>Commands = program → optional subcommand → options → arguments.</li>
+<li>Scripts accept arguments like larger tools; prefer explicit interpreter invocations when in doubt.</li>
+</ul>
+</section>
+<section id="reference" class="slide level2">
+<h2>Reference</h2>
+<p>These Windows-focused notes align with and extend the following resource:</p>
+<ul>
+<li>CLI Foundations on Windows — Student Notes: <code>https://josephmhango.github.io/professional-study-skills/slides/cli_windows_primer.html</code></li>
+</ul>
+<div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+
+</div>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="clis_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="clis_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="clis_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="clis_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="clis_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="clis_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="clis_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="clis_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="clis_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="clis_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="clis_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
