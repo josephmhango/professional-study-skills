@@ -1,0 +1,1340 @@
+---
+title: "Command-Line Interfaces: PowerShell and Bash"
+subtitle: "Professional and study skills"
+author: "Harper Adams University"
+css: scroll.css
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    toc: true
+    toc-depth: 3
+    incremental: false
+    code-line-numbers: false
+    chalkboard: true
+editor: visual
+---
+
+## Welcome
+
+This presentation teaches how to use a command-line interface (CLI) in two environments:
+
+- **Windows PowerShell**
+- **Bash** (as in Codespaces, Linux, or macOS)
+
+You will see the same task shown in both shells so you can match it to your own computer. All explanations are student-facing — read along, try the code, and compare the two versions.
+
+By the end you should be able to:
+
+1. Open a terminal/shell on your system.
+2. Understand the basic OS/shell vocabulary (program, process, shell, terminal, PATH).
+3. Navigate folders and work with files.
+4. Use built-in help.
+5. Save output to a file and understand redirection.
+6. Write a very small script (`.bat` or `.sh`).
+7. Read longer commands by breaking them into parts.
+
+---
+
+## How to use this deck
+
+- Learn a concept, see a short demo, then try it yourself.
+- “Try it” activities are sprinkled throughout for hands-on practice.
+- “Gotchas” callouts highlight common mistakes and quick fixes.
+- You can follow along in PowerShell or Bash; both are shown side-by-side.
+- This deck is beginner-friendly and builds concepts progressively.
+
+::: callout-note
+If your terminal isn’t where the slides expect, use `Get-Location` (PowerShell) or `pwd` (Bash) to confirm, then `cd` to move.
+:::
+
+---
+
+## 1. Why CLI?
+
+- Sometimes GUIs (File Explorer, Finder) are slower or hard to document.
+- Many data, dev, and cloud tools assume you know *some* CLI.
+- CLI is easy to copy/paste and share with teammates.
+- Scripts let you repeat work exactly the same way.
+
+We will use two shells, but focus on **concepts that stay the same**.
+
+---
+
+## 2. Core Concepts
+
+Before typing commands, it helps to know what is actually running.
+
+- **Program**: Code on disk. Example: `/bin/bash`, `/usr/bin/python3`, `C:\Windows\System32\cmd.exe`, `hello.sh`. A program by itself is **not** running.
+- **Process**: A running instance of a program. It has its own memory, open files, and environment variables.
+- **Operating System (OS)**: Software that manages hardware, files, networking, memory, scheduling. Windows, Linux, macOS.
+- **Kernel**: The privileged core of the OS that schedules processes and mediates access to hardware. You don't "run" the kernel directly; programs call it.
+- **Shell**: A program that you interact with that parses what you type and starts other programs. Examples: `bash`, `zsh`, `cmd`, `powershell`.
+- **Terminal**: The window/host that displays the shell (VS Code Terminal, GNOME Terminal, iTerm2, Windows Terminal). Think of it as the container; the shell is the interpreter inside it.
+- **Console**: The text-based input/output surface where you type and see results. Historically a physical screen/keyboard; today the console surface is provided by a terminal app (e.g., Windows Terminal) hosting a shell.
+
+**Why this matters:** the shell (a program) creates other processes to run your commands, and the OS makes that safe and efficient. Keep this model in mind.
+
+Note on the word “kernel”: In this deck, “kernel” means the OS core (privileged part of Windows/Linux/macOS). In Jupyter, a “kernel” is a normal user-space process (e.g., the IPython kernel) that runs your notebook code and talks to Jupyter over a protocol. Jupyter kernels are not the operating system kernel.
+
+---
+
+## 2.1 Which shell am I running? (bash side)
+
+In bash (Codespaces, Linux, macOS):
+
+```bash
+echo "$0"            # often -bash or bash
+printf "SHELL=%s\n" "$SHELL"
+ps -p $$ -o comm=      # show the current shell process
+which bash             # where is bash located?
+command -v bash        # also shows location
+```
+
+This tells you what program is acting as your shell.
+
+---
+
+## 2.2 Which shell am I running? (Windows side)
+
+In Windows you might see different prompts:
+
+- `PS C:\Users\you>` → this is **PowerShell**
+
+In this presentation we use **PowerShell aliases** (`ls`, `cd`, `mkdir`, `pwd`, `cat`, `rm`, `mv`, `cp`) to stay close to Bash. We’ll introduce longer cmdlets later as needed.
+
+---
+
+## 3. Opening the terminal
+
+### Windows PowerShell
+
+1. Press **Win + X** and choose **Windows Terminal** (PowerShell), or press Start and type “PowerShell” and open it.
+2. You should see something like:
+
+```text
+PS C:\Users\student>
+```
+
+### Bash (Codespaces / VS Code / Linux / macOS)
+
+1. Open **VS Code**.
+2. View → Terminal.
+3. Make sure it says `bash` in the terminal tab.
+4. You should see something like:
+
+```text
+student@machine:/workspaces/project$
+```
+
+If your prompt looks slightly different, that is okay.
+
+---
+
+## 4. First command: list current files
+
+**Windows PowerShell**
+```powershell
+ls
+```
+
+What this does:
+
+- Lists files and folders in your current working directory.
+- In PowerShell, `ls` is an alias for listing items; in Bash, it is the native list command.
+
+**Bash**
+```bash
+ls
+```
+
+Both show files and folders in the current directory.
+
+If you get an error, check spelling — CLI is strict.
+
+---
+
+## 5. How the shell runs a command (bash view)
+
+When you press Enter:
+
+1. The shell parses your input into a command and arguments.
+2. It resolves the command to a path by searching:
+   - a path you typed explicitly (`./myscript.sh`, `/usr/bin/python3`), or
+   - each directory in the `PATH` environment variable, in order.
+3. It asks the OS to start a **new process** for that program, passing environment variables.
+
+This means **PATH order** decides which copy of a tool you actually run.
+
+```bash
+# show PATH entries, one per line
+printf "%s\n" ${PATH//:/$'\n'} | head
+
+# which program will run when I type 'git'?
+which -a git
+command -v git
+
+echo "$PATH"    # raw PATH
+```
+
+---
+
+## 6. Current working directory (CWD)
+
+Your shell always has a **current working directory**. Relative paths are interpreted from here.
+
+- Bash:
+  ```bash
+  pwd      # print working directory
+  ```
+- PowerShell:
+  ```powershell
+  pwd   # print working directory
+  ```
+
+Why this matters:
+
+- Your current directory is the reference point for relative paths.
+- Many “file not found” errors happen because you’re in the wrong folder.
+
+If a command fails, first check where you are.
+
+---
+
+## 7. Moving between folders
+
+To go **into** a folder:
+
+- PowerShell:
+  ```powershell
+  cd Documents
+  ```
+- Bash:
+  ```bash
+  cd Documents
+  ```
+
+To go **up** one level (parent folder):
+
+- PowerShell:
+  ```powershell
+  cd ..
+  ```
+- Bash:
+  ```bash
+  cd ..
+  ```
+
+`..` means “the folder above this one” in both.
+
+---
+
+## 8. Going home
+
+Sometimes you just want to go to your user home.
+
+- PowerShell:
+  ```powershell
+  cd ~   # or: Set-Location ~
+  ```
+- Bash:
+  ```bash
+  cd ~
+  ```
+
+After that you can run `ls` to check what is there.
+
+Notes:
+
+- `~` is a shortcut for your home folder on both shells.
+- Use absolute paths for clarity; use relative paths for convenience inside a project.
+
+---
+
+## 9. Paths explained
+
+A **path** is how you tell the shell where something lives.
+
+- Windows uses **backslashes**:
+  ```text
+  C:\Users\student\cli_lab
+  ```
+- Bash uses **forward slashes**:
+  ```text
+  /home/student/cli_lab
+  ```
+
+Special names:
+
+- `.` → current directory
+- `..` → parent directory
+- `~` → home directory (bash, PowerShell)
+
+If you copy a Bash path into PowerShell, it will fail, and vice versa. Use the right slash for your shell.
+
+---
+
+## 10. Absolute vs relative paths
+
+- **Absolute path**: starts from the root of the file system.
+  - PowerShell (Windows): `C:\Users\student\Documents`
+  - Bash: `/home/student/Documents`
+- **Relative path**: starts from where you are right now.
+  - If you are in `C:\Users\student`, then `cd Documents` is enough.
+
+Use absolute paths when you need to be clear. Use relative paths when working inside a project.
+
+---
+
+## 11. Making folders
+
+We often create a lab/work folder.
+
+- PowerShell:
+  ```powershell
+  mkdir cli_lab
+  ```
+- Bash:
+  ```bash
+  mkdir cli_lab
+  ```
+
+Then go into it:
+
+```text
+cd cli_lab
+```
+
+Now `ls` should show it is (probably) empty.
+
+---
+
+## 12. Creating files
+
+This is different for PowerShell and Bash.
+
+**PowerShell:**
+```powershell
+ni notes.txt | Out-Null
+```
+Creates an empty file.
+
+Why this pattern:
+
+- `ni` is a short alias for creating files/folders.
+- `Out-Null` hides extra output to keep the screen clean.
+
+**Bash:**
+```bash
+touch notes.txt
+```
+
+After creating, list files to confirm.
+
+Common mistake: trying `touch` in PowerShell → use `New-Item` (or `ni` alias) instead.
+
+---
+
+## 13. Anatomy of a command
+
+Most commands can be read like this:
+
+```text
+command  [subcommand]  [options/flags]  [arguments]
+```
+
+Examples:
+
+```bash
+ls -1R "./Data Files"
+```
+- `ls` = command
+- `-1R` = flags/options (one per line, recursive)
+- `"./Data Files"` = argument (a path with spaces → must be quoted)
+
+```bash
+git log --oneline --graph --decorate --all
+```
+- `git` = command
+- `log` = subcommand
+- `--oneline --graph --decorate --all` = options that refine the output
+
+Once you can label these parts, long commands become readable.
+
+---
+
+## 14. Practice: build a small workspace
+
+Try to do this in **your** shell.
+
+1. Go to your home directory.
+2. Make a folder `project`.
+3. Go into `project`.
+4. Make a folder `data`.
+5. Go into `data`.
+6. Create an empty file `readme.txt`.
+7. Go back to `project` and list files.
+
+**Possible PowerShell solution**
+```powershell
+cd ~
+mkdir project
+cd project
+mkdir data
+cd data
+ni readme.txt | Out-Null
+cd ..
+ls
+```
+
+**Possible bash solution**
+```bash
+cd ~
+mkdir project
+cd project
+mkdir data
+cd data
+touch readme.txt
+cd ..
+ls
+```
+
+---
+
+## 15. Listing with options
+
+Sometimes you want to see more detail.
+
+**PowerShell:**
+```powershell
+ls -Force                 # include hidden files
+ls | fl                   # detailed properties (Format-List)
+ls | select Name,Length,LastWriteTime
+```
+
+What this does:
+
+- `-Force` shows hidden/system items.
+- `fl` (Format-List) displays all properties clearly for the output.
+- `select` picks the most useful columns.
+
+**Bash:**
+```bash
+ls -a      # all files, including hidden
+ls -l      # long format
+ls -al     # all + long format
+```
+
+Notice: In Bash options use `-` or `--`; in PowerShell options are typically named parameters (e.g., `-Force`).
+
+---
+
+## 16. Getting help from the shell
+
+You do not have to memorise every option.
+
+**PowerShell:**
+```powershell
+help ls -Full
+Get-Help ls -Online
+Get-Command ls       # see which command will run
+```
+
+Tips:
+
+- `help` shows usage and parameters with examples.
+- `Get-Command` reveals exactly which command/alias/function will run for a name.
+
+**Bash:**
+```bash
+ls --help
+```
+or
+```bash
+man ls
+```
+`man` opens the manual page; press `q` to quit.
+
+If you get stuck, ask the command for help first.
+
+---
+
+## 17. Show hidden files (task)
+
+Goal: show all files, including hidden ones, in the current directory.
+
+- In PowerShell, the `-Force` parameter includes hidden files:
+  ```powershell
+  ls -Force
+  ```
+- In Bash, `-a` includes hidden files:
+  ```bash
+  ls -a
+  ```
+
+Why hidden files exist:
+
+- Bash uses leading dots (e.g., `.env`), while Windows uses attributes.
+- Hidden files are common for configuration and caches.
+
+If nothing new appears, you may not have hidden files yet.
+
+---
+
+## 18. Redirection: save output to a file
+
+We can send the output of a command into a file using `>` (or use `Out-File` in PowerShell).
+
+**PowerShell:**
+```powershell
+ls > listing.txt
+# or explicitly:
+ls | Out-File -FilePath listing.txt -Encoding utf8
+```
+
+What this does:
+
+- `>` overwrites (creates if missing). `>>` appends.
+- `Out-File` lets you control encoding (UTF‑8 recommended).
+
+**Bash:**
+```bash
+ls > listing.txt
+```
+
+Then view the file:
+
+- PowerShell:
+  ```powershell
+  cat listing.txt
+  ```
+- Bash:
+  ```bash
+  cat listing.txt
+  ```
+
+If you run the command again with `>`, it overwrites the file.
+
+---
+
+## 19. Append instead of overwrite
+
+Use `>>` to add to the end of a file.
+
+**PowerShell:**
+```powershell
+ls >> listing.txt
+# or:
+ls | Out-File -FilePath listing.txt -Append
+```
+
+Append vs overwrite:
+
+- Use `>>` when you want to keep previous results and add new ones to the end.
+
+**Bash:**
+```bash
+ls >> listing.txt
+```
+
+Now `listing.txt` will have two sections.
+
+---
+
+## PowerShell and Bash — Deep Dive
+
+This section is a practical reference that teaches PowerShell (Windows) and Bash (Codespaces/Linux/macOS) side-by-side. It explains command resolution, `PATH`, pipelines, file operations, scripting, and troubleshooting, with instructor-ready exercises and gotchas called out.
+
+---
+
+## What you will learn (deep dive)
+
+By the end of this deep dive you will be able to:
+
+- Explain how Windows resolves and runs commands (current directory, system folders, `PATH`, and `PATHEXT`).
+- Inspect and manage your `PATH` safely; confirm which program will run.
+- Navigate with absolute vs relative paths; switch drives correctly.
+- Understand the anatomy of commands and pass arguments to scripts.
+- Use productive PowerShell and Bash patterns for searching, filtering, composing, and file operations.
+- Use redirection, piping, chaining, loops, and guard rails.
+- Manage environment variables, create virtual environments, and call tools deterministically.
+- Verify file integrity, compress/expand archives, and handle large files.
+- Run quick networking diagnostics and downloads.
+- Apply real-world recipes and troubleshoot common issues (including “pip is not recognized”).
+
+---
+
+## Core concepts (recap + quick checks)
+
+- Program vs Process vs OS vs Kernel vs Shell vs Terminal (see earlier).
+- Quick checks in PowerShell:
+
+```powershell
+$PSVersionTable
+(Get-Process -Id $PID).Path  # which executable is this shell?
+```
+
+In Bash:
+
+```bash
+echo "$SHELL"
+ps -p $$ -o comm=
+```
+
+---
+
+## How commands are found and run (resolution and launch)
+
+When you press Enter in a shell:
+
+1. Parses your input (program + arguments).
+2. Resolves the program to a file path.
+   - PowerShell on Windows: checks current directory, system folders, then the directories in `PATH` (first match wins). `PATHEXT` helps resolve extensions like `.EXE;.BAT;.CMD;.PS1`.
+   - Bash: checks explicit/relative paths (e.g., `./tool`) first; otherwise searches each directory in `$PATH` (first match wins). Executable bit must be set for scripts.
+3. Starts a new process for that program, passing environment variables.
+
+Notes:
+
+- On Windows, `PATHEXT` controls which extensions are considered executable; `PATH` order is decisive.
+- On Linux/macOS, scripts need execute permissions (`chmod +x script.sh`) or run via interpreter (`bash script.sh`, `python script.py`).
+
+PowerShell checks:
+
+```powershell
+$env:PATH -split ';' | Select-Object -First 10
+where.exe git
+```
+
+Bash checks:
+
+```bash
+echo "$PATH" | tr ':' '\n' | head
+which -a git
+command -v git
+```
+
+Tip: Use `where.exe toolname` (or `Get-Command` in PowerShell) to confirm what will run.
+
+---
+
+## Current directory and paths
+
+- The current working directory (CWD) anchors relative paths in both shells.
+- PowerShell on Windows considers the CWD before `PATH`; a tool in the current folder can mask another on `PATH`.
+- Prefer explicit paths in scripts.
+
+```powershell
+Set-Location C:\Projects\demo
+.\script.ps1 -Name Alice
+```
+
+In Bash, run scripts explicitly:
+
+```bash
+cd ~/Projects/demo
+./script.sh Alice
+```
+
+---
+
+## Anatomy of a command and passing arguments
+
+Structure:
+
+```text
+program [optional-subcommand] [options/flags] [arguments]
+```
+
+Examples:
+
+PowerShell:
+```powershell
+ls -Recurse -Filter *.csv
+```
+
+Bash:
+```bash
+ls -1R "./Data Files"
+```
+
+### Scripts that accept arguments
+
+`hello.ps1`:
+```powershell
+param([string]$Name = "World")
+Write-Host "Hello, $Name!"
+```
+
+`hello.sh`:
+```bash
+#!/usr/bin/env bash
+name="${1:-World}"
+echo "Hello, ${name}!"
+```
+
+---
+
+## PowerShell productivity: setup and shell basics
+
+- Think of the prompt (e.g., `PS C:\Users\you>`) as your “camera position.”
+- Absolute paths include the drive (`C:\data\projects`); relative paths depend on CWD.
+- Useful variables: `$HOME`, `$env:USERPROFILE`, `$env:TEMP`, `$PWD`.
+- Quote paths with spaces: `"C:\My Data\file.csv"`.
+- Change drives by typing `D:`; `Set-Location` works across PSDrives.
+
+::: callout-warning
+PowerShell pipelines pass objects, not plain text. Use `Select-Object`, `Where-Object`, `Sort-Object` to transform data; convert to text late (e.g., `Format-Table` for display only).
+:::
+
+---
+
+## Find files by pattern (PowerShell)
+
+Use recursive search to list matching files anywhere under the current folder.
+
+```powershell
+ls -Recurse -Filter *.csv
+```
+
+---
+
+## Which program will run (PowerShell)
+
+Check the exact command that will execute when you type a name.
+
+```powershell
+Get-Command python
+```
+
+---
+
+## Filter names and save (PowerShell)
+
+Select only names containing `_final`, sort them, and save to a text file.
+
+```powershell
+ls -Recurse -Filter *.csv | where Name -match '_final' | sort Name > finals.txt
+```
+
+---
+
+## Find files by pattern (Bash)
+
+Use recursive search to list matching files anywhere under the current folder.
+
+```bash
+find . -type f -name "*.csv"
+```
+
+---
+
+## Which program will run (Bash)
+
+Check the exact command that will execute when you type a name.
+
+```bash
+which python
+```
+
+---
+
+## Filter names and save (Bash)
+
+Select only names containing `_final`, sort them, and save to a text file.
+
+```bash
+find . -type f -name "*.csv" | grep -i "_final" | sort > finals.txt
+```
+
+---
+
+## Filter, sort, and compose
+
+PowerShell:
+```powershell
+cat server.log | sls 'timeout|error' | sort > errors_timeout.txt
+```
+
+Explanation:
+
+- `sls` (Select-String) searches for lines matching patterns.
+- `sort` sorts lines alphabetically.
+- Output is saved to `errors_timeout.txt`.
+
+Bash:
+```bash
+cat server.log | grep -Ei "timeout|error" | sort > errors_timeout.txt
+```
+
+Explanation:
+
+- `grep -E` enables extended regex; `-i` ignores case.
+- `sort` sorts lines alphabetically.
+- Output is saved to `errors_timeout.txt`.
+
+---
+
+## Make, copy, move, rename, delete
+
+PowerShell:
+```powershell
+mkdir "C:\data\archive" | Out-Null
+cp source.csv "C:\data\backup\source.csv" -Force
+mv results.txt results\results.txt -Force
+ren old_name.txt new_name.txt
+rm *.tmp -Force
+rm "C:\data\old_project" -Recurse -Force
+```
+
+Explanation:
+
+- `mkdir` creates a folder if missing.
+- `cp`, `mv`, `ren`, `rm` mirror Bash names for copy/move/rename/remove.
+- `-Force` overwrites without prompts; use carefully.
+
+Bash:
+```bash
+mkdir -p ~/data/archive
+cp -f source.csv ~/data/backup/source.csv
+mv -f results.txt results/results.txt
+mv old_name.txt new_name.txt
+rm -f *.tmp
+rm -rf ~/data/old_project
+```
+
+Explanation:
+
+- `-p` ensures parent folders exist.
+- `-f` forces overwrite; `-r` is recursive for folders.
+
+::: callout-warning
+These deletes are permanent. Test on a sandbox folder first.
+:::
+
+---
+
+## Viewing and slicing files
+
+PowerShell:
+```powershell
+cat data.csv -TotalCount 20   # head
+cat data.csv -Tail 20         # tail
+cat data.csv | measure -Line  # line count
+```
+
+Why:
+
+- Skim the first or last lines before processing a large file.
+- Quick line counts can help estimate data size and chunking.
+
+Bash:
+```bash
+head -n 20 data.csv
+tail -n 20 data.csv
+wc -l data.csv
+```
+
+Why:
+
+- Same idea in Bash using `head`, `tail`, and `wc`.
+
+---
+
+## Save a list to a file (overwrite) — PowerShell
+
+Write the list of parquet files to a new file (replace if it exists).
+
+```powershell
+ls -Recurse -Filter *.parquet > all_parquet.txt
+```
+
+---
+
+## Append to an existing file — PowerShell
+
+Add CSV filenames to the end of an existing file.
+
+```powershell
+ls -Recurse -Filter *.csv >> all_csv.txt
+```
+
+---
+
+## Save a list to a file (overwrite) — Bash
+
+Write the list of parquet files to a new file (replace if it exists).
+
+```bash
+find . -type f -name "*.parquet" > all_parquet.txt
+```
+
+---
+
+## Append to an existing file — Bash
+
+Add CSV filenames to the end of an existing file.
+
+```bash
+find . -type f -name "*.csv" >> all_csv.txt
+```
+
+---
+
+## Run next step only on success — PowerShell
+
+Log all output from the first script; run the second only if it succeeded.
+
+```powershell
+.\etl_step.ps1 *> etl.log; if ($?) { .\train_model.ps1 }
+```
+
+---
+
+## Run next step only on success — Bash
+
+Merge stderr into the log and only run the next command if the first succeeded.
+
+```bash
+./etl_step.sh > etl.log 2>&1 && ./train_model.sh
+```
+
+:::: callout-note
+PowerShell passes objects in pipelines; Bash passes text. Convert to text in PowerShell only when needed for display or file output.
+::::
+
+---
+
+## Loop basics (PowerShell)
+
+Count from 1 to 10 and print each number.
+
+```powershell
+foreach ($i in 1..10) { $i }
+```
+
+What this means:
+
+- `1..10` makes the sequence 1,2,...,10.
+- `foreach` runs the block once per number; `$i` is the current number.
+
+---
+
+## Loop basics (Bash)
+
+Count from 1 to 10 and print each number.
+
+```bash
+for i in {1..10}; do echo "$i"; done
+```
+
+What this means:
+
+- `{1..10}` expands to 1 2 ... 10.
+- `for i in ...` iterates the list; `echo "$i"` prints the current value.
+
+---
+
+## Guard rails: basic if (file exists) — PowerShell
+
+Check for a file and print a simple message.
+
+```powershell
+if (Test-Path 'notes.txt') { 'Found notes.txt' } else { 'Not found' }
+```
+
+---
+
+## Guard rails: basic if (file exists) — Bash
+
+Check for a file and print a simple message.
+
+```bash
+if [ -f "notes.txt" ]; then echo "Found notes.txt"; else echo "Not found"; fi
+```
+
+---
+
+## Conditions: compare values — PowerShell
+
+Test a variable value and act.
+
+```powershell
+$x = 10; if ($x -eq 10) { 'x is ten' } else { 'x is not ten' }
+```
+
+---
+
+## Conditions: compare values — Bash
+
+Test a variable value and act.
+
+```bash
+x=10; if [ "$x" = "10" ]; then echo "x is ten"; else echo "x is not ten"; fi
+```
+
+---
+
+## Environment variables and PATH
+
+PowerShell (session):
+```powershell
+$env:MYVAR = "hello"
+Write-Output $env:MYVAR
+$env:PATH -split ';' | Select-Object -First 5
+```
+
+Notes:
+
+- Assigning `$env:NAME` affects only the current terminal.
+- Splitting `PATH` shows the first few directories that will be searched.
+
+PowerShell (persist for user):
+```powershell
+[System.Environment]::SetEnvironmentVariable('MYVAR','hello','User')
+```
+
+Note:
+
+- Reopen your terminal to see persisted changes.
+
+Bash:
+```bash
+export MYVAR=hello
+echo "$MYVAR"
+echo "$PATH" | tr ':' '\n' | head -5
+```
+
+Notes:
+
+- `export` sets an environment variable for the current shell (and children).
+- `PATH` order determines which program runs when names collide.
+
+Interpreter selection (both):
+```powershell
+# PowerShell
+Get-Command python
+python --version
+python -m pip --version
+```
+```bash
+# Bash
+which python
+python --version
+python -m pip --version
+```
+
+---
+
+## Networking odds and ends
+
+PowerShell:
+```powershell
+# Prefer the real curl binary and quote URLs in PowerShell
+curl.exe -L -o data.zip "https://example.com/data.zip"
+# Or use Invoke-WebRequest
+Invoke-WebRequest -Uri "https://example.com/data.zip" -OutFile data.zip
+Test-Connection 8.8.8.8 -Count 2
+```
+
+Why:
+
+- `curl` downloads, `Test-Connection` pings — quick network checks.
+
+Bash:
+```bash
+curl -s 'wttr.in/London?format=3'
+```
+
+Why:
+
+- Same flow in Bash: download and basic connectivity test.
+
+---
+
+## How tools run: transferable model
+
+Two patterns:
+
+- Run a standalone program on PATH (e.g., `git`, `Rscript`).
+- Run an interpreter with a module/script (e.g., `python -m pip`, `node script.js`).
+
+Check what will run:
+
+PowerShell: `Get-Command toolname`  ·  Bash: `which toolname`
+
+---
+
+## Python: why use the launcher and -m
+
+- `py -3.11` (Windows) chooses a specific Python.
+- `-m pip` uses pip tied to that interpreter (no ambiguity).
+
+PowerShell:
+```powershell
+py -3.11 -m venv .venv
+python -m pip --version
+```
+
+Bash:
+```bash
+python3 -m venv .venv
+python -m pip --version
+```
+
+---
+
+## Activation: what it changes
+
+Activation prepends the venv’s `bin/Scripts` folder to PATH so `python`/`pip` resolve to the venv.
+
+PowerShell:
+```powershell
+.\.venv\Scripts\Activate.ps1; Get-Command python
+```
+
+Bash:
+```bash
+source .venv/bin/activate; which python
+```
+
+---
+
+## Install and run with the pinned interpreter
+
+Call pip via the interpreter, then verify.
+
+PowerShell:
+```powershell
+python -m pip install -U pip; python -c "import sys; print(sys.executable)"
+```
+
+Bash:
+```bash
+python -m pip install -U pip; python -c "import sys; print(sys.executable)"
+```
+
+---
+
+## Other tools follow the same idea
+
+Examples of CLI entry points:
+
+- R: `Rscript script.R`
+- Node: `node script.js`
+- Java: `java -jar app.jar`
+
+PowerShell and Bash (same):
+```bash
+Rscript my_analysis.R
+```
+
+:::: callout-warning
+If PowerShell blocks script activation scripts, run: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` and restart the terminal. For one file: `Unblock-File .\\.venv\\Scripts\\Activate.ps1`.
+::::
+
+---
+
+
+
+## Troubleshooting: “‘pip’ is not recognized”
+
+Checklist:
+
+1. Verify `pip` and `python` are on PATH for this session.
+2. Confirm which copies will run (there may be multiple installations).
+3. If using Conda/venv, activate the intended environment so PATH updates.
+4. Prefer `python -m pip ...` to remove ambiguity.
+
+PowerShell:
+
+```powershell
+where.exe pip
+where.exe python
+$env:PATH -split ';' | Select-Object -First 10
+python -m pip --version
+```
+
+Bash:
+```bash
+which pip
+which python
+echo "$PATH" | tr ':' '\n' | head -10
+python -m pip --version
+```
+
+---
+
+## Troubleshooting quick hits (PowerShell and Bash)
+
+- Command not found: verify install and PATH (`Get-Command tool` in PowerShell, `which tool` in Bash).
+- Access denied: try a location you own; on PowerShell consider running as Administrator only when required.
+- PowerShell execution policy blocking scripts: `Get-ExecutionPolicy`; `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`.
+- Wrong program due to PATH order: check with `Get-Command` (PowerShell) or `which -a` (Bash).
+- Quoting paths with spaces: always wrap in quotes. PowerShell supports `-LiteralPath` for exact paths.
+- Windows vs Linux line endings: use UTF-8; convert with `Set-Content -Encoding utf8` (PowerShell) or `dos2unix` (Bash).
+
+```powershell
+Get-Command toolname
+$env:PATH -split ';' | Select-Object -First 10
+```
+```bash
+which toolname
+echo "$PATH" | tr ':' '\n' | head -10
+```
+
+---
+
+## Headless: use curl with web services (PowerShell)
+
+Use the real curl binary and quote URLs (PowerShell aliases `curl` to Invoke-WebRequest).
+
+```powershell
+curl.exe -s "wttr.in/London?format=3"
+```
+
+## Headless: use curl with web services (Bash)
+
+```bash
+curl -s 'wttr.in/London?format=3'
+```
+
+---
+
+## Headless: YouTube title and thumbnail (PowerShell)
+
+Get a video title (no playback), then fetch a thumbnail image.
+
+```powershell
+# Force real curl and quote URL because of & in the query
+curl.exe -s "https://www.youtube.com/watch?v=dQw4w9WgXcQ" |
+  sls '<title>.*</title>' | % { $_.Matches.Value }
+
+# Or use Invoke-WebRequest directly
+(iwr -UseBasicParsing -Headers @{ 'User-Agent' = 'curl' } -Uri 'https://www.youtube.com/watch?v=dQw4w9WgXcQ').Content |
+  sls '<title>.*</title>' | % { $_.Matches.Value }
+
+curl.exe -L -o yt.jpg https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg
+ii yt.jpg
+```
+
+## Headless: YouTube title and thumbnail (Bash)
+
+```bash
+curl -s "https://www.youtube.com/watch?v=dQw4w9WgXcQ" | grep -o '<title>.*</title>'
+curl -L -o yt.jpg https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg
+# Optional (Linux/macOS): open the image
+xdg-open yt.jpg 2>/dev/null || open yt.jpg 2>/dev/null || echo "Open yt.jpg manually"
+```
+
+Gotchas:
+
+- Campus proxies or firewalls can block curl; add `-L` to follow redirects.
+- HTML can change; this demo is best-effort parsing just the `<title>` tag.
+
+---
+
+## Mini project: ML dataset scaffolding (create folders)
+
+Goal: build `ml-demo` with `data/raw`, `data/train/{cat,dog}`, `data/test/{cat,dog}` using aliases.
+
+PowerShell:
+```powershell
+mkdir ml-demo/data/raw -Force; mkdir ml-demo/data/train/cat -Force; mkdir ml-demo/data/train/dog -Force; mkdir ml-demo/data/test/cat -Force; mkdir ml-demo/data/test/dog -Force
+cd ml-demo
+```
+
+Bash:
+```bash
+mkdir -p ml-demo/data/raw ml-demo/data/train/cat ml-demo/data/train/dog ml-demo/data/test/cat ml-demo/data/test/dog
+cd ml-demo
+```
+
+---
+
+## Mini project: ML dataset scaffolding (download tiny images)
+
+Download a few small images and save with names that include `cat` or `dog`.
+
+PowerShell and Bash:
+```bash
+cd data/raw
+curl -L -o cat1.jpg https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg
+curl -L -o cat2.jpg https://upload.wikimedia.org/wikipedia/commons/4/4c/Push_van_cat.jpg
+curl -L -o dog1.jpg https://upload.wikimedia.org/wikipedia/commons/5/52/Beagle1.jpg
+curl -L -o dog2.jpg https://upload.wikimedia.org/wikipedia/commons/3/3a/Chocolatebrown_Labrador_Retriever.jpg
+cd ../..
+```
+
+Notes:
+
+- URLs are public Wikimedia images; names include `cat` or `dog` for easy patterning.
+
+---
+
+## Mini project: ML dataset scaffolding (split into train/test)
+
+Copy by pattern into class folders using one-liners (no loops).
+
+PowerShell:
+```powershell
+cp data/raw/cat*.jpg data/train/cat/
+cp data/raw/dog*.jpg data/train/dog/
+mv data/train/cat/cat2.jpg data/test/cat/
+mv data/train/dog/dog2.jpg data/test/dog/
+```
+
+Bash:
+```bash
+cp data/raw/cat*.jpg data/train/cat/
+cp data/raw/dog*.jpg data/train/dog/
+mv data/train/cat/cat2.jpg data/test/cat/
+mv data/train/dog/dog2.jpg data/test/dog/
+```
+
+Explanation:
+
+- Use globs (`cat*.jpg`, `dog*.jpg`) instead of loops to move sets of files.
+
+---
+
+## Mini project: ML dataset scaffolding (labels CSV)
+
+Create simple label CSVs: `filename,label`.
+
+PowerShell:
+```powershell
+ls data/train/cat | select -Expand Name | % { $_ + ',cat' } > data/train_labels.csv
+ls data/train/dog | select -Expand Name | % { $_ + ',dog' } >> data/train_labels.csv
+ls data/test/cat  | select -Expand Name | % { $_ + ',cat' } > data/test_labels.csv
+ls data/test/dog  | select -Expand Name | % { $_ + ',dog' } >> data/test_labels.csv
+```
+
+Bash:
+```bash
+ls data/train/cat | sed 's/$/,cat/' > data/train_labels.csv
+ls data/train/dog | sed 's/$/,dog/' >> data/train_labels.csv
+ls data/test/cat  | sed 's/$/,cat/' > data/test_labels.csv
+ls data/test/dog  | sed 's/$/,dog/' >> data/test_labels.csv
+```
+
+Notes:
+
+- These are starter labels; many ML tools accept CSV with filename and class.
+- Keep paths relative to the dataset root for portability.
+
+---
+
+## Wrap-up and glossary (Windows)
+
+- Terminal vs Shell vs Program vs Process vs OS vs Kernel.
+- Command resolution: current directory → system folders → `PATH`; `PATHEXT` helps, but `PATH` order decides.
+- Commands = program → optional subcommand → options → arguments.
+- Scripts accept arguments like larger tools; prefer explicit interpreter invocations when in doubt.
+
+---
+
+## Reference
+
+These Windows-focused notes align with and extend the following resource:
+
+- CLI Foundations on Windows — Student Notes: `https://josephmhango.github.io/professional-study-skills/slides/cli_windows_primer.html`
