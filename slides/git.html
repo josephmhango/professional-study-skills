@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="git_files/libs/clipboard/clipboard.min.js"></script>
+<script src="git_files/libs/quarto-html/tabby.min.js"></script>
+<script src="git_files/libs/quarto-html/popper.min.js"></script>
+<script src="git_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="git_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="git_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="git_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="git_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.57">
+
+  <meta name="author" content="Joseph Mhango">
+  <title>GitHub and collaboration</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="git_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="git_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="git_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="scroll.css">
+  <link href="git_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="git_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="git_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="git_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="git_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="git_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">GitHub and collaboration</h1>
+  <p class="subtitle">Professional and study skills</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Joseph Mhango 
+</div>
+</div>
+</div>
+
+</section><section id="TOC">
+<nav role="doc-toc"> 
+<h2 id="toc-title">Table of contents</h2>
+<ul>
+<li><a href="#/welcome-and-goals" id="/toc-welcome-and-goals">Welcome and goals</a></li>
+<li><a href="#/big-picture-git-github-codespaces" id="/toc-big-picture-git-github-codespaces">Big picture: Git, GitHub, Codespaces</a></li>
+<li><a href="#/git-as-a-library-of-functions" id="/toc-git-as-a-library-of-functions">Git as a library of functions</a></li>
+<li><a href="#/repositories-and-the-three-areas" id="/toc-repositories-and-the-three-areas">Repositories and the three areas</a></li>
+<li><a href="#/starting-in-codespaces" id="/toc-starting-in-codespaces">Starting in Codespaces</a>
+<ul>
+<li><a href="#/starting-in-codespaces" id="/toc-opening-a-codespace">Opening a Codespace</a></li>
+<li><a href="#/starting-in-codespaces" id="/toc-check-that-git-is-available">Check that Git is available</a></li>
+<li><a href="#/starting-in-codespaces" id="/toc-configure-your-identity-once-per-codespace">Configure your identity (once per Codespace)</a></li>
+</ul></li>
+<li><a href="#/git-status-your-dashboard" id="/toc-git-status-your-dashboard"><code>git status</code>: your dashboard</a></li>
+<li><a href="#/git-add-staging-changes" id="/toc-git-add-staging-changes"><code>git add</code>: staging changes</a></li>
+<li><a href="#/git-commit-recording-a-snapshot" id="/toc-git-commit-recording-a-snapshot"><code>git commit</code>: recording a snapshot</a></li>
+<li><a href="#/git-log-and-git-show-reading-history" id="/toc-git-log-and-git-show-reading-history"><code>git log</code> and <code>git show</code>: reading history</a>
+<ul>
+<li><a href="#/git-log-and-git-show-reading-history" id="/toc-git-log"><code>git log</code></a></li>
+<li><a href="#/git-log-and-git-show-reading-history" id="/toc-git-show"><code>git show</code></a></li>
+</ul></li>
+<li><a href="#/git-diff-what-changed" id="/toc-git-diff-what-changed"><code>git diff</code>: what changed?</a>
+<ul>
+<li><a href="#/git-diff-what-changed" id="/toc-how-to-read-a-diff-quick-example">How to read a diff (quick example)</a></li>
+</ul></li>
+<li><a href="#/undoing-local-changes-safely" id="/toc-undoing-local-changes-safely">Undoing local changes safely</a>
+<ul>
+<li><a href="#/undoing-local-changes-safely" id="/toc-unstage-a-file">Unstage a file</a></li>
+<li><a href="#/undoing-local-changes-safely" id="/toc-discard-changes-in-the-working-directory">Discard changes in the working directory</a></li>
+</ul></li>
+<li><a href="#/git-stash-save-work-in-progress" id="/toc-git-stash-save-work-in-progress"><code>git stash</code>: save work-in-progress</a></li>
+<li><a href="#/branches-parallel-timelines" id="/toc-branches-parallel-timelines">Branches: parallel timelines</a></li>
+<li><a href="#/branch-commands-create-switch-list" id="/toc-branch-commands-create-switch-list">Branch commands: create, switch, list</a>
+<ul>
+<li><a href="#/branch-commands-create-switch-list" id="/toc-list-branches">List branches</a></li>
+<li><a href="#/branch-commands-create-switch-list" id="/toc-create-a-branch">Create a branch</a></li>
+<li><a href="#/branch-commands-create-switch-list" id="/toc-switch-to-a-branch">Switch to a branch</a></li>
+</ul></li>
+<li><a href="#/where-is-main-and-branch-code-actually-stored" id="/toc-where-is-main-and-branch-code-actually-stored">Where is <code>main</code> and branch code actually stored?</a></li>
+<li><a href="#/what-really-happens-when-you-switch-branches" id="/toc-what-really-happens-when-you-switch-branches">What really happens when you switch branches?</a></li>
+<li><a href="#/what-if-you-have-uncommitted-changes-when-switching" id="/toc-what-if-you-have-uncommitted-changes-when-switching">What if you have uncommitted changes when switching?</a></li>
+<li><a href="#/merging-branches" id="/toc-merging-branches">Merging branches</a>
+<ul>
+<li><a href="#/merging-branches" id="/toc-merge-with-git-cli">Merge with Git CLI</a></li>
+<li><a href="#/merging-branches" id="/toc-merge-with-git-cli-1">Merge with Git CLI</a></li>
+</ul></li>
+<li><a href="#/remotes-connecting-local-and-github" id="/toc-remotes-connecting-local-and-github">Remotes: connecting local and GitHub</a>
+<ul>
+<li><a href="#/remotes-connecting-local-and-github" id="/toc-inspect-remotes">Inspect remotes</a></li>
+<li><a href="#/remotes-connecting-local-and-github" id="/toc-clone-a-repository">Clone a repository</a></li>
+</ul></li>
+<li><a href="#/git-pull-and-git-push-syncing-with-github" id="/toc-git-pull-and-git-push-syncing-with-github"><code>git pull</code> and <code>git push</code>: syncing with GitHub</a>
+<ul>
+<li><a href="#/git-pull-and-git-push-syncing-with-github" id="/toc-git-pull"><code>git pull</code></a></li>
+<li><a href="#/git-pull-and-git-push-syncing-with-github" id="/toc-git-push"><code>git push</code></a></li>
+</ul></li>
+<li><a href="#/github-101-issues-pull-requests-reviews" id="/toc-github-101-issues-pull-requests-reviews">GitHub 101: issues, pull requests, reviews</a>
+<ul>
+<li><a href="#/github-101-issues-pull-requests-reviews" id="/toc-issues">Issues</a></li>
+<li><a href="#/github-101-issues-pull-requests-reviews" id="/toc-pull-requests-prs">Pull Requests (PRs)</a></li>
+</ul></li>
+<li><a href="#/a-standard-pr-workflow-you-will-use-this" id="/toc-a-standard-pr-workflow-you-will-use-this">A standard PR workflow (you will use this)</a></li>
+<li><a href="#/github-reviews-and-code-comments" id="/toc-github-reviews-and-code-comments">GitHub reviews and code comments</a></li>
+<li><a href="#/git-blame-who-changed-this-line" id="/toc-git-blame-who-changed-this-line"><code>git blame</code>: who changed this line?</a></li>
+<li><a href="#/conflicts-what-they-are-and-how-to-see-them" id="/toc-conflicts-what-they-are-and-how-to-see-them">Conflicts: what they are and how to see them</a></li>
+<li><a href="#/resolving-conflicts-in-codespaces-step-by-step" id="/toc-resolving-conflicts-in-codespaces-step-by-step">Resolving conflicts in Codespaces (step-by-step)</a></li>
+<li><a href="#/gitignore-telling-git-what-to-ignore" id="/toc-gitignore-telling-git-what-to-ignore"><code>.gitignore</code>: telling Git what to ignore</a></li>
+<li><a href="#/good-readme-files" id="/toc-good-readme-files">Good README files</a></li>
+<li><a href="#/capstone-sq4003-company-readme-overview" id="/toc-capstone-sq4003-company-readme-overview">Capstone: SQ4003 company README (overview)</a></li>
+<li><a href="#/capstone-setup-repository-and-roles" id="/toc-capstone-setup-repository-and-roles">Capstone setup: repository and roles</a></li>
+<li><a href="#/capstone-initial-structure" id="/toc-capstone-initial-structure">Capstone: initial structure</a></li>
+<li><a href="#/capstone-task-your-personal-contribution" id="/toc-capstone-task-your-personal-contribution">Capstone task: your personal contribution</a></li>
+<li><a href="#/capstone-review-and-iteration" id="/toc-capstone-review-and-iteration">Capstone: review and iteration</a></li>
+<li><a href="#/capstone-dealing-with-conflicts-in-the-team-section" id="/toc-capstone-dealing-with-conflicts-in-the-team-section">Capstone: dealing with conflicts in the team section</a></li>
+<li><a href="#/capstone-using-issues-for-tasks" id="/toc-capstone-using-issues-for-tasks">Capstone: using issues for tasks</a></li>
+<li><a href="#/a-typical-daily-workflow-cheat-sheet" id="/toc-a-typical-daily-workflow-cheat-sheet">A typical daily workflow (cheat sheet)</a></li>
+<li><a href="#/summary-and-next-steps" id="/toc-summary-and-next-steps">Summary and next steps</a></li>
+</ul>
+</nav>
+</section>
+<section id="welcome-and-goals" class="slide level2">
+<h2>Welcome and goals</h2>
+<p>In this session you will learn how to use <strong>Git</strong> and <strong>GitHub</strong> as working tools for your own projects and for collaboration.</p>
+<p>By the end, you should be able to:</p>
+<ul>
+<li>Think of Git commands the same way you think about <strong>Python functions</strong>.</li>
+<li>Track changes to your code and notes safely.</li>
+<li>Work on branches without stepping on each other’s toes.</li>
+<li>Use GitHub for collaboration: issues, pull requests (PRs), and reviews.</li>
+<li>Resolve merge conflicts without panic.</li>
+<li>Complete a <strong>capstone collaboration project</strong> where your whole class builds a shared <code>README.md</code> for a fictional company called <strong>SQ4003</strong>.</li>
+</ul>
+<p>You will follow along using <strong>GitHub Codespaces</strong>, so you don’t need to install anything locally.</p>
+</section>
+<section id="big-picture-git-github-codespaces" class="slide level2">
+<h2>Big picture: Git, GitHub, Codespaces</h2>
+<p>Before touching any commands, get a mental model:</p>
+<ul>
+<li><strong>Git</strong> is a <strong>version control library and CLI tool</strong> installed in your development environment.
+<ul>
+<li>Think of Git as a Python package that manages versions of a folder.</li>
+<li>Git keeps a history of <em>snapshots</em> (commits) of your project.</li>
+</ul></li>
+<li><strong>GitHub</strong> is a <strong>website + API</strong> that hosts Git repositories in the cloud.
+<ul>
+<li>It stores your repos, issues, pull requests and discussions.</li>
+<li>It’s where collaboration happens.</li>
+</ul></li>
+<li><strong>GitHub Codespaces</strong> is a <strong>cloud development environment</strong>.
+<ul>
+<li>It gives you a full VS Code-like editor and a terminal in the browser.</li>
+<li>Git is already installed and wired to GitHub.</li>
+</ul></li>
+</ul>
+<p>The common pattern is:</p>
+<ol type="1">
+<li>You open a <strong>repository</strong> in GitHub.</li>
+<li>You start a <strong>Codespace</strong> from that repo.</li>
+<li>In the Codespace you run <strong><code>git</code> commands in the terminal</strong> to record and sync your changes.</li>
+</ol>
+</section>
+<section id="git-as-a-library-of-functions" class="slide level2">
+<h2>Git as a library of functions</h2>
+<p>You already know Python functions. For example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hello"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here:</p>
+<ul>
+<li><code>print</code> is a <strong>function</strong>.</li>
+<li><code>"Hello"</code> is an <strong>argument</strong>.</li>
+<li>The <strong>output</strong> appears in the console.</li>
+</ul>
+<p>With Git, the pattern is similar, but the <strong>shell</strong> is calling Git instead of Python calling <code>print</code>.</p>
+<p>The general Git call looks like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="op">&lt;</span>function<span class="op">&gt;</span> <span class="pp">[</span><span class="ss">options</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">arguments</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Some examples (we’ll unpack them one by one):</p>
+<ul>
+<li><code>git status</code></li>
+<li><code>git add file.py</code></li>
+<li><code>git commit -m "Add analysis"</code></li>
+<li><code>git push origin main</code></li>
+</ul>
+<p>You can think of <code>git</code> as the <strong>module</strong>, and <code>status</code>, <code>add</code>, <code>commit</code>, <code>push</code> as <strong>functions (subcommands)</strong> exposed by that module.</p>
+</section>
+<section id="repositories-and-the-three-areas" class="slide level2">
+<h2>Repositories and the three areas</h2>
+<p>Git organises your work in a <strong>repository</strong> (repo):</p>
+<ul>
+<li>A repo is just a folder with a hidden <code>.git</code> directory inside.</li>
+<li>The <code>.git</code> folder stores all history and metadata.</li>
+</ul>
+<p>Inside a repo, Git thinks in terms of <strong>three areas</strong>:</p>
+<ol type="1">
+<li><strong>Working directory</strong>
+<ul>
+<li>The actual files you edit: <code>.py</code>, <code>.ipynb</code>, <code>.qmd</code>, etc.</li>
+</ul></li>
+<li><strong>Staging area (Index)</strong>
+<ul>
+<li>A staging buffer where you explicitly list which changes will go into the next commit.</li>
+</ul></li>
+<li><strong>Repository (History)</strong>
+<ul>
+<li>The database of saved commits.</li>
+</ul></li>
+</ol>
+<p>You move changes like this:</p>
+<pre class="text"><code>Working directory --(git add)--&gt; Staging area --(git commit)--&gt; Repository</code></pre>
+<p>Keep this mental model in mind. Most Git commands move or inspect changes between these three areas.</p>
+</section>
+<section id="starting-in-codespaces" class="slide level2">
+<h2>Starting in Codespaces</h2>
+<p>In this module you will work mainly in Codespaces.</p>
+<h3 id="opening-a-codespace">Opening a Codespace</h3>
+<ol type="1">
+<li>Go to a GitHub repository in your browser.</li>
+<li>Click <strong>Code ▸ Codespaces ▸ Create codespace on main</strong> (or an existing branch).</li>
+<li>Wait for the Codespace to start. You’ll see an editor and a terminal at the bottom.</li>
+</ol>
+<h3 id="check-that-git-is-available">Check that Git is available</h3>
+<p>In the terminal, type:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see something like <code>git version 2.x.y</code>.</p>
+<h3 id="configure-your-identity-once-per-codespace">Configure your identity (once per Codespace)</h3>
+<p>Git records who made each commit:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"you@example.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote>
+<p>Use the same email you use for GitHub so commits link to your account.</p>
+</blockquote>
+</section>
+<section id="git-status-your-dashboard" class="slide level2">
+<h2><code>git status</code>: your dashboard</h2>
+<p>Think of <code>status()</code> as a <strong>read-only diagnostic function</strong>.</p>
+<p><strong>Function view</strong>:</p>
+<ul>
+<li>Name: <code>status</code></li>
+<li>Usage: <code>git status [options]</code></li>
+<li>Arguments: optional flags (e.g.&nbsp;<code>--short</code>, <code>--branch</code>)</li>
+<li>Output: a text summary of:
+<ul>
+<li>which branch you’re on,</li>
+<li>which files are modified,</li>
+<li>which files are staged,</li>
+<li>whether your local branch is ahead/behind the remote.</li>
+</ul></li>
+</ul>
+<p><strong>Examples</strong>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic status</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Short, compact output</span></span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status <span class="at">--short</span></span>
+<span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Show branch info and more details</span></span>
+<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status <span class="at">--branch</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Habit:</strong> Run <code>git status</code> frequently. It’s your “where am I?” command.</p>
+</section>
+<section id="git-add-staging-changes" class="slide level2">
+<h2><code>git add</code>: staging changes</h2>
+<p><code>git add</code> is the function that moves changes from the <strong>working directory</strong> into the <strong>staging area</strong>.</p>
+<p><strong>Function view</strong>:</p>
+<ul>
+<li>Name: <code>add</code></li>
+<li>Usage: <code>git add [options] &lt;pathspec&gt;...</code></li>
+<li>Arguments:
+<ul>
+<li><code>pathspec</code>: file or folder names (e.g.&nbsp;<code>script.py</code>, <code>data/</code>, <code>.</code>)</li>
+<li>Options:
+<ul>
+<li><code>-p</code> / <code>--patch</code>: stage changes interactively, hunk by hunk.</li>
+</ul></li>
+</ul></li>
+<li>Output: no printed result if successful; it updates the <em>staging area</em>.</li>
+</ul>
+<p><strong>Common use cases</strong>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage one file</span></span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add analysis.py</span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage several files</span></span>
+<span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add analysis.py data_cleaning.py</span>
+<span id="cb7-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage all tracked and new files in this folder and subfolders</span></span>
+<span id="cb7-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb7-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage changes interactively (advanced but powerful)</span></span>
+<span id="cb7-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In Python mental model:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Conceptually, not real code</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>staging_area <span class="op">=</span> add(staging_area, files<span class="op">=</span>[<span class="st">"analysis.py"</span>, <span class="st">"data_cleaning.py"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You choose <strong>which</strong> changes will be part of the next snapshot by calling <code>git add</code>.</p>
+</section>
+<section id="git-commit-recording-a-snapshot" class="slide level2">
+<h2><code>git commit</code>: recording a snapshot</h2>
+<p><code>git commit</code> creates a new <strong>commit</strong>: a snapshot of all staged changes, with metadata (author, timestamp, message, parent commit).</p>
+<p><strong>What “snapshot” means (plain English):</strong></p>
+<ul>
+<li>A commit captures exactly what you’ve staged at that moment. It’s built from the staging area, not whatever happens to be in your folder.</li>
+<li>It includes tracked files you staged (or, with <code>-a</code>, any tracked files you changed). It excludes untracked and ignored files unless you add them.</li>
+<li>It does not duplicate your whole project every time. Unchanged files are reused behind the scenes; you still get the effect of “this is how the project looked now.”</li>
+<li>It’s not “a diff.” Tools show diffs to explain a commit, but the commit itself is the recorded state of the files you chose.</li>
+</ul>
+<p><strong>Quick reality checks:</strong></p>
+<ul>
+<li>You edited 3 files but staged 2 → the commit contains the 2 you staged; the 3rd stays uncommitted.</li>
+<li>You ran <code>git commit -a</code> → only changes to already-tracked files are included; brand‑new files still need <code>git add</code>.</li>
+</ul>
+<p><strong>Function view</strong>:</p>
+<ul>
+<li>Name: <code>commit</code></li>
+<li>Usage: <code>git commit [options]</code></li>
+<li>Key options:
+<ul>
+<li><code>-m "message"</code>: provide a commit message inline.</li>
+<li><code>-a</code>: automatically stage all tracked files (skips new untracked files).</li>
+<li><code>--amend</code>: edit the last commit (message and/or content).</li>
+</ul></li>
+<li>Output: a summary of what was committed, and a new commit added to history.</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage then commit</span></span>
+<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add analysis.py</span>
+<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add first exploratory analysis"</span></span>
+<span id="cb9-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick commit of all tracked changes (skips new files)</span></span>
+<span id="cb9-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">"Fix typo in plotting script"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Your commit message should answer the question: <strong>“What did you change and why?”</strong></p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Gotcha: <code>git commit -a</code> skips new files</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><code>-a</code> only stages changes to <strong>already-tracked</strong> files (modified/deleted).</li>
+<li>It does not include brand‑new, untracked files — you still need <code>git add</code>.</li>
+<li>Equivalent behaviour: <code>git add -u</code> then <code>git commit</code>.</li>
+</ul>
+<p>Helpful variants:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Include tracked changes quickly</span></span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-am</span> <span class="st">"Refactor: extract helper"</span></span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Include everything including new files (two steps)</span></span>
+<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span> <span class="kw">&amp;&amp;</span> <span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add new module and tests"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Amending the last commit (<code>--amend</code>)</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>Change the last commit’s <strong>message</strong>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">--amend</span> <span class="at">-m</span> <span class="st">"Better message"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Add more changes to the last commit (stage first):</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add file.py</span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">--amend</span> <span class="at">--no-edit</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>This rewrites history (new commit ID). If already pushed, you must update the remote:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">--force-with-lease</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Be careful amending shared commits; coordinate with collaborators.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<p>Good examples:</p>
+<ul>
+<li><code>"Implement basic data cleaning pipeline"</code></li>
+<li><code>"Add bar chart of mean yield by treatment"</code></li>
+</ul>
+<p>Avoid:</p>
+<ul>
+<li><code>"stuff"</code>, <code>"update"</code>, <code>"final"</code>.</li>
+</ul>
+</section>
+<section id="git-log-and-git-show-reading-history" class="slide level2">
+<h2><code>git log</code> and <code>git show</code>: reading history</h2>
+<p>Once you have commits, you can inspect history.</p>
+<h3 id="git-log"><code>git log</code></h3>
+<p><strong>Function view</strong>:</p>
+<ul>
+<li>Name: <code>log</code></li>
+<li>Usage: <code>git log [options] [range]</code></li>
+<li>Output: list of commits (hash, author, date, message).</li>
+</ul>
+<p><strong>Examples</strong>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic history</span></span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log</span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># One-line history</span></span>
+<span id="cb14-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span></span>
+<span id="cb14-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># History with graph of branches and merges</span></span>
+<span id="cb14-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--graph</span> <span class="at">--all</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h3 id="git-show"><code>git show</code></h3>
+<p><code>git show</code> displays details about a specific commit (or other objects).</p>
+<p><strong>Examples</strong>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the latest commit</span></span>
+<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> show</span>
+<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Show a particular commit</span></span>
+<span id="cb15-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> show 3a5f2c1</span>
+<span id="cb15-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Show only the commit message (no diff)</span></span>
+<span id="cb15-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> show <span class="at">--no-patch</span> 3a5f2c1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you imagine commits as <strong>objects</strong>, then <code>git log</code> lets you list them and <code>git show</code> lets you inspect one in detail.</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Gotcha: <code>git show</code> opens a pager or prints huge diffs</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>To avoid the pager for a one-off:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--no-pager</span> show</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Make it permanent for <code>show</code>:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> pager.show cat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Get summaries instead of full patches:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> show <span class="at">--stat</span></span>
+<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> show <span class="at">--name-only</span></span>
+<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> show <span class="op">&lt;</span>commit<span class="op">&gt;</span> -- path/to/file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="git-diff-what-changed" class="slide level2">
+<h2><code>git diff</code>: what changed?</h2>
+<p><code>git diff</code> compares two states and shows line-by-line differences.</p>
+<p><strong>Function view</strong>:</p>
+<ul>
+<li>Name: <code>diff</code></li>
+<li>Usage: <code>git diff [options] [&lt;commit&gt; [&lt;commit&gt;]]</code></li>
+<li>Output: a patch: added lines (<code>+</code>) and removed lines (<code>-</code>).</li>
+</ul>
+<p>Common patterns:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Show differences between working directory and staging area</span></span>
+<span id="cb19-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff</span>
+<span id="cb19-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Show differences between staging area and last commit</span></span>
+<span id="cb19-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff <span class="at">--cached</span></span>
+<span id="cb19-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Show differences between two commits</span></span>
+<span id="cb19-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff old_commit new_commit</span>
+<span id="cb19-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Show differences for a single file</span></span>
+<span id="cb19-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff HEAD analysis.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use <code>git diff</code> before committing to double-check what you are about to record.</p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Gotcha: <code>git diff</code> prints nothing</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>You may have nothing <strong>unstaged</strong>. Check:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>If changes are staged, use:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff <span class="at">--staged</span>   <span class="co"># or --cached</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>To compare against the last commit regardless of staging:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff HEAD</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Untracked files never show in <code>git diff</code> — look at <code>git status</code> or <code>git add</code> them first.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<h3 id="how-to-read-a-diff-quick-example">How to read a diff (quick example)</h3>
+<div class="sourceCode" id="cb23"><pre class="sourceCode diff code-with-copy"><code class="sourceCode diff"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">diff --git a/app.py b/app.py</span></span>
+<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a>index a1b2c3d..d4e5f6g 100644</span>
+<span id="cb23-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dt">--- a/app.py</span></span>
+<span id="cb23-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dt">+++ b/app.py</span></span>
+<span id="cb23-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -12,6 +12,7 @@ def load_config(path):</span></span>
+<span id="cb23-6"><a href="" aria-hidden="true" tabindex="-1"></a>     cfg = json.load(f)</span>
+<span id="cb23-7"><a href="" aria-hidden="true" tabindex="-1"></a>     return cfg</span>
+<span id="cb23-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="st">-def connect(db_url):</span></span>
+<span id="cb23-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">+def connect(db_url, timeout=30):</span></span>
+<span id="cb23-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">+    # default timeout added for reliability</span></span>
+<span id="cb23-12"><a href="" aria-hidden="true" tabindex="-1"></a>     conn = driver.connect(db_url, timeout=timeout)</span>
+<span id="cb23-13"><a href="" aria-hidden="true" tabindex="-1"></a>     return conn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p><code>--- a/...</code> vs <code>+++ b/...</code>: old vs new file.</p></li>
+<li><p><code>@@ -12,6 +12,7 @@</code>: hunk header → old starts line 12 (6 lines), new starts line 12 (7 lines).</p></li>
+<li><p><code>-</code> removed, <code>+</code> added, space is context.</p></li>
+<li><p>What to notice: API changes (new parameter), logic changes, comments/doc hints.</p></li>
+<li><p>Helpful flags:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff <span class="at">--stat</span></span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff <span class="at">--word-diff</span></span>
+<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> show <span class="op">&lt;</span>commit<span class="op">&gt;</span> --stat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="undoing-local-changes-safely" class="slide level2">
+<h2>Undoing local changes safely</h2>
+<p>You will make mistakes. That’s fine. Git has <strong>undo functions</strong>.</p>
+<h3 id="unstage-a-file">Unstage a file</h3>
+<p>If you accidentally staged a file with <code>git add</code>:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Unstage a single file</span></span>
+<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--staged</span> analysis.py</span>
+<span id="cb25-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Unstage everything</span></span>
+<span id="cb25-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--staged</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h3 id="discard-changes-in-the-working-directory">Discard changes in the working directory</h3>
+<p>⚠️ This is destructive: it throws away your uncommitted changes.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Discard local changes in one file</span></span>
+<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore analysis.py</span>
+<span id="cb26-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Discard local changes in all files</span></span>
+<span id="cb26-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Think of <code>restore</code> as a function that resets your files back to the version in a specified commit (by default, the latest commit).</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Gotcha: <code>git restore .</code> restores from the Index by default</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p><code>git restore .</code> makes the working tree match the <strong>Index</strong> (staged snapshot), not necessarily <code>HEAD</code>.</p></li>
+<li><p>To force the working tree to match the latest commit:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--source</span><span class="op">=</span>HEAD <span class="at">--worktree</span> .</span>
+<span id="cb27-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># single file</span></span>
+<span id="cb27-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--source</span><span class="op">=</span>HEAD <span class="at">--worktree</span> path/to/file.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>To unstage (keep edits):</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--staged</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>To discard both index and working tree (dangerous):</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset <span class="at">--hard</span> HEAD</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Untracked files are unaffected; remove them with:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clean <span class="at">-fd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Example: if you added <code>import os</code> locally and want it gone, the HEAD version will remove that line:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--source</span><span class="op">=</span>HEAD <span class="at">--worktree</span> script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="git-stash-save-work-in-progress" class="slide level2">
+<h2><code>git stash</code>: save work-in-progress</h2>
+<p>Temporarily save your uncommitted changes to a stack and clean your working tree.</p>
+<p><strong>Basics</strong></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash push <span class="at">-m</span> <span class="st">"WIP: refactor widget"</span>   <span class="co"># save</span></span>
+<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash list                             <span class="co"># view</span></span>
+<span id="cb32-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash show <span class="at">-p</span> stash@{0}                <span class="co"># inspect</span></span>
+<span id="cb32-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash apply stash@{0}                  <span class="co"># re-apply (keep)</span></span>
+<span id="cb32-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash pop                              <span class="co"># re-apply and drop</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Include more:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash push <span class="at">-u</span>   <span class="co"># include untracked</span></span>
+<span id="cb33-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash push <span class="at">-a</span>   <span class="co"># include untracked + ignored</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Create a branch from a stash:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash branch my-wip stash@{0}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="branches-parallel-timelines" class="slide level2">
+<h2>Branches: parallel timelines</h2>
+<p>A <strong>branch</strong> is just a named pointer to a commit.</p>
+<ul>
+<li>The default branch is usually called <code>main</code>.</li>
+<li>When you create a new branch, you’re creating a new <strong>timeline</strong> of commits.</li>
+<li>Branches let you experiment without breaking the main line of development.</li>
+</ul>
+<p>Visual idea:</p>
+<pre class="text"><code>main:       A --- B --- C
+                 \
+feature-x:        D --- E</code></pre>
+<p>Here <code>feature-x</code> branched off from commit <code>B</code> and added commits <code>D</code> and <code>E</code>.</p>
+</section>
+<section id="branch-commands-create-switch-list" class="slide level2">
+<h2>Branch commands: create, switch, list</h2>
+<h3 id="list-branches">List branches</h3>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Shows all local branches.</li>
+<li><code>*</code> marks the current branch.</li>
+</ul>
+<h3 id="create-a-branch">Create a branch</h3>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Create branch 'feature-bio' from current commit</span></span>
+<span id="cb37-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch feature-bio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h3 id="switch-to-a-branch">Switch to a branch</h3>
+<p>Modern, friendly command:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Switch to an existing branch</span></span>
+<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch feature-bio</span>
+<span id="cb38-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Create and switch in one step</span></span>
+<span id="cb38-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch <span class="at">-c</span> feature-bio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Older style (still common):</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Create + switch</span></span>
+<span id="cb39-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> feature-bio</span>
+<span id="cb39-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Switch only</span></span>
+<span id="cb39-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout feature-bio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In Python mental model:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Logical idea, not real code</span></span>
+<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a>current_branch <span class="op">=</span> switch_branch(<span class="st">"feature-bio"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You will mainly use <strong>feature branches</strong> for new work, then merge them back into <code>main</code> via pull requests.</p>
+</section>
+<section id="where-is-main-and-branch-code-actually-stored" class="slide level2">
+<h2>Where is <code>main</code> and branch code actually stored?</h2>
+<p>When you hear “code on <code>main</code>” vs “code on <code>feature-x</code>”, it’s tempting to imagine two different folders somewhere on your disk. Git actually stores things more cleverly.</p>
+<p>Inside your repo there are two important pieces:</p>
+<ul>
+<li>Your <strong>working directory</strong>: the files you see and edit (<code>.py</code>, <code>.ipynb</code>, <code>.qmd</code>, etc.).</li>
+<li>The hidden <strong><code>.git/</code> folder</strong>: Git’s database.</li>
+</ul>
+<p>Inside <code>.git/</code>:</p>
+<ul>
+<li>Git stores <strong>commits</strong>, <strong>trees</strong> (directory snapshots) and <strong>blobs</strong> (file contents) in an <strong>object database</strong>.</li>
+<li>Each branch name (like <code>main</code>, <code>feature-bio</code>) is just a tiny file (a <strong>ref</strong>) pointing at <strong>one commit hash</strong> in that database.</li>
+<li><code>HEAD</code> is a special pointer saying “which branch/commit am I currently viewing?”</li>
+</ul>
+<p>So:</p>
+<ul>
+<li>All versions of the code for <strong>all branches</strong> live in <code>.git/objects/</code> as immutable objects.</li>
+<li><code>main</code> and <code>feature-bio</code> are just <strong>names</strong> pointing to different commits in that one database.</li>
+<li>Your working directory is a <strong>materialised view</strong> of whichever commit <code>HEAD</code> is currently on.</li>
+</ul>
+<p>You’re never carrying around separate copies of the whole project for each branch; Git reuses objects internally and only materialises one snapshot at a time in your working directory.</p>
+</section>
+<section id="what-really-happens-when-you-switch-branches" class="slide level2">
+<h2>What really happens when you switch branches?</h2>
+<p>Imagine your working directory currently shows <code>main</code> after you’ve done:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb41-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>At this point:</p>
+<ul>
+<li><code>HEAD → main</code>.</li>
+<li><code>main</code> points to some commit (say <code>A1B2C3…</code>).</li>
+<li>Your working directory and staging area are synced to that commit’s snapshot.</li>
+</ul>
+<p>Now you run:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch feature-bio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Git does <strong>not</strong> blindly delete everything and re-copy files.</p>
+<p>Instead, Git:</p>
+<ol type="1">
+<li>Changes <code>HEAD</code> to point to <code>feature-bio</code>.</li>
+<li>Looks at the commit for <code>main</code> and the commit for <code>feature-bio</code>.</li>
+<li>Computes the <strong>difference</strong> between those two snapshots.</li>
+<li>Applies that diff to your working directory:
+<ul>
+<li>Files that exist on <code>main</code> but <strong>not</strong> on <code>feature-bio</code> are <strong>removed</strong> from the working directory.</li>
+<li>Files that exist on both but have different contents are <strong>overwritten</strong> with the <code>feature-bio</code> version.</li>
+<li>Files that exist only on <code>feature-bio</code> are <strong>created</strong> in the working directory.</li>
+<li>Untracked files (things Git isn’t tracking) are left alone unless they would clash with a tracked file (in that case, Git refuses to switch and asks you to move/commit them first).</li>
+</ul></li>
+</ol>
+<p>From your point of view, the effect is:</p>
+<blockquote>
+<p>“My folder now looks like the version of the project that lives on the <code>feature-bio</code> branch.”</p>
+</blockquote>
+<p>But under the hood, no history is lost:</p>
+<ul>
+<li>The <code>main</code> branch pointer still points to its commit.</li>
+<li>All commits and file versions still live in <code>.git/objects/</code>.</li>
+</ul>
+<p>Git is just changing <strong>which snapshot</strong> is checked out into the working directory.</p>
+</section>
+<section id="what-if-you-have-uncommitted-changes-when-switching" class="slide level2">
+<h2>What if you have uncommitted changes when switching?</h2>
+<p>If your working directory has uncommitted edits that would be overwritten by switching branches, Git will stop you:</p>
+<ul>
+<li>If a file is the same in both branches except for your local edits, Git may safely carry your changes over.</li>
+<li>If switching would overwrite your local modifications, Git prints an error and suggests that you:
+<ul>
+<li>commit them,</li>
+<li>stash them (<code>git stash</code>), or</li>
+<li>discard them.</li>
+</ul></li>
+</ul>
+<p>This is why you often see the advice:</p>
+<ul>
+<li><strong>“Commit or stash before switching branches.”</strong></li>
+</ul>
+<p>It’s Git’s way of protecting your unsaved work.</p>
+</section>
+<section id="merging-branches" class="slide level2">
+<h2>Merging branches</h2>
+<p>Once work on a branch is complete and reviewed, you <strong>merge</strong> it back into another branch (often <code>main</code>).</p>
+<h3 id="merge-with-git-cli">Merge with Git CLI</h3>
+<p>From the branch you want to merge <strong>into</strong> (e.g.&nbsp;<code>main</code>):</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb43-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure you have the latest</span></span>
+<span id="cb43-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin main</span>
+<span id="cb43-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge feature branch</span></span>
+<span id="cb43-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge feature-bio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Two main types of merge:</p>
+<ul>
+<li><strong>Fast-forward merge</strong>: if <code>main</code> has not moved since you branched, Git just advances <code>main</code> to the new commit.</li>
+<li><strong>Merge commit</strong>: if both branches have new commits, Git creates a new commit that has two parents.</li>
+</ul>
+<p>In GitHub-based workflows, merges usually happen via <strong>pull requests</strong>, which we’ll cover later.</p>
+<p>Once work on a branch is complete and reviewed, you <strong>merge</strong> it back into another branch (often <code>main</code>).</p>
+<h3 id="merge-with-git-cli-1">Merge with Git CLI</h3>
+<p>From the branch you want to merge <strong>into</strong> (e.g.&nbsp;<code>main</code>):</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb44-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure you have the latest</span></span>
+<span id="cb44-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin main</span>
+<span id="cb44-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge feature branch</span></span>
+<span id="cb44-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge feature-bio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Two main types of merge:</p>
+<ul>
+<li><strong>Fast-forward merge</strong>: if <code>main</code> has not moved since you branched, Git just advances <code>main</code> to the new commit.</li>
+<li><strong>Merge commit</strong>: if both branches have new commits, Git creates a new commit that has two parents.</li>
+</ul>
+<p>In GitHub-based workflows, merges usually happen via <strong>pull requests</strong>, which we’ll cover later.</p>
+</section>
+<section id="remotes-connecting-local-and-github" class="slide level2">
+<h2>Remotes: connecting local and GitHub</h2>
+<p>A <strong>remote</strong> is a link to a copy of your repo hosted elsewhere, usually on GitHub.</p>
+<ul>
+<li>The default remote name is usually <code>origin</code>.</li>
+</ul>
+<h3 id="inspect-remotes">Inspect remotes</h3>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This lists remote names and URLs.</p>
+<h3 id="clone-a-repository">Clone a repository</h3>
+<p>In most cases, your Codespace is created directly from a GitHub repo, so you don’t need <code>git clone</code>. But on your own machine you would do:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/user/repo.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This creates a local folder with:</p>
+<ul>
+<li>A working directory.</li>
+<li>A <code>.git</code> folder with full history.</li>
+<li>A remote called <code>origin</code> pointing to GitHub.</li>
+</ul>
+</section>
+<section id="git-pull-and-git-push-syncing-with-github" class="slide level2">
+<h2><code>git pull</code> and <code>git push</code>: syncing with GitHub</h2>
+<p>Once you have a remote, two key functions keep you in sync:</p>
+<h3 id="git-pull"><code>git pull</code></h3>
+<p>Combines <code>git fetch</code> (download new commits from remote) and <code>git merge</code> (apply them to your current branch).</p>
+<p><strong>Function view</strong>:</p>
+<ul>
+<li>Name: <code>pull</code></li>
+<li>Usage: <code>git pull [remote] [branch]</code></li>
+<li>Typical call: <code>git pull origin main</code></li>
+</ul>
+<p>Use <code>git pull</code>:</p>
+<ul>
+<li>At the start of a coding session.</li>
+<li>Before pushing your own changes.</li>
+</ul>
+<h3 id="git-push"><code>git push</code></h3>
+<p>Uploads your local commits to the remote.</p>
+<p><strong>Function view</strong>:</p>
+<ul>
+<li>Name: <code>push</code></li>
+<li>Usage: <code>git push [remote] [branch]</code></li>
+<li>Typical call: <code>git push origin feature-bio</code></li>
+</ul>
+<p>The first time you push a new branch, Git may ask you to set the upstream:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin feature-bio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After that, you can just run <code>git push</code> on that branch.</p>
+</section>
+<section id="github-101-issues-pull-requests-reviews" class="slide level2">
+<h2>GitHub 101: issues, pull requests, reviews</h2>
+<p>GitHub adds collaboration tools <em>on top of</em> Git.</p>
+<h3 id="issues">Issues</h3>
+<ul>
+<li>Issues are used to track <strong>tasks</strong>, <strong>bugs</strong>, or <strong>ideas</strong>.</li>
+<li>Each issue has a title, description, labels, assignees.</li>
+<li>You can link issues to commits and pull requests.</li>
+</ul>
+<p>Example uses in this module:</p>
+<ul>
+<li>“Add README section on company values.”</li>
+<li>“Fix broken link in installation instructions.”</li>
+</ul>
+<h3 id="pull-requests-prs">Pull Requests (PRs)</h3>
+<p>A PR is a request to merge one branch into another (often <code>main</code>).</p>
+<ul>
+<li>Shows the diff between branches.</li>
+<li>Allows <strong>reviews</strong> and <strong>comments</strong>.</li>
+<li>Can enforce rules (e.g.&nbsp;at least one approval before merging).</li>
+</ul>
+<p>We will rely heavily on PRs in the capstone project.</p>
+<h4 id="linking-prs-to-issues">Linking PRs to issues</h4>
+<ul>
+<li><p>In the PR description (or a commit on the PR branch), include keywords:</p>
+<ul>
+<li><code>Fixes #123</code>, <code>Closes #123</code>, <code>Resolves #123</code> → auto-link and auto-close on merge.</li>
+<li><code>Refs #123</code>, <code>Related to #123</code> → link without auto-close.</li>
+</ul></li>
+<li><p>Examples:</p>
+<pre class="text"><code>Fixes #42: Handle empty dates in import
+Related to #77</code></pre></li>
+<li><p>You can also link via the PR sidebar “Linked issues”.</p></li>
+</ul>
+<h4 id="what-a-pr-really-is">What a PR really is</h4>
+<ul>
+<li>At its core, a PR is a structured request to merge branch A into branch B.</li>
+<li>It is a platform feature (GitHub/GitLab/Bitbucket), not a core Git command.</li>
+<li>The platform adds discussion, code review, required approvals, and automated checks (CI) around the basic Git merge/rebase.</li>
+</ul>
+<h4 id="how-review-cycles-work">How review cycles work</h4>
+<ul>
+<li>Comments and “changes requested” live on the PR, not on a one-off merge commit.</li>
+<li>You update the PR by pushing more commits to the same branch; the PR view updates automatically.</li>
+<li>There is no merge commit until the PR is actually merged.</li>
+<li>CI checks re-run on each push; reviewers re-review; you resolve conversations and proceed.</li>
+<li>Opening a new PR is optional and usually unnecessary unless you intentionally start over (e.g.&nbsp;new branch/scope).</li>
+</ul>
+<h4 id="merge-options-and-protections">Merge options and protections</h4>
+<ul>
+<li>Teams choose how to finalize PRs: merge commit, squash merge, or rebase-merge.</li>
+<li>Branch protection rules can require green CI, approvals, linear history, etc., before the merge button is enabled.</li>
+<li>“Blame,” history graphs, and file views in the web UI are product features reading underlying Git data (you can also run <code>git blame</code> locally).</li>
+</ul>
+<h4 id="squash-merge-plain-english">Squash merge (plain English)</h4>
+<ul>
+<li>Combines all commits from the PR branch into a single commit when merging into the target branch.</li>
+<li>Result: the main branch gets one clean commit summarizing the whole change; the messy “work-in-progress” commit history stays only on the feature branch (or is discarded after delete).</li>
+<li>Use when you want a tidy history and the PR logically represents one change.</li>
+</ul>
+<h4 id="rebase-rebase-merge-plain-english">Rebase / rebase-merge (plain English)</h4>
+<ul>
+<li>Rebase “replays” your branch’s commits on top of another branch so it looks like you started from the latest point.</li>
+<li>Result: a linear history without merge commits; good for keeping a clean timeline.</li>
+<li>Trade‑off: it rewrites commit history of your feature branch; avoid rebasing shared/public branches unless your team agrees on the workflow.</li>
+<li>In PRs, “rebase-merge” creates the effect of applying your commits cleanly on top of the target branch at merge time (without a merge commit).</li>
+</ul>
+</section>
+<section id="a-standard-pr-workflow-you-will-use-this" class="slide level2">
+<h2>A standard PR workflow (you will use this)</h2>
+<p>You will repeat this pattern many times:</p>
+<ol type="1">
+<li><p><strong>Update your local main</strong>:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb49-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Create a feature branch</strong> for your work:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch <span class="at">-c</span> feature-yourname-bio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Make changes</strong> (edit files in the Codespaces editor).</p></li>
+<li><p><strong>Check status and diff</strong>:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb51-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Stage and commit</strong>:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add README.md images/yourname.jpg</span>
+<span id="cb52-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add bio and photo for Your Name"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Push the branch to GitHub</strong>:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin feature-yourname-bio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>On GitHub, create a <strong>Pull Request</strong> from your branch into <code>main</code>.</p></li>
+<li><p>Respond to <strong>review comments</strong>, make extra commits if needed.</p></li>
+<li><p>Once approved, merge the PR.</p></li>
+</ol>
+<p>This is exactly what you will do in the SQ4003 project.</p>
+</section>
+<section id="github-reviews-and-code-comments" class="slide level2">
+<h2>GitHub reviews and code comments</h2>
+<p>On a PR page, reviewers can:</p>
+<ul>
+<li>Comment on individual lines.</li>
+<li>Request changes.</li>
+<li>Approve the PR.</li>
+</ul>
+<p>As a contributor, you should:</p>
+<ul>
+<li>Treat reviews as a way to improve your work.</li>
+<li>Respond politely, asking for clarification when needed.</li>
+<li>Address requested changes via new commits.</li>
+</ul>
+<p>As a reviewer (e.g.&nbsp;team leader):</p>
+<ul>
+<li>Comment on <strong>content</strong>, <strong>style</strong>, and <strong>consistency</strong>.</li>
+<li>Be specific: “Please change this heading to H2” is better than “Improve this.”</li>
+<li>Avoid personal criticism; focus on the work.</li>
+</ul>
+</section>
+<section id="git-blame-who-changed-this-line" class="slide level2">
+<h2><code>git blame</code>: who changed this line?</h2>
+<p>Sometimes you need to know <strong>who last touched a specific line</strong> of a file.</p>
+<p><code>git blame</code> shows, for each line, the commit and author that last modified it.</p>
+<p><strong>Function view</strong>:</p>
+<ul>
+<li>Name: <code>blame</code></li>
+<li>Usage: <code>git blame [options] &lt;file&gt;</code></li>
+</ul>
+<p>Example:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> blame README.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This prints each line of <code>README.md</code> with a commit hash and author.</p>
+<p>Use cases:</p>
+<ul>
+<li>Find who wrote a particular paragraph.</li>
+<li>Track when something changed.</li>
+</ul>
+<p>Important: use <code>blame</code> as a tool for understanding history, not for blaming people. 🙂</p>
+</section>
+<section id="conflicts-what-they-are-and-how-to-see-them" class="slide level2">
+<h2>Conflicts: what they are and how to see them</h2>
+<p>A <strong>merge conflict</strong> happens when Git cannot automatically combine changes from two branches.</p>
+<p>Example situation:</p>
+<ul>
+<li>You edit line 10 of <code>README.md</code> in branch <code>feature-alex</code>.</li>
+<li>Someone else edits the same line in <code>README.md</code> on <code>main</code>.</li>
+<li>When you merge <code>feature-alex</code> into <code>main</code>, Git doesn’t know which version to keep.</li>
+</ul>
+<p>Git then marks the conflict in the file like this:</p>
+<pre class="text"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+This is the line from the branch you are merging into (e.g. main).
+=======
+This is the line from the branch being merged (e.g. feature-alex).
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature-alex</code></pre>
+<p>You must edit the file to remove these markers and keep the correct final content.</p>
+</section>
+<section id="resolving-conflicts-in-codespaces-step-by-step" class="slide level2">
+<h2>Resolving conflicts in Codespaces (step-by-step)</h2>
+<ol type="1">
+<li><p>Run your merge (or <code>git pull</code>) and see the conflict error.</p></li>
+<li><p>Check status:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’ll see files listed as <strong>both modified</strong> or <strong>unmerged</strong>.</p></li>
+<li><p>Open the conflicted file in the editor.</p></li>
+<li><p>Decide how to resolve each conflict:</p>
+<ul>
+<li>Keep your version.</li>
+<li>Keep the other version.</li>
+<li>Combine or rewrite both.</li>
+</ul></li>
+<li><p>Manually edit the file:</p>
+<ul>
+<li>Remove <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> lines.</li>
+<li>Make sure the final text reads correctly.</li>
+</ul></li>
+<li><p>Mark the conflict as resolved by staging the file:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add README.md</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Complete the merge with a commit (if required):</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb58-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Push the result to GitHub:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb59-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+<p>In Codespaces, the editor often offers buttons like <strong>Accept Current Change</strong> / <strong>Accept Incoming Change</strong> / <strong>Accept Both</strong>.</p>
+</section>
+<section id="gitignore-telling-git-what-to-ignore" class="slide level2">
+<h2><code>.gitignore</code>: telling Git what to ignore</h2>
+<p>Some files should <strong>not</strong> be tracked by Git:</p>
+<ul>
+<li>Temporary files.</li>
+<li>Python cache files.</li>
+<li>Large raw data that doesn’t belong in the repo.</li>
+</ul>
+<p>You list these in a <code>.gitignore</code> file.</p>
+<p>Example <code>.gitignore</code> for a Python project:</p>
+<pre class="text"><code># Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# OS-specific junk
+.DS_Store
+Thumbs.db</code></pre>
+<p>Create or edit <code>.gitignore</code> at the root of your repo, then commit it. Git will stop tracking files that match those patterns.</p>
+</section>
+<section id="good-readme-files" class="slide level2">
+<h2>Good README files</h2>
+<p>Your <code>README.md</code> is the <strong>front page</strong> of your project.</p>
+<p>A good README typically includes:</p>
+<ul>
+<li>Project name and short description.</li>
+<li>Installation instructions (if needed).</li>
+<li>How to run or use the project.</li>
+<li>Structure of the repository.</li>
+<li>How to contribute.</li>
+<li>License (if relevant).</li>
+</ul>
+<p>In Markdown you can:</p>
+<ul>
+<li><p>Use headings (<code>#</code>, <code>##</code>, <code>###</code>).</p></li>
+<li><p>Add lists and tables.</p></li>
+<li><p>Embed images:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb61-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="al">![Alt text for accessibility](images/yourname.jpg)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<p>In the SQ4003 project you will build a rich README together.</p>
+</section>
+<section id="capstone-sq4003-company-readme-overview" class="slide level2">
+<h2>Capstone: SQ4003 company README (overview)</h2>
+<p>You will now work as a <strong>fictional company</strong> called <strong>SQ4003</strong>.</p>
+<p>Goal: <strong>Collaboratively build a professional <code>README.md</code></strong> for the company using Git, GitHub, and Codespaces.</p>
+<p>The README will:</p>
+<ul>
+<li>Introduce the company (what SQ4003 does).</li>
+<li>Describe its values and ways of working.</li>
+<li>Present the team: a section with <strong>each of you</strong> as an employee, including:
+<ul>
+<li>Name and role.</li>
+<li>2–3 sentence bio.</li>
+<li>A small profile picture.</li>
+</ul></li>
+<li>Explain how new team members can contribute to projects.</li>
+</ul>
+<p>Everything must happen through <strong>branches, commits, and pull requests</strong>. No editing <code>main</code> directly.</p>
+</section>
+<section id="capstone-setup-repository-and-roles" class="slide level2">
+<h2>Capstone setup: repository and roles</h2>
+<ol type="1">
+<li><p>Choose a <strong>Team Lead</strong> and tell them to create a GitHub repo.</p></li>
+<li><p>You will all be added as <strong>collaborators</strong> by the team lead.</p></li>
+<li><p>Create a shared GitHub repository, for example:</p>
+<ul>
+<li><code>SQ4003-company-welcome</code>.</li>
+</ul></li>
+<li><p>The team lead is responsible for:</p>
+<ul>
+<li>Reviewing all PRs.</li>
+<li>Requesting changes if needed.</li>
+<li>Approving and merging PRs.</li>
+<li>Merging into <code>main</code>.</li>
+</ul></li>
+<li><p>Branch protection can be enabled so that PRs are required to merge.</p></li>
+</ol>
+<p>This simulates a real-world workflow in a software/data team.</p>
+</section>
+<section id="capstone-initial-structure" class="slide level2">
+<h2>Capstone: initial structure</h2>
+<p>The starting <code>README.md</code> might look like this:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb62-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu"># SQ4003</span></span>
+<span id="cb62-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="" aria-hidden="true" tabindex="-1"></a>Welcome to SQ4003 — a fictional data and analytics company used for learning Git and GitHub.</span>
+<span id="cb62-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## About SQ4003</span></span>
+<span id="cb62-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-7"><a href="" aria-hidden="true" tabindex="-1"></a>(Short paragraph about what the company does.)</span>
+<span id="cb62-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Our values</span></span>
+<span id="cb62-10"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Value 1</span>
+<span id="cb62-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Value 2</span>
+<span id="cb62-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Value 3</span>
+<span id="cb62-14"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-15"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## The team</span></span>
+<span id="cb62-16"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-17"><a href="" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Each team member will add themselves here via a pull request.</span></span>
+<span id="cb62-18"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-19"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## How we work</span></span>
+<span id="cb62-20"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-21"><a href="" aria-hidden="true" tabindex="-1"></a>(Notes about collaboration, Git workflow, issues, etc.)</span>
+<span id="cb62-22"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-23"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">## Contact</span></span>
+<span id="cb62-24"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-25"><a href="" aria-hidden="true" tabindex="-1"></a>(Placeholder contact details.)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You will extend this with your own content and images.</p>
+</section>
+<section id="capstone-task-your-personal-contribution" class="slide level2">
+<h2>Capstone task: your personal contribution</h2>
+<p>Each of you will:</p>
+<ol type="1">
+<li><p>Open the repo in a <strong>Codespace</strong>.</p></li>
+<li><p>Create a <strong>feature branch</strong> for your contribution:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb63-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb63-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin main</span>
+<span id="cb63-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch <span class="at">-c</span> feature-yourname-bio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Add your profile picture:</p>
+<ul>
+<li>Place an image file in <code>images/</code> (e.g.&nbsp;<code>images/yourname.jpg</code>).</li>
+<li>Make sure the image file is small (&lt;1 MB).</li>
+</ul></li>
+<li><p>Edit <code>README.md</code> to add your profile under <code>## The team</code>:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb64-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">### Your Name</span></span>
+<span id="cb64-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="al">![Your Name](images/yourname.jpg)</span></span>
+<span id="cb64-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-5"><a href="" aria-hidden="true" tabindex="-1"></a>Short bio here: what you study/teach, interests in data or coding, and one fun fact.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Check your work:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb65-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb65-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Commit your changes:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb66-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add README.md images/yourname.jpg</span>
+<span id="cb66-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add bio and photo for Your Name"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Push your branch and open a <strong>Pull Request</strong> into <code>main</code>.</p></li>
+</ol>
+</section>
+<section id="capstone-review-and-iteration" class="slide level2">
+<h2>Capstone: review and iteration</h2>
+<p>As you submit PRs:</p>
+<ul>
+<li>The <strong>Team Lead</strong> (and optionally other students) will review them.</li>
+<li>Expect feedback such as:
+<ul>
+<li>“Please shorten the bio to 3 sentences.”</li>
+<li>“Image is too large, please compress it.”</li>
+<li>“Heading levels are inconsistent; please use <code>###</code> for names.”</li>
+</ul></li>
+</ul>
+<p>If changes are requested:</p>
+<ol type="1">
+<li><p>Keep working on <strong>the same branch</strong> in your Codespace.</p></li>
+<li><p>Edit the files.</p></li>
+<li><p>Commit new changes:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb67-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb67-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add README.md</span>
+<span id="cb67-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Address review comments on bio"</span></span>
+<span id="cb67-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Your PR automatically updates with the new commits.</p></li>
+</ol>
+<p>Once your PR is approved, the team lead merges it into <code>main</code>.</p>
+</section>
+<section id="capstone-dealing-with-conflicts-in-the-team-section" class="slide level2">
+<h2>Capstone: dealing with conflicts in the team section</h2>
+<p>The <code>## The team</code> section is a <strong>hotspot</strong>: many of you will edit the same area.</p>
+<p>This is an opportunity to practise resolving conflicts.</p>
+<p>If you see a merge conflict message on your PR:</p>
+<ol type="1">
+<li><p>In your Codespace, update your branch with the latest <code>main</code>:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb68-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch origin</span>
+<span id="cb68-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge origin/main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>If conflicts appear, resolve them in <code>README.md</code> as previously described.</p></li>
+<li><p>Re-stage, commit and push the resolution.</p></li>
+</ol>
+<p>Tips to reduce conflicts:</p>
+<ul>
+<li>Insert your entry with clear blank lines before and after.</li>
+<li>Keep headings consistent.</li>
+<li>Don’t reformat other people’s bios without discussing it.</li>
+</ul>
+</section>
+<section id="capstone-using-issues-for-tasks" class="slide level2">
+<h2>Capstone: using issues for tasks</h2>
+<p>During the project, you can use GitHub <strong>Issues</strong> to organise work.</p>
+<p>Examples of issues you might create:</p>
+<ul>
+<li>“Write About SQ4003 section.”</li>
+<li>“Decide company values and add them to README.”</li>
+<li>“Create consistent style guide for bios.”</li>
+</ul>
+<p>For each issue:</p>
+<ul>
+<li>Someone volunteers to work on it.</li>
+<li>They create a branch, implement the changes, and open a PR referencing the issue (e.g.&nbsp;<code>Fixes #3</code>).</li>
+</ul>
+<p>This gives you a taste of how real software teams coordinate work.</p>
+</section>
+<section id="a-typical-daily-workflow-cheat-sheet" class="slide level2">
+<h2>A typical daily workflow (cheat sheet)</h2>
+<p>When you open your Codespace to work on any project, follow this pattern:</p>
+<ol type="1">
+<li><p><strong>Update your main branch</strong>:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb69-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb69-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Create or switch to a feature branch</strong> for your specific task:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb70-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch <span class="at">-c</span> feature-your-task   <span class="co"># first time</span></span>
+<span id="cb70-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb70-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch feature-your-task      <span class="co"># if it already exists</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Do the work</strong>:</p>
+<ul>
+<li>Edit files.</li>
+<li>Run your Python code or other tools.</li>
+</ul></li>
+<li><p><strong>Check what changed</strong>:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb71-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb71-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Stage and commit in logical chunks</strong>:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb72-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add file1 file2</span>
+<span id="cb72-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Clear, descriptive message"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Push your branch and open a PR</strong>:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb73-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin feature-your-task</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Respond to reviews</strong>, fix conflicts if needed, and merge.</p></li>
+</ol>
+<p>If you repeat this cycle, Git and GitHub will start to feel natural.</p>
+</section>
+<section id="summary-and-next-steps" class="slide level2">
+<h2>Summary and next steps</h2>
+<p>You have seen Git as a <strong>library of functions</strong> that you call from the command line:</p>
+<ul>
+<li><code>git status</code> to inspect state.</li>
+<li><code>git add</code> and <code>git commit</code> to record snapshots.</li>
+<li><code>git diff</code> and <code>git log</code> to see history.</li>
+<li>Branches to work in parallel.</li>
+<li>Remotes, <code>git pull</code> and <code>git push</code> to sync with GitHub.</li>
+<li>Issues, pull requests and reviews for collaboration.</li>
+<li>Conflict resolution and <code>.gitignore</code> for smoother teamwork.</li>
+</ul>
+<p>Your next step is to <strong>apply</strong> this in the SQ4003 capstone project.</p>
+<p>As you work, keep connecting these commands back to your Python mental model:</p>
+<ul>
+<li>Git commands are like calling functions with arguments.</li>
+<li>A repository is like a project object with methods to inspect and modify its state.</li>
+</ul>
+<p>The more you practise, the more Git will feel like a natural extension of your coding workflow.</p>
+<div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+
+</div>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="git_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="git_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="git_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="git_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="git_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="git_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="git_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="git_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="git_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="git_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="git_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

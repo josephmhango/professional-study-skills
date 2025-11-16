@@ -1,0 +1,1394 @@
+---
+title: "GitHub and collaboration"
+subtitle: "Professional and study skills"
+author: "Joseph Mhango"
+css: scroll.css
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    toc: true
+    toc-depth: 3
+    incremental: false
+    code-line-numbers: false
+    chalkboard: true
+    controls: true
+    hash: true
+editor: visual
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Welcome and goals
+
+In this session you will learn how to use **Git** and **GitHub** as working tools for your own projects and for collaboration.
+
+By the end, you should be able to:
+
+- Think of Git commands the same way you think about **Python functions**.
+- Track changes to your code and notes safely.
+- Work on branches without stepping on each other’s toes.
+- Use GitHub for collaboration: issues, pull requests (PRs), and reviews.
+- Resolve merge conflicts without panic.
+- Complete a **capstone collaboration project** where your whole class builds a shared `README.md` for a fictional company called **SQ4003**.
+
+You will follow along using **GitHub Codespaces**, so you don’t need to install anything locally.
+
+---
+
+## Big picture: Git, GitHub, Codespaces
+
+Before touching any commands, get a mental model:
+
+- **Git** is a **version control library and CLI tool** installed in your development environment.
+  - Think of Git as a Python package that manages versions of a folder.
+  - Git keeps a history of *snapshots* (commits) of your project.
+
+- **GitHub** is a **website + API** that hosts Git repositories in the cloud.
+  - It stores your repos, issues, pull requests and discussions.
+  - It’s where collaboration happens.
+
+- **GitHub Codespaces** is a **cloud development environment**.
+  - It gives you a full VS Code-like editor and a terminal in the browser.
+  - Git is already installed and wired to GitHub.
+
+The common pattern is:
+
+1. You open a **repository** in GitHub.
+2. You start a **Codespace** from that repo.
+3. In the Codespace you run **`git` commands in the terminal** to record and sync your changes.
+
+---
+
+## Git as a library of functions
+
+You already know Python functions. For example:
+
+```python
+print("Hello")
+```
+
+Here:
+
+- `print` is a **function**.
+- `"Hello"` is an **argument**.
+- The **output** appears in the console.
+
+With Git, the pattern is similar, but the **shell** is calling Git instead of Python calling `print`.
+
+The general Git call looks like this:
+
+```bash
+git <function> [options] [arguments]
+```
+
+Some examples (we’ll unpack them one by one):
+
+- `git status`
+- `git add file.py`
+- `git commit -m "Add analysis"`
+- `git push origin main`
+
+You can think of `git` as the **module**, and `status`, `add`, `commit`, `push` as **functions (subcommands)** exposed by that module.
+
+---
+
+## Repositories and the three areas
+
+Git organises your work in a **repository** (repo):
+
+- A repo is just a folder with a hidden `.git` directory inside.
+- The `.git` folder stores all history and metadata.
+
+Inside a repo, Git thinks in terms of **three areas**:
+
+1. **Working directory**
+   - The actual files you edit: `.py`, `.ipynb`, `.qmd`, etc.
+2. **Staging area (Index)**
+   - A staging buffer where you explicitly list which changes will go into the next commit.
+3. **Repository (History)**
+   - The database of saved commits.
+
+You move changes like this:
+
+```text
+Working directory --(git add)--> Staging area --(git commit)--> Repository
+```
+
+Keep this mental model in mind. Most Git commands move or inspect changes between these three areas.
+
+---
+
+## Starting in Codespaces
+
+In this module you will work mainly in Codespaces.
+
+### Opening a Codespace
+
+1. Go to a GitHub repository in your browser.
+2. Click **Code ▸ Codespaces ▸ Create codespace on main** (or an existing branch).
+3. Wait for the Codespace to start. You’ll see an editor and a terminal at the bottom.
+
+### Check that Git is available
+
+In the terminal, type:
+
+```bash
+git --version
+```
+
+You should see something like `git version 2.x.y`.
+
+### Configure your identity (once per Codespace)
+
+Git records who made each commit:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+```
+
+> Use the same email you use for GitHub so commits link to your account.
+
+---
+
+## `git status`: your dashboard
+
+Think of `status()` as a **read-only diagnostic function**.
+
+**Function view**:
+
+- Name: `status`
+- Usage: `git status [options]`
+- Arguments: optional flags (e.g. `--short`, `--branch`)
+- Output: a text summary of:
+  - which branch you’re on,
+  - which files are modified,
+  - which files are staged,
+  - whether your local branch is ahead/behind the remote.
+
+**Examples**:
+
+```bash
+# Basic status
+git status
+
+# Short, compact output
+git status --short
+
+# Show branch info and more details
+git status --branch
+```
+
+**Habit:** Run `git status` frequently. It’s your “where am I?” command.
+
+---
+
+## `git add`: staging changes
+
+`git add` is the function that moves changes from the **working directory** into the **staging area**.
+
+**Function view**:
+
+- Name: `add`
+- Usage: `git add [options] <pathspec>...`
+- Arguments:
+  - `pathspec`: file or folder names (e.g. `script.py`, `data/`, `.`)
+  - Options:
+    - `-p` / `--patch`: stage changes interactively, hunk by hunk.
+- Output: no printed result if successful; it updates the *staging area*.
+
+**Common use cases**:
+
+```bash
+# Stage one file
+git add analysis.py
+
+# Stage several files
+git add analysis.py data_cleaning.py
+
+# Stage all tracked and new files in this folder and subfolders
+git add .
+
+# Stage changes interactively (advanced but powerful)
+git add -p
+```
+
+In Python mental model:
+
+```python
+# Conceptually, not real code
+staging_area = add(staging_area, files=["analysis.py", "data_cleaning.py"])
+```
+
+You choose **which** changes will be part of the next snapshot by calling `git add`.
+
+---
+
+## `git commit`: recording a snapshot
+
+`git commit` creates a new **commit**: a snapshot of all staged changes, with metadata (author, timestamp, message, parent commit).
+
+**What “snapshot” means (plain English):**
+
+- A commit captures exactly what you’ve staged at that moment. It’s built from the staging area, not whatever happens to be in your folder.
+- It includes tracked files you staged (or, with `-a`, any tracked files you changed). It excludes untracked and ignored files unless you add them.
+- It does not duplicate your whole project every time. Unchanged files are reused behind the scenes; you still get the effect of “this is how the project looked now.”
+- It’s not “a diff.” Tools show diffs to explain a commit, but the commit itself is the recorded state of the files you chose.
+
+**Quick reality checks:**
+
+- You edited 3 files but staged 2 → the commit contains the 2 you staged; the 3rd stays uncommitted.
+- You ran `git commit -a` → only changes to already-tracked files are included; brand‑new files still need `git add`.
+
+**Function view**:
+
+- Name: `commit`
+- Usage: `git commit [options]`
+- Key options:
+  - `-m "message"`: provide a commit message inline.
+  - `-a`: automatically stage all tracked files (skips new untracked files).
+  - `--amend`: edit the last commit (message and/or content).
+- Output: a summary of what was committed, and a new commit added to history.
+
+**Example**:
+
+```bash
+# Stage then commit
+git add analysis.py
+git commit -m "Add first exploratory analysis"
+
+# Quick commit of all tracked changes (skips new files)
+git commit -am "Fix typo in plotting script"
+```
+
+Your commit message should answer the question: **“What did you change and why?”**
+
+::: callout-warning
+### Gotcha: `git commit -a` skips new files
+
+- `-a` only stages changes to **already-tracked** files (modified/deleted).
+- It does not include brand‑new, untracked files — you still need `git add`.
+- Equivalent behaviour: `git add -u` then `git commit`.
+
+Helpful variants:
+
+```bash
+# Include tracked changes quickly
+git commit -am "Refactor: extract helper"
+
+# Include everything including new files (two steps)
+git add -A && git commit -m "Add new module and tests"
+```
+:::
+
+::: callout-note
+### Amending the last commit (`--amend`)
+
+- Change the last commit’s **message**:
+  ```bash
+  git commit --amend -m "Better message"
+  ```
+- Add more changes to the last commit (stage first):
+  ```bash
+  git add file.py
+  git commit --amend --no-edit
+  ```
+- This rewrites history (new commit ID). If already pushed, you must update the remote:
+  ```bash
+  git push --force-with-lease
+  ```
+- Be careful amending shared commits; coordinate with collaborators.
+:::
+
+Good examples:
+
+- `"Implement basic data cleaning pipeline"`
+- `"Add bar chart of mean yield by treatment"`
+
+Avoid:
+
+- `"stuff"`, `"update"`, `"final"`.
+
+---
+
+## `git log` and `git show`: reading history
+
+Once you have commits, you can inspect history.
+
+### `git log`
+
+**Function view**:
+
+- Name: `log`
+- Usage: `git log [options] [range]`
+- Output: list of commits (hash, author, date, message).
+
+**Examples**:
+
+```bash
+# Basic history
+git log
+
+# One-line history
+git log --oneline
+
+# History with graph of branches and merges
+git log --oneline --graph --all
+```
+
+### `git show`
+
+`git show` displays details about a specific commit (or other objects).
+
+**Examples**:
+
+```bash
+# Show the latest commit
+git show
+
+# Show a particular commit
+git show 3a5f2c1
+
+# Show only the commit message (no diff)
+git show --no-patch 3a5f2c1
+```
+
+If you imagine commits as **objects**, then `git log` lets you list them and `git show` lets you inspect one in detail.
+
+::: callout-tip
+### Gotcha: `git show` opens a pager or prints huge diffs
+
+- To avoid the pager for a one-off:
+  ```bash
+  git --no-pager show
+  ```
+- Make it permanent for `show`:
+  ```bash
+  git config --global pager.show cat
+  ```
+- Get summaries instead of full patches:
+  ```bash
+  git show --stat
+  git show --name-only
+  git show <commit> -- path/to/file
+  ```
+:::
+
+---
+
+## `git diff`: what changed?
+
+`git diff` compares two states and shows line-by-line differences.
+
+**Function view**:
+
+- Name: `diff`
+- Usage: `git diff [options] [<commit> [<commit>]]`
+- Output: a patch: added lines (`+`) and removed lines (`-`).
+
+Common patterns:
+
+```bash
+# Show differences between working directory and staging area
+git diff
+
+# Show differences between staging area and last commit
+git diff --cached
+
+# Show differences between two commits
+git diff old_commit new_commit
+
+# Show differences for a single file
+git diff HEAD analysis.py
+```
+
+Use `git diff` before committing to double-check what you are about to record.
+
+::: callout-warning
+### Gotcha: `git diff` prints nothing
+
+- You may have nothing **unstaged**. Check:
+  ```bash
+  git status
+  ```
+- If changes are staged, use:
+  ```bash
+  git diff --staged   # or --cached
+  ```
+- To compare against the last commit regardless of staging:
+  ```bash
+  git diff HEAD
+  ```
+- Untracked files never show in `git diff` — look at `git status` or `git add` them first.
+:::
+
+### How to read a diff (quick example)
+
+```diff
+diff --git a/app.py b/app.py
+index a1b2c3d..d4e5f6g 100644
+--- a/app.py
++++ b/app.py
+@@ -12,6 +12,7 @@ def load_config(path):
+     cfg = json.load(f)
+     return cfg
+
+-def connect(db_url):
++def connect(db_url, timeout=30):
++    # default timeout added for reliability
+     conn = driver.connect(db_url, timeout=timeout)
+     return conn
+```
+
+- `--- a/...` vs `+++ b/...`: old vs new file.
+- `@@ -12,6 +12,7 @@`: hunk header → old starts line 12 (6 lines), new starts line 12 (7 lines).
+- `-` removed, `+` added, space is context.
+- What to notice: API changes (new parameter), logic changes, comments/doc hints.
+- Helpful flags:
+  ```bash
+  git diff --stat
+  git diff --word-diff
+  git show <commit> --stat
+  ```
+
+---
+
+## Undoing local changes safely
+
+You will make mistakes. That’s fine. Git has **undo functions**.
+
+### Unstage a file
+
+If you accidentally staged a file with `git add`:
+
+```bash
+# Unstage a single file
+git restore --staged analysis.py
+
+# Unstage everything
+git restore --staged .
+```
+
+### Discard changes in the working directory
+
+⚠️ This is destructive: it throws away your uncommitted changes.
+
+```bash
+# Discard local changes in one file
+git restore analysis.py
+
+# Discard local changes in all files
+git restore .
+```
+
+Think of `restore` as a function that resets your files back to the version in a specified commit (by default, the latest commit).
+
+::: callout-tip
+### Gotcha: `git restore .` restores from the Index by default
+
+- `git restore .` makes the working tree match the **Index** (staged snapshot), not necessarily `HEAD`.
+- To force the working tree to match the latest commit:
+  ```bash
+  git restore --source=HEAD --worktree .
+  # single file
+  git restore --source=HEAD --worktree path/to/file.py
+  ```
+- To unstage (keep edits):
+  ```bash
+  git restore --staged .
+  ```
+- To discard both index and working tree (dangerous):
+  ```bash
+  git reset --hard HEAD
+  ```
+- Untracked files are unaffected; remove them with:
+  ```bash
+  git clean -fd
+  ```
+- Example: if you added `import os` locally and want it gone, the HEAD version will remove that line:
+  ```bash
+  git restore --source=HEAD --worktree script.py
+  ```
+:::
+
+---
+
+## `git stash`: save work-in-progress
+
+Temporarily save your uncommitted changes to a stack and clean your working tree.
+
+**Basics**
+
+```bash
+git stash push -m "WIP: refactor widget"   # save
+git stash list                             # view
+git stash show -p stash@{0}                # inspect
+git stash apply stash@{0}                  # re-apply (keep)
+git stash pop                              # re-apply and drop
+```
+
+Include more:
+
+```bash
+git stash push -u   # include untracked
+git stash push -a   # include untracked + ignored
+```
+
+Create a branch from a stash:
+
+```bash
+git stash branch my-wip stash@{0}
+```
+
+---
+
+## Branches: parallel timelines
+
+A **branch** is just a named pointer to a commit.
+
+- The default branch is usually called `main`.
+- When you create a new branch, you’re creating a new **timeline** of commits.
+- Branches let you experiment without breaking the main line of development.
+
+Visual idea:
+
+```text
+main:       A --- B --- C
+                 \
+feature-x:        D --- E
+```
+
+Here `feature-x` branched off from commit `B` and added commits `D` and `E`.
+
+---
+
+## Branch commands: create, switch, list
+
+### List branches
+
+```bash
+git branch
+```
+
+- Shows all local branches.
+- `*` marks the current branch.
+
+### Create a branch
+
+```bash
+# Create branch 'feature-bio' from current commit
+git branch feature-bio
+```
+
+### Switch to a branch
+
+Modern, friendly command:
+
+```bash
+# Switch to an existing branch
+git switch feature-bio
+
+# Create and switch in one step
+git switch -c feature-bio
+```
+
+Older style (still common):
+
+```bash
+# Create + switch
+git checkout -b feature-bio
+
+# Switch only
+git checkout feature-bio
+```
+
+In Python mental model:
+
+```python
+# Logical idea, not real code
+current_branch = switch_branch("feature-bio")
+```
+
+You will mainly use **feature branches** for new work, then merge them back into `main` via pull requests.
+
+---
+
+## Where is `main` and branch code actually stored?
+
+When you hear “code on `main`” vs “code on `feature-x`”, it’s tempting to imagine two different folders somewhere on your disk. Git actually stores things more cleverly.
+
+Inside your repo there are two important pieces:
+
+- Your **working directory**: the files you see and edit (`.py`, `.ipynb`, `.qmd`, etc.).
+- The hidden **`.git/` folder**: Git’s database.
+
+Inside `.git/`:
+
+- Git stores **commits**, **trees** (directory snapshots) and **blobs** (file contents) in an **object database**.
+- Each branch name (like `main`, `feature-bio`) is just a tiny file (a **ref**) pointing at **one commit hash** in that database.
+- `HEAD` is a special pointer saying “which branch/commit am I currently viewing?”
+
+So:
+
+- All versions of the code for **all branches** live in `.git/objects/` as immutable objects.
+- `main` and `feature-bio` are just **names** pointing to different commits in that one database.
+- Your working directory is a **materialised view** of whichever commit `HEAD` is currently on.
+
+You’re never carrying around separate copies of the whole project for each branch; Git reuses objects internally and only materialises one snapshot at a time in your working directory.
+
+---
+
+## What really happens when you switch branches?
+
+Imagine your working directory currently shows `main` after you’ve done:
+
+```bash
+git switch main
+git pull origin main
+```
+
+At this point:
+
+- `HEAD → main`.
+- `main` points to some commit (say `A1B2C3…`).
+- Your working directory and staging area are synced to that commit’s snapshot.
+
+Now you run:
+
+```bash
+git switch feature-bio
+```
+
+Git does **not** blindly delete everything and re-copy files.
+
+Instead, Git:
+
+1. Changes `HEAD` to point to `feature-bio`.
+2. Looks at the commit for `main` and the commit for `feature-bio`.
+3. Computes the **difference** between those two snapshots.
+4. Applies that diff to your working directory:
+   - Files that exist on `main` but **not** on `feature-bio` are **removed** from the working directory.
+   - Files that exist on both but have different contents are **overwritten** with the `feature-bio` version.
+   - Files that exist only on `feature-bio` are **created** in the working directory.
+   - Untracked files (things Git isn’t tracking) are left alone unless they would clash with a tracked file (in that case, Git refuses to switch and asks you to move/commit them first).
+
+From your point of view, the effect is:
+
+> “My folder now looks like the version of the project that lives on the `feature-bio` branch.”
+
+But under the hood, no history is lost:
+
+- The `main` branch pointer still points to its commit.
+- All commits and file versions still live in `.git/objects/`.
+
+Git is just changing **which snapshot** is checked out into the working directory.
+
+---
+
+## What if you have uncommitted changes when switching?
+
+If your working directory has uncommitted edits that would be overwritten by switching branches, Git will stop you:
+
+- If a file is the same in both branches except for your local edits, Git may safely carry your changes over.
+- If switching would overwrite your local modifications, Git prints an error and suggests that you:
+  - commit them,
+  - stash them (`git stash`), or
+  - discard them.
+
+This is why you often see the advice:
+
+- **“Commit or stash before switching branches.”**
+
+It’s Git’s way of protecting your unsaved work.
+
+---
+
+## Merging branches
+
+Once work on a branch is complete and reviewed, you **merge** it back into another branch (often `main`).
+
+### Merge with Git CLI
+
+From the branch you want to merge **into** (e.g. `main`):
+
+```bash
+git switch main
+# Ensure you have the latest
+git pull origin main
+# Merge feature branch
+git merge feature-bio
+```
+
+Two main types of merge:
+
+- **Fast-forward merge**: if `main` has not moved since you branched, Git just advances `main` to the new commit.
+- **Merge commit**: if both branches have new commits, Git creates a new commit that has two parents.
+
+In GitHub-based workflows, merges usually happen via **pull requests**, which we’ll cover later.
+
+
+Once work on a branch is complete and reviewed, you **merge** it back into another branch (often `main`).
+
+### Merge with Git CLI
+
+From the branch you want to merge **into** (e.g. `main`):
+
+```bash
+git switch main
+# Ensure you have the latest
+git pull origin main
+# Merge feature branch
+git merge feature-bio
+```
+
+Two main types of merge:
+
+- **Fast-forward merge**: if `main` has not moved since you branched, Git just advances `main` to the new commit.
+- **Merge commit**: if both branches have new commits, Git creates a new commit that has two parents.
+
+In GitHub-based workflows, merges usually happen via **pull requests**, which we’ll cover later.
+
+---
+
+## Remotes: connecting local and GitHub
+
+A **remote** is a link to a copy of your repo hosted elsewhere, usually on GitHub.
+
+- The default remote name is usually `origin`.
+
+### Inspect remotes
+
+```bash
+git remote -v
+```
+
+This lists remote names and URLs.
+
+### Clone a repository
+
+In most cases, your Codespace is created directly from a GitHub repo, so you don’t need `git clone`. But on your own machine you would do:
+
+```bash
+git clone https://github.com/user/repo.git
+```
+
+This creates a local folder with:
+
+- A working directory.
+- A `.git` folder with full history.
+- A remote called `origin` pointing to GitHub.
+
+---
+
+## `git pull` and `git push`: syncing with GitHub
+
+Once you have a remote, two key functions keep you in sync:
+
+### `git pull`
+
+Combines `git fetch` (download new commits from remote) and `git merge` (apply them to your current branch).
+
+**Function view**:
+
+- Name: `pull`
+- Usage: `git pull [remote] [branch]`
+- Typical call: `git pull origin main`
+
+Use `git pull`:
+
+- At the start of a coding session.
+- Before pushing your own changes.
+
+### `git push`
+
+Uploads your local commits to the remote.
+
+**Function view**:
+
+- Name: `push`
+- Usage: `git push [remote] [branch]`
+- Typical call: `git push origin feature-bio`
+
+The first time you push a new branch, Git may ask you to set the upstream:
+
+```bash
+git push -u origin feature-bio
+```
+
+After that, you can just run `git push` on that branch.
+
+---
+
+## GitHub 101: issues, pull requests, reviews
+
+GitHub adds collaboration tools *on top of* Git.
+
+### Issues
+
+- Issues are used to track **tasks**, **bugs**, or **ideas**.
+- Each issue has a title, description, labels, assignees.
+- You can link issues to commits and pull requests.
+
+Example uses in this module:
+
+- “Add README section on company values.”
+- “Fix broken link in installation instructions.”
+
+### Pull Requests (PRs)
+
+A PR is a request to merge one branch into another (often `main`).
+
+- Shows the diff between branches.
+- Allows **reviews** and **comments**.
+- Can enforce rules (e.g. at least one approval before merging).
+
+We will rely heavily on PRs in the capstone project.
+
+#### Linking PRs to issues
+
+- In the PR description (or a commit on the PR branch), include keywords:
+  - `Fixes #123`, `Closes #123`, `Resolves #123` → auto-link and auto-close on merge.
+  - `Refs #123`, `Related to #123` → link without auto-close.
+- Examples:
+  ```text
+  Fixes #42: Handle empty dates in import
+  Related to #77
+  ```
+- You can also link via the PR sidebar “Linked issues”.
+
+#### What a PR really is
+
+- At its core, a PR is a structured request to merge branch A into branch B.
+- It is a platform feature (GitHub/GitLab/Bitbucket), not a core Git command.
+- The platform adds discussion, code review, required approvals, and automated checks (CI) around the basic Git merge/rebase.
+
+#### How review cycles work
+
+- Comments and “changes requested” live on the PR, not on a one-off merge commit.
+- You update the PR by pushing more commits to the same branch; the PR view updates automatically.
+- There is no merge commit until the PR is actually merged.
+- CI checks re-run on each push; reviewers re-review; you resolve conversations and proceed.
+- Opening a new PR is optional and usually unnecessary unless you intentionally start over (e.g. new branch/scope).
+
+#### Merge options and protections
+
+- Teams choose how to finalize PRs: merge commit, squash merge, or rebase-merge.
+- Branch protection rules can require green CI, approvals, linear history, etc., before the merge button is enabled.
+- “Blame,” history graphs, and file views in the web UI are product features reading underlying Git data (you can also run `git blame` locally).
+
+#### Squash merge (plain English)
+
+- Combines all commits from the PR branch into a single commit when merging into the target branch.
+- Result: the main branch gets one clean commit summarizing the whole change; the messy “work-in-progress” commit history stays only on the feature branch (or is discarded after delete).
+- Use when you want a tidy history and the PR logically represents one change.
+
+#### Rebase / rebase-merge (plain English)
+
+- Rebase “replays” your branch’s commits on top of another branch so it looks like you started from the latest point.
+- Result: a linear history without merge commits; good for keeping a clean timeline.
+- Trade‑off: it rewrites commit history of your feature branch; avoid rebasing shared/public branches unless your team agrees on the workflow.
+- In PRs, “rebase-merge” creates the effect of applying your commits cleanly on top of the target branch at merge time (without a merge commit).
+
+---
+
+## A standard PR workflow (you will use this)
+
+You will repeat this pattern many times:
+
+1. **Update your local main**:
+
+   ```bash
+   git switch main
+   git pull origin main
+   ```
+
+2. **Create a feature branch** for your work:
+
+   ```bash
+   git switch -c feature-yourname-bio
+   ```
+
+3. **Make changes** (edit files in the Codespaces editor).
+
+4. **Check status and diff**:
+
+   ```bash
+   git status
+   git diff
+   ```
+
+5. **Stage and commit**:
+
+   ```bash
+   git add README.md images/yourname.jpg
+   git commit -m "Add bio and photo for Your Name"
+   ```
+
+6. **Push the branch to GitHub**:
+
+   ```bash
+   git push -u origin feature-yourname-bio
+   ```
+
+7. On GitHub, create a **Pull Request** from your branch into `main`.
+8. Respond to **review comments**, make extra commits if needed.
+9. Once approved, merge the PR.
+
+This is exactly what you will do in the SQ4003 project.
+
+---
+
+## GitHub reviews and code comments
+
+On a PR page, reviewers can:
+
+- Comment on individual lines.
+- Request changes.
+- Approve the PR.
+
+As a contributor, you should:
+
+- Treat reviews as a way to improve your work.
+- Respond politely, asking for clarification when needed.
+- Address requested changes via new commits.
+
+As a reviewer (e.g. team leader):
+
+- Comment on **content**, **style**, and **consistency**.
+- Be specific: “Please change this heading to H2” is better than “Improve this.”
+- Avoid personal criticism; focus on the work.
+
+---
+
+## `git blame`: who changed this line?
+
+Sometimes you need to know **who last touched a specific line** of a file.
+
+`git blame` shows, for each line, the commit and author that last modified it.
+
+**Function view**:
+
+- Name: `blame`
+- Usage: `git blame [options] <file>`
+
+Example:
+
+```bash
+git blame README.md
+```
+
+This prints each line of `README.md` with a commit hash and author.
+
+Use cases:
+
+- Find who wrote a particular paragraph.
+- Track when something changed.
+
+Important: use `blame` as a tool for understanding history, not for blaming people. 🙂
+
+---
+
+## Conflicts: what they are and how to see them
+
+A **merge conflict** happens when Git cannot automatically combine changes from two branches.
+
+Example situation:
+
+- You edit line 10 of `README.md` in branch `feature-alex`.
+- Someone else edits the same line in `README.md` on `main`.
+- When you merge `feature-alex` into `main`, Git doesn’t know which version to keep.
+
+Git then marks the conflict in the file like this:
+
+```text
+<<<<<<< HEAD
+This is the line from the branch you are merging into (e.g. main).
+=======
+This is the line from the branch being merged (e.g. feature-alex).
+>>>>>>> feature-alex
+```
+
+You must edit the file to remove these markers and keep the correct final content.
+
+---
+
+## Resolving conflicts in Codespaces (step-by-step)
+
+1. Run your merge (or `git pull`) and see the conflict error.
+
+2. Check status:
+
+   ```bash
+   git status
+   ```
+
+   You’ll see files listed as **both modified** or **unmerged**.
+
+3. Open the conflicted file in the editor.
+
+4. Decide how to resolve each conflict:
+
+   - Keep your version.
+   - Keep the other version.
+   - Combine or rewrite both.
+
+5. Manually edit the file:
+
+   - Remove `<<<<<<<`, `=======`, `>>>>>>>` lines.
+   - Make sure the final text reads correctly.
+
+6. Mark the conflict as resolved by staging the file:
+
+   ```bash
+   git add README.md
+   ```
+
+7. Complete the merge with a commit (if required):
+
+   ```bash
+   git commit
+   ```
+
+8. Push the result to GitHub:
+
+   ```bash
+   git push
+   ```
+
+In Codespaces, the editor often offers buttons like **Accept Current Change** / **Accept Incoming Change** / **Accept Both**.
+
+---
+
+## `.gitignore`: telling Git what to ignore
+
+Some files should **not** be tracked by Git:
+
+- Temporary files.
+- Python cache files.
+- Large raw data that doesn’t belong in the repo.
+
+You list these in a `.gitignore` file.
+
+Example `.gitignore` for a Python project:
+
+```text
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# OS-specific junk
+.DS_Store
+Thumbs.db
+```
+
+Create or edit `.gitignore` at the root of your repo, then commit it. Git will stop tracking files that match those patterns.
+
+---
+
+## Good README files
+
+Your `README.md` is the **front page** of your project.
+
+A good README typically includes:
+
+- Project name and short description.
+- Installation instructions (if needed).
+- How to run or use the project.
+- Structure of the repository.
+- How to contribute.
+- License (if relevant).
+
+In Markdown you can:
+
+- Use headings (`#`, `##`, `###`).
+- Add lists and tables.
+- Embed images:
+
+  ```markdown
+  ![Alt text for accessibility](images/yourname.jpg)
+  ```
+
+In the SQ4003 project you will build a rich README together.
+
+---
+
+## Capstone: SQ4003 company README (overview)
+
+You will now work as a **fictional company** called **SQ4003**.
+
+Goal: **Collaboratively build a professional `README.md`** for the company using Git, GitHub, and Codespaces.
+
+The README will:
+
+- Introduce the company (what SQ4003 does).
+- Describe its values and ways of working.
+- Present the team: a section with **each of you** as an employee, including:
+  - Name and role.
+  - 2–3 sentence bio.
+  - A small profile picture.
+- Explain how new team members can contribute to projects.
+
+Everything must happen through **branches, commits, and pull requests**. No editing `main` directly.
+
+---
+
+## Capstone setup: repository and roles
+
+1. Choose a **Team Lead** and tell them to create a GitHub repo.
+
+2. You will all be added as **collaborators** by the team lead.
+
+3. Create a shared GitHub repository, for example:
+
+   - `SQ4003-company-welcome`.
+
+
+4. The team lead is responsible for:
+   - Reviewing all PRs.
+   - Requesting changes if needed.
+   - Approving and merging PRs.
+   - Merging into `main`.
+
+5. Branch protection can be enabled so that PRs are required to merge.
+
+This simulates a real-world workflow in a software/data team.
+
+---
+
+## Capstone: initial structure
+
+The starting `README.md` might look like this:
+
+```markdown
+# SQ4003
+
+Welcome to SQ4003 — a fictional data and analytics company used for learning Git and GitHub.
+
+## About SQ4003
+
+(Short paragraph about what the company does.)
+
+## Our values
+
+- Value 1
+- Value 2
+- Value 3
+
+## The team
+
+> Each team member will add themselves here via a pull request.
+
+## How we work
+
+(Notes about collaboration, Git workflow, issues, etc.)
+
+## Contact
+
+(Placeholder contact details.)
+```
+
+You will extend this with your own content and images.
+
+---
+
+## Capstone task: your personal contribution
+
+Each of you will:
+
+1. Open the repo in a **Codespace**.
+
+2. Create a **feature branch** for your contribution:
+
+   ```bash
+   git switch main
+   git pull origin main
+   git switch -c feature-yourname-bio
+   ```
+
+3. Add your profile picture:
+
+   - Place an image file in `images/` (e.g. `images/yourname.jpg`).
+   - Make sure the image file is small (<1 MB).
+
+4. Edit `README.md` to add your profile under `## The team`:
+
+   ```markdown
+   ### Your Name
+
+   ![Your Name](images/yourname.jpg)
+
+   Short bio here: what you study/teach, interests in data or coding, and one fun fact.
+   ```
+
+5. Check your work:
+
+   ```bash
+   git status
+   git diff
+   ```
+
+6. Commit your changes:
+
+   ```bash
+   git add README.md images/yourname.jpg
+   git commit -m "Add bio and photo for Your Name"
+   ```
+
+7. Push your branch and open a **Pull Request** into `main`.
+
+---
+
+## Capstone: review and iteration
+
+As you submit PRs:
+
+- The **Team Lead** (and optionally other students) will review them.
+- Expect feedback such as:
+  - “Please shorten the bio to 3 sentences.”
+  - “Image is too large, please compress it.”
+  - “Heading levels are inconsistent; please use `###` for names.”
+
+If changes are requested:
+
+1. Keep working on **the same branch** in your Codespace.
+2. Edit the files.
+3. Commit new changes:
+
+   ```bash
+   git status
+   git add README.md
+   git commit -m "Address review comments on bio"
+   git push
+   ```
+
+4. Your PR automatically updates with the new commits.
+
+Once your PR is approved, the team lead merges it into `main`.
+
+---
+
+## Capstone: dealing with conflicts in the team section
+
+The `## The team` section is a **hotspot**: many of you will edit the same area.
+
+This is an opportunity to practise resolving conflicts.
+
+If you see a merge conflict message on your PR:
+
+1. In your Codespace, update your branch with the latest `main`:
+
+   ```bash
+   git fetch origin
+   git merge origin/main
+   ```
+
+2. If conflicts appear, resolve them in `README.md` as previously described.
+3. Re-stage, commit and push the resolution.
+
+Tips to reduce conflicts:
+
+- Insert your entry with clear blank lines before and after.
+- Keep headings consistent.
+- Don’t reformat other people’s bios without discussing it.
+
+---
+
+## Capstone: using issues for tasks
+
+During the project, you can use GitHub **Issues** to organise work.
+
+Examples of issues you might create:
+
+- “Write About SQ4003 section.”
+- “Decide company values and add them to README.”
+- “Create consistent style guide for bios.”
+
+For each issue:
+
+- Someone volunteers to work on it.
+- They create a branch, implement the changes, and open a PR referencing the issue (e.g. `Fixes #3`).
+
+This gives you a taste of how real software teams coordinate work.
+
+---
+
+## A typical daily workflow (cheat sheet)
+
+When you open your Codespace to work on any project, follow this pattern:
+
+1. **Update your main branch**:
+
+   ```bash
+   git switch main
+   git pull origin main
+   ```
+
+2. **Create or switch to a feature branch** for your specific task:
+
+   ```bash
+   git switch -c feature-your-task   # first time
+   # or
+   git switch feature-your-task      # if it already exists
+   ```
+
+3. **Do the work**:
+   - Edit files.
+   - Run your Python code or other tools.
+
+4. **Check what changed**:
+
+   ```bash
+   git status
+   git diff
+   ```
+
+5. **Stage and commit in logical chunks**:
+
+   ```bash
+   git add file1 file2
+   git commit -m "Clear, descriptive message"
+   ```
+
+6. **Push your branch and open a PR**:
+
+   ```bash
+   git push -u origin feature-your-task
+   ```
+
+7. **Respond to reviews**, fix conflicts if needed, and merge.
+
+If you repeat this cycle, Git and GitHub will start to feel natural.
+
+---
+
+## Summary and next steps
+
+You have seen Git as a **library of functions** that you call from the command line:
+
+- `git status` to inspect state.
+- `git add` and `git commit` to record snapshots.
+- `git diff` and `git log` to see history.
+- Branches to work in parallel.
+- Remotes, `git pull` and `git push` to sync with GitHub.
+- Issues, pull requests and reviews for collaboration.
+- Conflict resolution and `.gitignore` for smoother teamwork.
+
+Your next step is to **apply** this in the SQ4003 capstone project.
+
+As you work, keep connecting these commands back to your Python mental model:
+
+- Git commands are like calling functions with arguments.
+- A repository is like a project object with methods to inspect and modify its state.
+
+The more you practise, the more Git will feel like a natural extension of your coding workflow.
+
