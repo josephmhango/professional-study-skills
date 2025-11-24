@@ -500,7 +500,7 @@ By adding these folders to your repo, you override the default theme:
    ```
    The `{{ content }}` tag is where your Markdown content will be injected.
 
-2. **`_includes/`**: Small snippets of HTML (like `header.html` or `footer.html`) that you can pull into your layouts using `{% include header.html %}`.
+2. **`_includes/`**: Small snippets of HTML (like `header.html` or `footer.html`) that you can pull into your layouts.
 
 3. **`assets/css/`**: Place your custom CSS files here.
 
