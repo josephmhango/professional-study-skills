@@ -1,0 +1,530 @@
+---
+title: "GitHub Pages — Publish Your CV/Portfolio from Markdown"
+subtitle: "Professional and study skills"
+author: "Harper Adams University"
+date: today
+css: scroll.css
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    toc: true
+    toc-depth: 3
+    incremental: false
+    code-line-numbers: false
+    chalkboard: true
+    controls: true
+    hash: true
+editor: visual
+execute:
+  echo: true
+  warning: false
+  message: false
+lang: en-GB
+---
+
+## How to use these notes
+
+- Read a short concept → follow the steps in your own GitHub account.
+- Designed for **self-guided** use; pause and explore as needed.
+
+By the end you will be able to:
+
+- Explain what **GitHub**, **Markdown**, **Jekyll**, and **GitHub Pages** do in this workflow.
+- Create a **Markdown CV/portfolio** in a GitHub repo.
+- Add a **small configuration file** to enable a theme and navigation.
+- Turn on **GitHub Pages** to get a public URL for your portfolio.
+- Understand why keeping an up-to-date portfolio is valuable for your career.
+
+
+
+---
+
+# Why a portfolio, and why GitHub Pages?
+
+## Why bother with a portfolio?
+
+- Your CV is often a **static PDF** sent in emails.
+- A portfolio site can show:
+  - Projects with screenshots and links.
+  - Code, data, or reports you are proud of.
+  - A clear “story” about what you can do.
+
+Employers, supervisors, and collaborators often:
+
+- Google your name.
+- Look at your **GitHub profile**.
+- Appreciate a **clean, updated site** that’s easy to share.
+
+GitHub Pages lets you:
+
+- Host a simple portfolio **for free**.
+- Update it just by committing to a repo.
+- Avoid complex web hosting or servers.
+
+---
+
+## What we’ll build today
+
+By the end of this workshop you will have:
+
+- A **GitHub repository** named `yourusername.github.io`
+- A `index.md` file containing your **CV/portfolio** in Markdown.
+- A small `_config.yml` file that:
+  - Sets your site title and theme.
+  - Adds simple navigation and optional social links.
+- GitHub Pages enabled, giving you a URL:
+
+```text
+https://yourusername.github.io/
+```
+
+You’ll know how to:
+
+- Edit your CV in Markdown.
+- Commit changes to GitHub.
+- See your site update automatically.
+
+---
+
+# Tools & mental model
+
+## The key ingredients
+
+We’ll use four main tools:
+
+1. **GitHub account**  
+   Your online space for repositories.
+
+2. **Repository (repo)**  
+   A folder on GitHub containing files (Markdown, config, images).
+
+3. **Markdown (`.md` files)**  
+   A simple way to write formatted text using `#`, `*`, `-`, etc.
+
+4. **GitHub Pages + Jekyll**  
+   - GitHub Pages: the hosting service.
+   - Jekyll: a static site generator that turns Markdown into HTML and applies a theme.
+
+You **write content** in Markdown →  
+Jekyll **builds a site** →  
+GitHub Pages **serves it at a URL**.
+
+---
+
+## Static websites: the simple web
+
+**Static site** = a collection of pre-built files:
+
+- HTML (structure).
+- CSS (styling).
+- Maybe a little JavaScript (interactivity).
+
+No:
+
+- Databases.
+- Login systems.
+- Complex server code.
+
+GitHub Pages is designed to host exactly this kind of static content.
+
+For a CV/portfolio, this is **perfect**:
+
+- Mostly text, links, occasional images.
+- Rarely needs dynamic features.
+
+---
+
+## How GitHub Pages works (high level)
+
+Conceptually:
+
+1. You push files (Markdown, `_config.yml`, images) to your repo.
+2. GitHub runs Jekyll for you on their servers (for Jekyll sites).
+3. Jekyll:
+   - Reads your Markdown and config.
+   - Applies a theme.
+   - Produces HTML files.
+4. GitHub Pages serves those HTML files at your Pages URL.
+
+You do **not** have to:
+
+- Install Jekyll locally.
+- Run build commands.
+- Configure servers or domain names (unless you want your own custom domain later).
+
+---
+
+## User site vs project site
+
+Two main types of GitHub Pages site:
+
+- **User (or organisation) site**
+  - Repo must be named: `yourusername.github.io`
+  - URL: `https://yourusername.github.io/`
+  - Great for your **main portfolio**.
+
+- **Project site**
+  - Repo can have any name, e.g. `cool-project`.
+  - URL: `https://yourusername.github.io/cool-project/`
+  - Great for specific projects or modules.
+
+In this workshop, we’ll build a **user site** for your main CV/portfolio.
+
+---
+
+# Prepare your portfolio repo
+
+## Step 1 — Create or Open your Repository
+
+If you haven't created a repository yet, follow these steps. If you have one, skip to the next section, but **read the note about naming**.
+
+1. Log in to GitHub and click the **+** icon in the top-right corner.
+2. Select **New repository**.
+
+### Important: Naming your repository
+
+The name you choose determines your website's address (URL).
+
+**Option A: The Main Portfolio (User Site)**
+
+- **Repository Name**: MUST be exactly `yourusername.github.io` (e.g., `jdoe.github.io`).
+
+- **Resulting URL**: `https://yourusername.github.io/`
+
+- **Why**: This is a special reserved name that tells GitHub "this is my main personal site". It lives at the root of your domain.
+
+**Option B: A Project Site**
+
+- **Repository Name**: Any other name (e.g., `my-portfolio`, `cv`, `lab-reports`).
+
+- **Resulting URL**: `https://yourusername.github.io/my-portfolio/`
+
+- **Why**: Standard repositories are hosted in a subdirectory (subfolder) matching the repo name.
+
+3. **Public/Private**: Select **Public** (Pages is free for public repos).
+
+4. **Initialize**: Check **"Add a README file"** (this creates the first commit so you can start editing immediately).
+
+5. Click **Create repository**.
+
+---
+
+## Step 2 — Add the config file `_config.yml`
+
+We will add a **configuration file** to control your site's settings.
+
+**Why do we need this file?**
+Jekyll (the site builder) needs instructions on how to build your site. Without this file, Jekyll will use default settings which often won't match what you want (e.g., no theme, basic styling). It is the "control center" for your entire website.
+
+In your new repo:
+
+1. Click **“Add file → Create new file”**.
+2. File name: `_config.yml`
+3. Paste this template:
+
+```yaml
+title: "Your Name"
+description: "Short tagline about who you are."
+theme: minima
+
+author:
+  name: "Your Name"
+  email: "you@example.com"
+
+header_pages:
+  - index.md
+
+github_username: your-github-user
+linkedin_username: your-linkedin-handle
+```
+
+4. Replace the placeholders with your details.
+5. Scroll down and **Commit new file**.
+
+---
+
+## Understanding `_config.yml` (conceptually)
+
+This file is written in **YAML** (Yet Another Markup Language), which is used for configuration.
+
+### What happens if you delete this file?
+- Your site might still load, but it will lose its theme and styling.
+- Social links and navigation menus will disappear.
+- The title in the browser tab will revert to the repository name.
+
+### Minimal Requirements
+Technically, Jekyll can run without a `_config.yml`, but for a functional portfolio, you **must** at least specify:
+1. **`theme`**: Without this, you get raw HTML with no styling.
+2. **`title`**: Essential for search engines and browser tabs.
+
+### Key settings explained:
+- `title` — appears in the browser tab and site header.
+- `theme: minima` — tells GitHub to use the built-in **minima** theme (Clean, simple layout, no extra setup).
+- `header_pages` — a list of pages to show in the **top navigation bar**.
+- `github_username` — the theme uses this to generate social icons in the footer.
+
+---
+
+# Write your CV in Markdown
+
+## Step 3 — Create `index.md` (your main page)
+
+Still in your repo:
+
+1. Click **Add file → Create new file**.
+2. File name: `index.md`
+3. Paste this starter CV template:
+
+```markdown
+---
+layout: home
+title: Home
+---
+
+# Your Name
+
+City, Country · you@example.com · [GitHub](https://github.com/youruser) · [LinkedIn](https://linkedin.com/in/yourprofile)
+
+---
+
+## Profile
+
+Highly motivated data science student with a strong foundation in statistics, R programming, and machine learning. Passionate about applying data-driven solutions to agricultural and environmental challenges.
+
+## Experience
+
+### **Data Analyst Intern**
+*AgriTech Solutions, London, UK*  
+*June 2023 – August 2023*
+
+- Analysed crop yield data using **R** and **Python** to identify efficiency trends.
+- Visualised findings with **ggplot2**, presenting reports to senior stakeholders.
+- Automated weekly data cleaning processes, saving the team 5 hours per week.
+
+### **Research Assistant**
+*Harper Adams University*  
+*Sept 2022 – Present*
+
+- Assisting in field trials for sustainable pest control methods.
+- Collecting and organising large datasets for statistical analysis.
+
+## Education
+
+### **BSc (Hons) Data Science for Global Agriculture**
+*Harper Adams University*  
+*2021 – 2025 (Expected)*
+
+- **Relevant Modules:** Applied Statistics, Machine Learning, Database Management, GIS.
+- **Project:** "Predicting Soil Health using Satellite Imagery and Machine Learning".
+
+## Skills
+
+- **Languages:** R, Python, SQL
+- **Tools:** Git, GitHub, RStudio, QGIS, Tableau
+- **Soft Skills:** Technical Writing, Public Speaking, Project Management
+
+## Projects
+
+### **Soil Prediction Model**
+*[View on GitHub](https://github.com/youruser/soil-model)*
+- Built a random forest model to predict soil nitrogen levels.
+- Achieved 85% accuracy on test data.
+
+### **Campus Weather App**
+*[View Live](https://youruser.github.io/weather-app)*
+- A simple web app displaying real-time weather data from campus sensors.
+```
+
+4. **Edit the content** to reflect your own actual experience.
+5. Scroll down and **Commit new file**.
+
+---
+
+## The "Front Matter" (YAML Header)
+
+You noticed the block at the top of the file between the triple dashes (`---`). This is called **Front Matter**.
+
+```yaml
+---
+layout: home
+title: Home
+---
+```
+
+### Why is this important?
+This is **not optional** decoration. It is how you communicate with the Jekyll build engine.
+
+1. **The Triple Dashes (`---`)**: These tell Jekyll "Stop! This file contains metadata, process it first."
+
+2. **If you remove it**: Jekyll treats the file as a plain text file. Your layout (header, footer, CSS) will disappear, and the page will look broken.
+
+### What goes in here?
+- **`layout`**: Tells Jekyll which HTML template to wrap around your content.
+  - `layout: home` (specific to the Minima theme) adds the title and social links.
+  - `layout: page` is for standard content pages.
+  - `layout: post` is for blog articles.
+- **`title`**: Sets the page title tag (what you see in search results).
+- **`permalink`** (optional): Manually sets the URL (e.g., `/my-cv/`).
+
+**Key takeaway**: Every page in your site needs this header to inherit the site's theme and structure.
+
+---
+
+# Enable GitHub Pages & Go Live
+
+## Step 4 — Activate Pages
+
+Now that you have content (`index.md`) and configuration (`_config.yml`), let’s turn on the website.
+
+1. Go to your repository’s **Settings** tab.
+2. On the left sidebar, click **Pages**.
+3. Under **Build and deployment** > **Source**, verify it says "Deploy from a branch".
+4. Under **Branch**, select `main` (or `master`) and folder `/ (root)`.
+5. Click **Save**.
+
+---
+
+## Step 5 — Verify your site
+
+1. Stay on the **Pages** settings page.
+2. Look at the top for a message: "GitHub Pages is currently being built from the main branch..."
+3. Wait about 30–60 seconds. Refresh the page.
+4. You should see: **"Your site is live at..."** followed by a link.
+5. **Click the link!**
+
+🎉 You should see your formatted CV with the Minima theme applied.
+
+If you see a 404 error, wait another minute and refresh. It takes a moment for Jekyll to build the site for the first time.
+
+---
+
+# Extending your portfolio (Optional)
+
+## Adding a new page
+
+A single-page CV is great, but maybe you want a separate page for your detailed projects.
+
+1. Create a new file named `projects.md`.
+2. Add the front matter (metadata) at the top:
+
+```markdown
+---
+layout: page
+title: Projects
+permalink: /projects/
+---
+
+# My Projects
+
+Here are some detailed case studies of my work.
+
+## Project A...
+```
+
+3. Add your project details below the metadata.
+4. **Commit** the file.
+
+## Updating the navigation
+
+To make this new page appear in the header menu:
+
+1. Edit `_config.yml`.
+2. Update the `header_pages` section:
+
+```yaml
+header_pages:
+  - index.md
+  - projects.md
+```
+
+3. **Commit** changes.
+4. Wait a minute and refresh your live site. You should see a "Projects" link in the header.
+
+---
+
+## Discovering and Applying Themes
+
+One of the most powerful features of Jekyll is the ability to swap the entire look of your site by changing a single line of code.
+
+### 1. Supported Themes
+GitHub Pages has a set of "supported" themes that are pre-installed. These are the easiest to use as they require no extra plugins.
+
+- **Gallery**: View them at [https://github.com/pages-themes](https://https://github.com/pages-themes).
+- **How to use**: In your `_config.yml`, simply set:
+  ```yaml
+  theme: jekyll-theme-cayman
+  ```
+  (Replace `cayman` with `slate`, `architect`, `minimal`, etc.)
+
+### 2. Community Themes (Remote Themes)
+There are thousands of free Jekyll themes created by the community.
+
+- **Discovery**:
+  - [Jamstack Themes](https://jamstackthemes.dev/ssg/jekyll/)
+  - [Jekyll Themes](http://jekyllthemes.org/)
+- **How to use**:
+  These often require the `jekyll-remote-theme` plugin.
+  1. In `_config.yml`, remove `theme: ...`.
+  2. Add:
+     ```yaml
+     plugins:
+       - jekyll-remote-theme
+
+     remote_theme: "benbalter/retlab"
+     ```
+     *(Replace `benbalter/retlab` with the `username/repo` of the theme you want)*.
+
+---
+
+## Creating Your Own Theme (Advanced)
+
+If you are inclined to build something truly unique, you can create your own theme from scratch. You don't need to build a "theme gem"; you just need to understand the Jekyll folder structure.
+
+By adding these folders to your repo, you override the default theme:
+
+1. **`_layouts/`**: Create a `default.html` file here. This is the HTML skeleton of your site.
+   ```html
+   <!DOCTYPE html>
+   <html>
+     <head>
+       <title>{{ page.title }}</title>
+       <link rel="stylesheet" href="/assets/css/style.css">
+     </head>
+     <body>
+       <nav>...</nav>
+       {{ content }}
+       <footer>...</footer>
+     </body>
+   </html>
+   ```
+   The `{{ content }}` tag is where your Markdown content will be injected.
+
+2. **`_includes/`**: Small snippets of HTML (like `header.html` or `footer.html`) that you can pull into your layouts using `{% include header.html %}`.
+
+3. **`assets/css/`**: Place your custom CSS files here.
+
+4. **`_sass/`** (Optional): If you use SASS/SCSS, put your partials here.
+
+Once you create a `_layouts/default.html`, Jekyll will stop using the theme's layout and use yours instead (assuming your Markdown files specify `layout: default`).
+
+---
+
+# Summary & Next Steps
+
+## Recap
+
+You have:
+
+1. Created a repository to host your site.
+2. Written a CV in **Markdown**.
+3. Configured the site with `_config.yml`.
+4. Published it to the world with **GitHub Pages**.
+
+## Maintenance
+
+- To update your CV, just edit `index.md` and commit.
+- To add a blog post, create a file in a `_posts` folder (see Jekyll documentation).
+- To change the look, try different themes or CSS.
+
+**Keep your portfolio updated!** It’s a living document of your professional journey.
