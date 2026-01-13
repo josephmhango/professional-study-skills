@@ -1,0 +1,422 @@
+---
+title: "Applied AI: Prompting, Context, MCP, and RAG"
+subtitle: "Professional and study skills"
+format:
+  revealjs:
+    theme: simple
+    center: false
+    slide-number: true
+    preview-links: auto
+    css: scroll.css
+    mermaid:
+      theme: default
+---
+
+## Today’s focus
+
+1. **Prompt engineering techniques**
+2. **Contemporary context engineering** (the status quo)
+3. **MCP** as the new standard for tool calling (how it works under the bonnet)
+4. **RAG**: intro + deep dive in Colab
+
+## Tools we will use
+
+- **Google AI Studio (Gemini free tier)**: students generate their own API keys
+- **Google Colab**: runs all code (no local installs)
+- **GitHub Copilot**: optional, for writing/refactoring
+
+---
+
+## 1) Prompt engineering techniques
+
+Prompting is how you specify: **task + constraints + output format**.
+
+## Core techniques
+
+- **One-shot**: one instruction, one output
+- **Few-shot**: show 1–3 examples of the format you want
+- **Decomposition**: split the task into sub-tasks
+- **Constraints**: “use only the provided context”
+- **Structured output**: ask for tables or JSON schemas
+- **Self-checks**: ask the model to verify against rules
+
+## A reliable prompt template
+
+- **Role**: “You are a…”
+- **Task**: “Do X.”
+- **Context**: “Here is the data…”
+- **Constraints**: “Use only the context…”
+- **Output format**: “Return JSON / bullet points / table…”
+
+## Few-shot example
+
+```text
+You are a teaching assistant.
+Task: Convert a paper excerpt into a 2-sentence summary.
+Constraints: Use only the provided text.
+Output: JSON: {"summary": "...", "keywords": ["...","..."]}
+
+Example input:
+<text about a dataset...>
+Example output:
+{"summary":"...","keywords":["dataset","evaluation"]}
+
+Now do it for this input:
+<PASTE TEXT HERE>
+```
+
+---
+
+## 2) Contemporary context engineering
+
+Context engineering is how applications decide **what the model sees** at generation time.
+
+## The status quo pattern
+
+- Put **instructions** up front (rules + output format)
+- Add **retrieved context** (PDF snippets, DB rows) only when needed
+- Use **RAG** for large corpora (chunk → embed → retrieve)
+- Keep **short memory** via summarisation, not infinite chat logs
+- Use **schemas + validation** to reduce “format drift”
+- Add **evaluation**: grounding checks, citation coverage, regressions
+
+## What the model actually sees
+
+Everything the model can use must fit in a **context window**.
+
+```{mermaid}
+%%{init: {"theme":"default","themeVariables":{
+  "background":"#d7ecff",
+  "primaryColor":"#bfe3ff",
+  "primaryTextColor":"#000000",
+  "primaryBorderColor":"#1b4b7a",
+  "secondaryColor":"#bfe3ff",
+  "secondaryTextColor":"#000000",
+  "lineColor":"#1b4b7a",
+  "fontSize":"18px",
+  "nodeTextMargin":"18"
+},"flowchart":{"htmlLabels":false,"useMaxWidth":true,"nodeSpacing":70,"rankSpacing":80,"wrappingWidth":1500}}}%%
+flowchart TB
+  I["Instructions (rules + output format)"] --> W["Context window (what the model sees now)"]
+  R["Retrieved snippets (PDF chunks, DB rows)"] --> W
+  T["Tool contracts (name + args schema)"] --> W
+  Q["User question"] --> W
+  W --> A["Model output (answer / tool call / JSON)"]
+```
+
+---
+
+## 3) MCP: tool calling under the bonnet
+
+MCP (Model Context Protocol) standardises how an **app** connects an LLM to **tools** and **data sources**.
+
+## MCP roles
+
+- **Host app**: enforces policy, chooses what context to send, executes tool calls
+- **LLM**: proposes an action (answer or tool call)
+- **MCP server(s)**: expose tools/resources in a standard format
+
+## MCP architecture
+
+```{mermaid}
+%%{init: {"theme":"default","themeVariables":{
+  "background":"#d7ecff",
+  "primaryColor":"#bfe3ff",
+  "primaryTextColor":"#000000",
+  "primaryBorderColor":"#1b4b7a",
+  "secondaryColor":"#bfe3ff",
+  "secondaryTextColor":"#000000",
+  "lineColor":"#1b4b7a",
+  "fontSize":"18px",
+  "nodeTextMargin":"18"
+},"flowchart":{"htmlLabels":false,"useMaxWidth":true,"nodeSpacing":70,"rankSpacing":80,"wrappingWidth":1500}}}%%
+flowchart TB
+  Host["Host app (policy + context)"] --> LLM["LLM (Gemini, etc.)"]
+  Host <--> MCP["MCP servers (tool providers)"]
+  MCP --> FS["Files"]
+  MCP --> DB["Databases"]
+  MCP --> API["Internal APIs"]
+```
+
+## What MCP standardises
+
+An MCP server typically publishes:
+
+- **Tool definitions**: name, description, JSON input schema, output shape
+- **Resources**: controlled access to data (files, DB rows, etc.)
+- **Optional prompt templates** (“prompts”) for common tasks
+
+## The tool-calling loop (what happens internally)
+
+1. Host sends: question + instructions + available tool schemas
+2. LLM returns: either an answer, or a **tool call** (tool name + JSON args)
+3. Host executes the tool via MCP server (auth + allow-lists + logging)
+4. Host sends tool results back as context
+5. LLM produces a grounded final answer
+
+**Key point:** credentials and policy stay in the host/server, not inside the model.
+
+---
+
+## 4) RAG: intro + deep dive in Colab
+
+RAG = Retrieval-Augmented Generation
+
+- **Index**: split PDFs into chunks and store embeddings
+- **Retrieve**: find relevant chunks for a question
+- **Generate**: ask Gemini to answer using only those chunks (with citations)
+
+## RAG pipeline (concept)
+
+```{mermaid}
+%%{init: {"theme":"default","themeVariables":{
+  "background":"#d7ecff",
+  "primaryColor":"#bfe3ff",
+  "primaryTextColor":"#000000",
+  "primaryBorderColor":"#1b4b7a",
+  "secondaryColor":"#bfe3ff",
+  "secondaryTextColor":"#000000",
+  "lineColor":"#1b4b7a",
+  "fontSize":"18px",
+  "nodeTextMargin":"18"
+},"flowchart":{"htmlLabels":false,"useMaxWidth":true,"nodeSpacing":70,"rankSpacing":80,"wrappingWidth":1650}}}%%
+flowchart TB
+  A["PDF folder"] --> B["Extract text"]
+  B --> C["Chunk text (overlap)"]
+  C --> D["Embed chunks (vectors)"]
+  D --> E["Vector DB (Chroma)"]
+  Q["Question"] --> QE["Embed question"]
+  QE --> E
+  E --> R["Retrieve top-k chunks"]
+  R --> P["Build prompt (chunks + question)"]
+  P --> L["Gemini answers + citations"]
+```
+
+## Colab deep dive: 1) choose a PDF folder (Drive)
+
+```python
+from google.colab import drive
+drive.mount("/content/drive")
+
+PDF_FOLDER = "/content/drive/MyDrive/papers"
+```
+
+**What this cell does:**
+
+- Mounts your Google Drive into the Colab runtime.
+- Sets `PDF_FOLDER` to the directory containing your PDFs.
+- In practice: students can create a `papers/` folder and drop PDFs in there.
+
+## 2) install libraries
+
+```python
+!pip -q install pypdf chromadb sentence-transformers pandas google-generativeai
+```
+
+**What this cell does:**
+
+- Installs:
+  - `pypdf` to read PDFs
+  - `sentence-transformers` to create embeddings (vectors)
+  - `chromadb` as a free local vector database inside Colab
+  - `google-generativeai` to call Gemini models
+  - `pandas` for debugging/inspection (optional but useful)
+
+## 3) connect Gemini (AI Studio API key)
+
+```python
+import os
+import google.generativeai as genai
+
+os.environ["GEMINI_API_KEY"] = "PASTE_YOUR_KEY_HERE"
+genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+
+for m in genai.list_models():
+    if 'generateContent' in m.supported_generation_methods:
+        print(f"Model Name: {m.name}")
+        print(f"Description: {m.description}\n")
+
+# Default model for this lesson:
+# If list_models() shows a different exact name, use that exact string here.
+model = genai.GenerativeModel("gemma-3-12b-it")
+```
+
+**What this cell does:**
+
+- **Configures the Gemini SDK** using your AI Studio API key.
+- **Lists available models** that support `generateContent` so you can choose a model that works.
+- Sets a **default model** for the rest of the notebook.
+
+## 4) extract PDF text
+
+```python
+import os
+import warnings
+from pypdf import PdfReader
+
+def extract_pdf_text(path):
+    """
+    Extract text from a PDF, but keep going if some pages are malformed.
+
+    Some PDFs can trigger pypdf errors like KeyError: 'bbox' during text extraction
+    (often due to incomplete/malformed font metadata). In that case we skip the
+    problematic page and continue.
+    """
+    try:
+        reader = PdfReader(path)
+    except Exception as e:
+        warnings.warn(f"Could not open PDF {path!r}: {e}")
+        return ""
+
+    pages = []
+    for i, page in enumerate(reader.pages):
+        try:
+            pages.append(page.extract_text() or "")
+        except KeyError as e:
+            if str(e) == "'bbox'":
+                warnings.warn(f"Skipping page {i} in {path!r} due to KeyError: 'bbox'")
+                pages.append("")
+            else:
+                warnings.warn(f"Skipping page {i} in {path!r} due to KeyError: {e}")
+                pages.append("")
+        except Exception as e:
+            warnings.warn(f"Skipping page {i} in {path!r} due to error: {e}")
+            pages.append("")
+
+    return "\n".join(pages)
+
+def list_pdfs(folder):
+    return [
+        os.path.join(folder, f)
+        for f in os.listdir(folder)
+        if f.lower().endswith(".pdf")
+    ]
+```
+
+**What this cell does:**
+
+- **`list_pdfs(folder)`**: finds all `.pdf` files in a folder.
+- **`extract_pdf_text(path)`**: extracts text from each page and joins it.
+- The `KeyError: 'bbox'` handling means: if one page is malformed, we **skip that page** and keep going.
+
+## 5) chunking + metadata
+
+```python
+def chunk_text(text, chunk_size=1200, overlap=150):
+    text = " ".join(text.split())
+    chunks = []
+    start = 0
+    while start < len(text):
+        end = min(len(text), start + chunk_size)
+        chunks.append(text[start:end])
+        start = max(end - overlap, end)
+    return chunks
+
+def load_pdf_chunks(folder):
+    docs, metas, ids = [], [], []
+    for path in list_pdfs(folder):
+        text = extract_pdf_text(path)
+        chunks = chunk_text(text)
+        for i, ch in enumerate(chunks):
+            ids.append(f"{os.path.basename(path)}::chunk-{i}")
+            docs.append(ch)
+            metas.append({"source_file": os.path.basename(path), "chunk": i})
+    return docs, metas, ids
+
+docs, metas, ids = load_pdf_chunks(PDF_FOLDER)
+len(docs), metas[0]
+```
+
+**Key concepts:**
+
+- **Chunking**: we split each PDF into smaller pieces (“chunks”) so retrieval can be precise.
+- **`chunk_size`**: how big each chunk is (here: ~1200 characters).
+  - Bigger chunks: more context per chunk, but retrieval gets less precise.
+  - Smaller chunks: more precise retrieval, but you may lose context.
+- **`overlap`**: repeated text between chunks so sentences near the boundary aren’t cut in half.
+- **Metadata (`metas`)**: we store `source_file` + `chunk` index so we can cite where an answer came from.
+- **IDs (`ids`)**: unique identifiers so the vector DB can store/retrieve chunks reliably.
+
+## 6) embeddings + vector DB (Chroma)
+
+```python
+import chromadb
+from sentence_transformers import SentenceTransformer
+
+embedder = SentenceTransformer("all-MiniLM-L6-v2")
+client = chromadb.Client()
+collection = client.create_collection("papers_rag")
+
+embeddings = embedder.encode(docs).tolist()
+collection.add(ids=ids, documents=docs, metadatas=metas, embeddings=embeddings)
+```
+
+**Key concepts:**
+
+- **Embedding**: turns text into a numeric vector representing meaning.
+- **Vector DB (Chroma)**: stores vectors and can do similarity search (find chunks “closest” in meaning).
+- We store:
+  - `documents`: the chunk text
+  - `embeddings`: the vector for each chunk
+  - `metadatas`: citations (file + chunk index)
+
+## 7) retrieval + cited answer
+
+```python
+def build_rag_prompt(question, top_k=6):
+    q_vec = embedder.encode(question).tolist()
+    res = collection.query(query_embeddings=[q_vec], n_results=top_k)
+
+    chunks = res["documents"][0]
+    met = res["metadatas"][0]
+
+    blocks = []
+    for ch, m in zip(chunks, met):
+        tag = f"[source_file={m['source_file']} chunk={m['chunk']}]"
+        blocks.append(f"{tag}\n{ch}")
+    context = "\n\n---\n\n".join(blocks)
+
+    return f"""You are a careful assistant.
+Use ONLY the context below. If the answer isn't in the context, say you don't know.
+
+CONTEXT:
+{context}
+
+QUESTION:
+{question}
+
+INSTRUCTIONS:
+- Answer in bullet points.
+- Add citations like [source_file=... chunk=...] after each key claim.
+"""
+
+def rag_answer(question, top_k=6):
+    prompt = build_rag_prompt(question, top_k=top_k)
+    return model.generate_content(prompt).text
+
+print(rag_answer("What problem is this paper trying to solve?", top_k=6))
+```
+
+**Key concepts:**
+
+- **Retrieval**: we embed the question, then ask Chroma for the most similar chunks.
+- **`top_k`**: how many chunks to retrieve.
+  - Larger `top_k` increases recall (less likely to miss the answer),
+    but can add noise and make prompts longer.
+- **Citations**: we attach `[source_file=... chunk=...]` tags so the model can cite evidence.
+- **Generation**: Gemini is instructed to answer using **only** retrieved context.
+
+## Practice prompts (try variations)
+
+- One-shot: “Answer in 5 bullets with citations.”
+- Few-shot: include 1 example of a well-cited answer
+- Constraints: “Use only context; do not guess.”
+- Output schema: “Return JSON with answer + citations.”
+
+## Takeaways
+
+- **Prompt engineering**: makes outputs consistent and testable
+- **Context engineering**: determines what the model can actually use
+- **MCP**: standardises tool calling in real applications
+- **RAG**: practical grounding for your PDFs with citations
+
